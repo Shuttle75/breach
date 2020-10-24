@@ -1,0 +1,34 @@
+<html xmlns:th="https://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'breaches')}">
+
+<body>
+
+  <h2>Пошук порушень</h2>
+
+  <form th:object="${breach}" th:action="@{/breaches}" method="get"
+    class="form-horizontal" id="search-owner-form">
+    <div class="form-group">
+      <div class="control-group" id="numberGroup">
+        <label class="col-sm-2 control-label">Last name </label>
+        <div class="col-sm-10">
+          <input class="form-control" th:field="*{sentNumber}" size="30"
+            maxlength="80" /> <span class="help-inline"><div
+              th:if="${#fields.hasAnyErrors()}">
+              <p th:each="err : ${#fields.allErrors()}" th:text="${err}">Error</p>
+            </div></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Пошук</button>
+      </div>
+    </div>
+  </form>
+
+  <br/>
+
+  <a class="btn btn-default" th:href="@{/breaches/new}">Додати порушення</a>
+
+</body>
+</html>
