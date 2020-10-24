@@ -1584,6 +1584,11 @@ pre code {
     width: 1170px;
   }
 }
+@media (min-width: 1600px) {
+  .container {
+    width: 1580px;
+  }
+}
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
@@ -2767,7 +2772,7 @@ select[multiple].input-lg {
   position: relative;
 }
 .has-feedback .form-control {
-  padding-right: 42.5px;
+  padding-right: 6px;
 }
 .form-control-feedback {
   position: absolute;
@@ -5656,8 +5661,11 @@ button.list-group-item-danger.active:focus {
 }
 .panel-default > .panel-heading {
   color: #333333;
-  background-color: #f5f5f5;
+  background-color: #cccccc;
   border-color: #ddd;
+}
+.panel-default > .panel-body {
+  background-color: #e5e5e5;
 }
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #ddd;

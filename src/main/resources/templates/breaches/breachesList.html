@@ -9,9 +9,12 @@
     <table id="breaches" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 150px;">Id</th>
-            <th style="width: 200px;">Номер</th>
-            <th style="width: 200px;">Дата</th>
+            <th style="width: 100px;">Id</th>
+            <th style="width: 100px;">Номер</th>
+            <th style="width: 100px;">Дата</th>
+
+
+
             <th style="width: 120px">Метод</th>
             <th style="width: 120px">Telephone</th>
             <th>Регіон</th>
@@ -20,9 +23,8 @@
         <tbody>
           <tr th:each="breach : ${selections}">
               <td>
-                  <a th:href="@{/breaches/__${breach.id}__}" th:text="${breach.id}"/></a>
+                  <a th:href="@{/breaches/__${breach.id}__}" th:text="${breach.sentId}"/></a>
               </td>
-              <td th:text="${breach.sentId}"/>
               <td th:text="${breach.sentNumber}"/>
               <td th:text="${#temporals.format(breach.sentDate, 'dd.MM.yyyy HH:mm')}"/>
 

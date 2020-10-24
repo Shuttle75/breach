@@ -2,116 +2,123 @@
   th:replace="~{fragments/layout :: layout (~{::body},'breaches')}">
 
 <body>
-
-  <h2>Порушення</h2>
   <form th:object="${breach}" class="form-horizontal" id="add-breach-form" method="post" autocomplete="off">
+    <input hidden id="id" name="id" th:field="*{id}">
+
     <div class="form-group has-feedback">
-      <div class="row">
-        <div class="col-md-1">
-          <label class="control-label">Id</label>
-        </div>
-        <div class="col-md-2">
-          <input class="form-control" type="text" th:field="*{sentId}" />
-        </div>
-        <div class="col-md-1">
-          <label class="control-label">Номер</label>
-        </div>
-        <div class="col-md-2">
-          <input class="form-control" type="text" th:field="*{sentNumber}" />
-        </div>
-        <div class="col-md-1">
-          <label class="control-label">Дата</label>
-        </div>
-        <div class="col-md-3">
-          <input class="form-control" type="datetime-local" th:field="*{sentDate}" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1">
-          <label class="control-label">Вх номер</label>
-        </div>
-        <div class="col-md-2">
-          <input class="form-control" type="text" th:field="*{incomeNumber}" />
-        </div>
-        <div class="col-md-1">
-          <label class="control-label">Дата</label>
-        </div>
-        <div class="col-md-3">
-          <input class="form-control" type="datetime-local" th:field="*{incomeDate}" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-1">
-          <label class="control-label">ЕО номер</label>
-        </div>
-        <div class="col-md-2">
-          <input class="form-control" type="text" th:field="*{eoNumber}" />
-        </div>
-        <div class="col-md-1">
-          <label class="control-label">Дата</label>
-        </div>
-        <div class="col-md-3">
-          <input class="form-control" type="datetime-local" th:field="*{eoDate}" />
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-1">
-          <label class="control-label">ЕРДР номер</label>
-        </div>
-        <div class="col-md-2">
-          <input class="form-control" type="text" th:field="*{erdrNumber}" />
-        </div>
-        <div class="col-md-1">
-          <label class="control-label">Дата</label>
-        </div>
-        <div class="col-md-3">
-          <input class="form-control" type="datetime-local" th:field="*{erdrDate}" />
-        </div>
-        <div class="col-md-1">
-          <label class="control-label">Стаття</label>
-        </div>
-        <div class="col-md-2">
-          <input class="form-control" type="text" th:field="*{erdrArticle}" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1">
-          <label class="control-label">Метод</label>
-        </div>
-        <div class="col-md-3">
-          <select class="form-control" id="method" name="method">
-            <option th:each="method : ${methods}" th:value="${method.id}" th:text="${method.name}"></option>
-          </select>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1">
-          <label class="control-label">Фабула</label>
-        </div>
-        <div class="col-md-11">
-          <textarea class="form-control" rows="5" th:field="*{story}"></textarea>
-        </div>
-      </div>
-
-      <div class="panel panel-primary">
-        <div class="panel-heading">Panel Heading</div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Загальна інформація</div>
         <div class="panel-body">
-          <table class="table table-striped">
-            <tr>
-              <th>Номер картки</th>
-              <th>Назва банку</th>
-              <th>Власник</th>
-            </tr>
-          </table>
+          <div class="row">
+            <div class="col-md-1">
+              <label class="control-label">Id</label>
+            </div>
+            <div class="col-md-1">
+              <input class="form-control" type="text" th:field="*{sentId}"/>
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">Номер</label>
+            </div>
+            <div class="col-md-1">
+              <input class="form-control" type="text" th:field="*{sentNumber}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">Дата</label>
+            </div>
+            <div class="col-md-2">
+              <input class="form-control" type="datetime-local" th:field="*{sentDate}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">Метод</label>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control" id="method" name="method" th:field="*{method}">
+                <option th:each="method : ${methods}" th:value="${method.id}" th:text="${method.name}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-1">
+              <label class="control-label">Вх номер</label>
+            </div>
+            <div class="col-md-1">
+              <input class="form-control" type="text" th:field="*{incomeNumber}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">Вх дата</label>
+            </div>
+            <div class="col-md-2">
+              <input class="form-control" type="datetime-local" th:field="*{incomeDate}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">Регіон</label>
+            </div>
+            <div class="col-md-4">
+              <select class="form-control" id="region" name="region" th:field="*{region}">
+                <option th:each="region : ${regions}" th:value="${region.level1}" th:text="${region.name}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-1">
+              <label class="control-label">ЕО номер</label>
+            </div>
+            <div class="col-md-1">
+              <input class="form-control" type="text" th:field="*{eoNumber}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">ЕО дата</label>
+            </div>
+            <div class="col-md-2">
+              <input class="form-control" type="datetime-local" th:field="*{eoDate}" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-1">
+              <label class="control-label">ЕРДР номер</label>
+            </div>
+            <div class="col-md-1">
+              <input class="form-control" type="text" th:field="*{erdrNumber}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">ЕРДР дата</label>
+            </div>
+            <div class="col-md-2">
+              <input class="form-control" type="datetime-local" th:field="*{erdrDate}" />
+            </div>
+            <div class="col-md-1">
+              <label class="control-label">ЕРДР стаття</label>
+            </div>
+            <div class="col-md-4">
+              <input class="form-control" type="text" th:field="*{erdrArticle}"/>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-1">
+              <label class="control-label">Фабула</label>
+            </div>
+            <div class="col-md-11">
+              <textarea class="form-control" rows="2" th:field="*{story}"></textarea>
+            </div>
+          </div>
+
+
         </div>
-        <div class="panel-footer">Panel Footer</div>
       </div>
 
-      <div class="">
-        <div class="row form-control">
-          <table class="table table-striped">
+
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Отримувач</div>
+        <div class="panel-body">
+
+
+          <table class="table table-striped" th:if="${not breach.bankCards.isEmpty()}">
             <tr>
               <th>Номер картки</th>
               <th>Назва банку</th>
@@ -125,6 +132,7 @@
           </table>
         </div>
       </div>
+
     </div>
 
 
