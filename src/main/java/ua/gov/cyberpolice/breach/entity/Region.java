@@ -10,17 +10,17 @@ import javax.persistence.Table;
 public class Region {
 
     @Id
-    private String level1;
+    private String id;
 
     @Column
     private String name;
 
-    public String getLevel1() {
-        return level1;
+    public String getId() {
+        return id;
     }
 
-    public void setLevel1(String level1) {
-        this.level1 = level1;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

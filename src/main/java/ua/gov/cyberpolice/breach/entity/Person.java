@@ -2,45 +2,128 @@ package ua.gov.cyberpolice.breach.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "person", schema = "breach")
 public class Person extends BaseEntity {
 
     @Column
-    String passport;
+    private String passport;
 
     @Column
-    String lastName;
+    private String lastName;
 
     @Column
-    String firstName;
+    private String firstName;
 
     @Column
-    String middleName;
+    private String middleName;
 
     @Column
-    LocalDate birthDate;
+    private LocalDate birthDate;
+
+    @ManyToOne
+    private Region region;
 
     @Column
-    String region;
+    private String city;
 
     @Column
-    String city;
+    private String street;
 
     @Column
-    String street;
+    private String house;
 
     @Column
-    String house;
+    private String apartment;
 
-    @Column
-    String apartment;
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getHouse() {
+        return house;
+    }
+
+    public void setHouse(String house) {
+        this.house = house;
+    }
+
+    public String getApartment() {
+        return apartment;
+    }
+
+    public void setApartment(String apartment) {
+        this.apartment = apartment;
+    }
 
     public String getFullInfo() {
+        if (passport == null) {
+            return "Особа не вказана";
+        }
         return passport + " " +
                 lastName + " " +
                 firstName + " " +

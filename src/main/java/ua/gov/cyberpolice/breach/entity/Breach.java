@@ -50,8 +50,8 @@ public class Breach extends BaseEntity {
     @Column
     private String story;
 
-    @Column
-    private String region;
+    @ManyToOne
+    private Region region;
 
     @Column
     private String operInfo;
@@ -155,11 +155,11 @@ public class Breach extends BaseEntity {
         this.story = story;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 

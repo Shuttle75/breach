@@ -1,11 +1,11 @@
 <html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: layout (~{::body},'breaches')}">
+  th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
 
   <h2>Пошук порушень</h2>
 
-  <form th:object="${breach}" th:action="@{/breaches}" method="get"
+  <form th:object="${breach}" th:action="@{/breach}" method="get"
     class="form-horizontal" id="search-owner-form">
     <div class="form-group">
       <div class="control-group" id="numberGroup">
@@ -28,7 +28,7 @@
 
   <br/>
 
-  <a class="btn btn-default" th:href="@{/breaches/new}">Додати порушення</a>
+  <a class="btn btn-default" th:href="@{/breach/new}">Додати порушення</a>
 
 </body>
 </html>

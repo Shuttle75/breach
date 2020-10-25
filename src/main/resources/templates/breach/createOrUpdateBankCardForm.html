@@ -1,0 +1,131 @@
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
+
+<body>
+  <form class="form-horizontal" id="add-breach-form" method="post" autocomplete="off">
+
+
+    <div class="form-group has-feedback">
+      <div th:object="${bankCard}" class="panel panel-default">
+        <div class="panel-heading">Банківська картка</div>
+        <div class="panel-body">
+          <div class="row">
+            <input hidden id="id" name="id" th:field="*{id}">
+            <input hidden id="userId" name="userId" th:field="*{userId}">
+
+            <label for="cardNumber" class="control-label col-md-1">Номер</label>
+            <div th:class="${'col-md-2' + (!#fields.hasErrors('cardNumber') ? '' : ' has-error')}">
+              <input id="cardNumber"
+                     class="form-control"
+                     type="text"
+                     th:field="*{cardNumber}"
+                     placeholder="0000-0000-0000-0000"
+                     maxlength="19"
+                     size="19"
+                     pattern="^([0-9]{4}[-]){3}([0-9]{4})$"/>
+              <span class="help-inline" th:errors="*{cardNumber}">Error</span>
+            </div>
+            <label for="bankName" class="control-label col-md-1">Банк</label>
+            <div class="col-md-2">
+              <input id="bankName"
+                     class="form-control"
+                     type="text"
+                     th:field="*{bankName}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div th:object="${holder}" class="panel panel-default">
+        <div class="panel-heading">Власник</div>
+        <div class="panel-body">
+          <div class="row">
+            <label for="passport" class="control-label col-md-1">Пасспорт</label>
+            <div class="col-md-1">
+              <input id="passport"
+                     class="form-control"
+                     type="text"
+                     th:field="*{passport}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label for="lastName" class="control-label col-md-1">Прізвище</label>
+            <div class="col-md-3">
+              <input id="lastName"
+                     class="form-control"
+                     type="text"
+                     th:field="*{lastName}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label for="firstName" class="control-label col-md-1">Ім'я</label>
+            <div class="col-md-2">
+              <input id="firstName"
+                     class="form-control"
+                     type="text"
+                     th:field="*{firstName}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label for="middleName" class="control-label col-md-1">По батькові</label>
+            <div class="col-md-2">
+              <input id="middleName"
+                     class="form-control"
+                     type="text"
+                     th:field="*{middleName}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+          </div>
+          <div class="row">
+            <label class="control-label col-md-1">Регіон</label>
+            <div class="col-md-5">
+              <select class="form-control" id="region" name="region" th:field="*{region}">
+                <option th:each="region : ${regions}" th:value="${region.id}" th:text="${region.name}"></option>
+              </select>
+            </div>
+            <label for="city" class="control-label col-md-1">Місто</label>
+            <div class="col-md-5">
+              <input id="city"
+                     class="form-control"
+                     type="text"
+                     th:field="*{city}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+          </div>
+          <div class="row">
+            <label for="street" class="control-label col-md-1">Вулиця</label>
+            <div class="col-md-5">
+              <input id="street"
+                     class="form-control"
+                     type="text"
+                     th:field="*{street}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label for="house" class="control-label col-md-1">Будинок</label>
+            <div class="col-md-1">
+              <input id="house"
+                     class="form-control"
+                     type="text"
+                     th:field="*{house}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label for="apartment" class="control-label col-lg-offset-1 col-md-1">Квартира</label>
+            <div class="col-md-1">
+              <input id="apartment"
+                     class="form-control"
+                     type="text"
+                     th:field="*{apartment}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-offset-10 col-md-2">
+        <button
+          th:with="text=${bankCard['new']} ? 'Додати' : 'Змінити'"
+          class="btn btn-default" type="submit" th:text="${text}">Додати порушення
+        </button>
+      </div>
+    </div>
+  </form>
+</body>
+</html>

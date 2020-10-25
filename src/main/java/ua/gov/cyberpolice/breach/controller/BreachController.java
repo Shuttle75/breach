@@ -14,6 +14,7 @@ import ua.gov.cyberpolice.breach.repository.MethodRepository;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -21,7 +22,7 @@ import java.util.UUID;
 @Controller
 public class BreachController {
 
-    private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "breaches/createOrUpdateBreachForm";
+    private static final String VIEWS_BREACH_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateBreachForm";
 
     private final BreachRepository breachRepository;
     private Iterable<Method> methods;
@@ -36,33 +37,36 @@ public class BreachController {
         this.regions = regionRepository.findAll();
     }
 
-    @GetMapping("/breaches/new")
+    @GetMapping("/breach/new")
     public String initCreationForm(Map<String, Object> model) {
-        model.put("breach", new Breach());
+        Breach breach = new Breach();
+        breach.setBankCards(new ArrayList<>());
+
+        model.put("breach", breach);
         model.put("methods", this.methods);
         model.put("regions", this.regions);
 
-        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+        return VIEWS_BREACH_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping("/breaches/new")
+    @PostMapping("/breach/new")
     public String processCreationForm(@Valid Breach breach, BindingResult result) {
         if (result.hasErrors()) {
-            return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+            return VIEWS_BREACH_CREATE_OR_UPDATE_FORM;
         }
         else {
             this.breachRepository.save(breach);
-            return "redirect:/breaches";
+            return "redirect:/breach";
         }
     }
 
-    @GetMapping("/breaches/find")
+    @GetMapping("/breach/find")
     public String initFindForm(Map<String, Object> model) {
         model.put("breach", new Breach());
-        return "breaches/findBreaches";
+        return "breach/findBreach";
     }
 
-    @GetMapping("/breaches")
+    @GetMapping("/breach")
     public String processFindForm(Breach breach, BindingResult result, Map<String, Object> model) {
 
 //        // allow parameterless GET request for /owners to return all records
@@ -74,12 +78,12 @@ public class BreachController {
         List<Breach> results = this.breachRepository.findAll();
 
         model.put("selections", results);
-        return "breaches/breachesList";
+        return "breach/breachList";
     }
 
-    @GetMapping("/breaches/{breachId}")
+    @GetMapping("/breach/{breachId}")
     public ModelAndView initEditForm(@PathVariable("breachId") UUID breachId) {
-        ModelAndView modelAndView = new ModelAndView(VIEWS_OWNER_CREATE_OR_UPDATE_FORM);
+        ModelAndView modelAndView = new ModelAndView(VIEWS_BREACH_CREATE_OR_UPDATE_FORM);
 
         this.breachRepository.findById(breachId)
                 .ifPresent(breach -> modelAndView.addObject("breach", breach));
@@ -89,14 +93,14 @@ public class BreachController {
         return modelAndView;
     }
 
-    @PostMapping("/breaches/{breachId}")
+    @PostMapping("/breach/{breachId}")
     public String postEditForm(@PathVariable("breachId") UUID breachId, @Valid Breach breach, BindingResult result) {
         if (result.hasErrors()) {
-            return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+            return VIEWS_BREACH_CREATE_OR_UPDATE_FORM;
         }
         else {
             this.breachRepository.save(breach);
-            return "redirect:/breaches";
+            return "redirect:/breach";
         }
     }
 }
