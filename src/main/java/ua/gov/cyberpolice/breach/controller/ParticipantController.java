@@ -4,10 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.gov.cyberpolice.breach.entity.BankCard;
-import ua.gov.cyberpolice.breach.entity.Breach;
-import ua.gov.cyberpolice.breach.entity.Person;
-import ua.gov.cyberpolice.breach.entity.Region;
+import ua.gov.cyberpolice.breach.entity.*;
 import ua.gov.cyberpolice.breach.repository.BankCardRepository;
 import ua.gov.cyberpolice.breach.repository.BreachRepository;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
@@ -17,15 +14,15 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/breach/{breachId}")
-public class BankCardController {
-    private static final String VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateBankCardForm";
+public class ParticipantController {
+    private static final String VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateParticipantForm";
 
     private BreachRepository breachRepository;
     private BankCardRepository bankCardRepository;
     private RegionRepository regionRepository;
     private Iterable<Region> regions;
 
-    public BankCardController(
+    public ParticipantController(
             BreachRepository breachRepository,
             BankCardRepository bankCardRepository,
             RegionRepository regionRepository) {
@@ -40,30 +37,30 @@ public class BankCardController {
         return this.breachRepository.findById(breachId).get();
     }
 
-    @GetMapping("/bank-card/new")
+    @GetMapping("/participant/new")
     public String initCreationForm(Breach breach, ModelMap model) {
-        BankCard bankCard = new BankCard();
+        Participant participant = new Participant();
         Person person = new Person();
 
+        participant.setBreachId(breach.getId());
         regionRepository.findById("8000000000")
                 .ifPresent(person::setRegion);
-        bankCard.setUserId(breach.getId());
 
-        model.put("bankCard", bankCard);
+        model.put("participant", participant);
         model.put("regions", this.regions);
-        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+        return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
     }
 
-    @GetMapping("/bank-card/{bankCardId}/edit")
-    public String initEditForm(@PathVariable("bankCardId") UUID bankCardId, ModelMap model) {
-        BankCard bankCard = bankCardRepository.findById(bankCardId).get();
+//    @GetMapping("/bank-card/{bankCardId}/edit")
+//    public String initEditForm(@PathVariable("bankCardId") UUID bankCardId, ModelMap model) {
+//        BankCard bankCard = bankCardRepository.findById(bankCardId).get();
+//
+//        model.put("bankCard", bankCard);
+//        model.put("regions", this.regions);
+//        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+//    }
 
-        model.put("bankCard", bankCard);
-        model.put("regions", this.regions);
-        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
-    }
-
-    @PostMapping({"/bank-card/new", "/bank-card/{bankCardId}/edit"})
+    @PostMapping({"/participant/new", "/participant/{bankCardId}/edit"})
     public String processForm(
             @Valid BankCard bankCard,
             BindingResult result,
@@ -71,7 +68,7 @@ public class BankCardController {
         if (result.hasErrors()) {
             model.put("bankCard", bankCard);
             model.put("regions", this.regions);
-            return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+            return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
         }
         else {
             this.bankCardRepository.save(bankCard);
@@ -79,7 +76,7 @@ public class BankCardController {
         }
     }
 
-    @PostMapping("/bank-card/{bankCardId}/delete")
+    @PostMapping("/participant/{bankCardId}/delete")
     public String deleteForm(@PathVariable("bankCardId") UUID bankCardId) {
         this.bankCardRepository.deleteById(bankCardId);
         return "redirect:/breach/{breachId}";

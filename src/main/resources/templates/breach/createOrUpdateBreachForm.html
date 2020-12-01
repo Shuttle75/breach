@@ -87,7 +87,50 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">Заявник</div>
-        <div class="panel-body"></div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-1" style="padding: 0">
+              <ul class="nav navbar-right">
+                <li>
+                  <a th:href="@{{breachId}/participant/new(breachId=${breach.id})}" title="додати особу">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span>особу</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-11">
+              <table class="table table-striped" th:if="${not breach.bankCards.isEmpty()}">
+                <tr>
+                  <th>Тип особи</th>
+                  <th>Пасспорт</th>
+                  <th>Прізвище</th>
+                  <th>Ім'я</th>
+                  <th>По батькові</th>
+                  <th>Дата народ</th>
+                  <th>Адреса</th>
+                  <th></th>
+                </tr>
+                <tr th:each="participant : ${breach.participants}">
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${participant.participantType.name}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.passport}"></td>
+                  <td style="white-space: nowrap" th:text=" ${participant.person?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${participant.person?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${participant.person?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${participant.person?.region?.name + ', ' + participant.person?.city + ', ' +
+                  participant.person?.street + ' ' + participant.person?.house + ' КВ.' + participant.person?.apartment}"></td>
+                  <td style="width: 20px" >
+                    <a th:href="@{{breachId}/participant/{participantId}/edit(breachId=${breach.id},bankCardId=${participant.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="panel panel-default">
@@ -147,7 +190,7 @@
                   <td style="white-space: nowrap" th:text=" ${bankCard.holder?.firstName}"></td>
                   <td style="white-space: nowrap" th:text=" ${bankCard.holder?.middleName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${bankCard.holder?.region?.name + ', ' + bankCard.holder?.city + ',' +
+                  <td style="width: 500px" th:text="${bankCard.holder?.region?.name + ', ' + bankCard.holder?.city + ', ' +
                   bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
                   <td style="width: 20px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
