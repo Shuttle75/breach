@@ -1,5 +1,4 @@
-<html xmlns:th="https://www.thymeleaf.org"
-  th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
   <form th:object="${breach}" class="form-horizontal" id="add-breach-form" method="post" autocomplete="off">
@@ -66,26 +65,68 @@
             </div>
             <label class="control-label col-md-1">ЕРДР стаття</label>
             <div class="col-md-4">
-              <input class="form-control" type="text" th:field="*{erdrArticle}"/>
+              <input class="form-control"
+                     type="text"
+                     th:field="*{erdrArticle}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
 
           <div class="row">
-            <label class="control-label col-md-1">Фабула</label>
-            <div class="col-md-11">
-              <textarea class="form-control" rows="2" th:field="*{story}"></textarea>
+            <label class="control-label col-lg-offset-2 col-md-1">Фабула</label>
+            <div class="col-md-9">
+              <textarea class="form-control"
+                        rows="2"
+                        th:field="*{story}"
+                        onkeyup="this.value = this.value.toUpperCase();">
+              </textarea>
             </div>
           </div>
         </div>
       </div>
 
       <div class="panel panel-default">
-        <div class="panel-heading">
-            Отримувач
-        </div>
+        <div class="panel-heading">Заявник</div>
+        <div class="panel-body"></div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Отримувач</div>
         <div class="panel-body">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-1" style="padding: 0">
+              <ul class="nav navbar-right">
+                <li>
+                  <a th:href="@{{breachId}/bank-card/new(breachId=${breach.id})}" title="додати картку">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+                    <span>картку</span>
+                  </a>
+                </li>
+                <li class="active">
+                  <a href="/breach/find" title="додати телефон">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                    <span>телефон</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/vets.html" title="veterinarians">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon  glyphicon-user" aria-hidden="true"></span>
+                    <span>особу</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/oups" title="trigger a RuntimeException to see how it is handled">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon  glyphicon-warning-sign" aria-hidden="true"></span>
+                    <span>Error</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-11">
               <table class="table table-striped" th:if="${not breach.bankCards.isEmpty()}">
                 <tr>
                   <th>Номер картки</th>
@@ -94,65 +135,48 @@
                   <th>Прізвище</th>
                   <th>Ім'я</th>
                   <th>По батькові</th>
-                  <th>Регіон</th>
-                  <th>Місто</th>
-                  <th>Вулиця</th>
-                  <th>Будинок</th>
-                  <th>Квартира</th>
+                  <th>Дата народ</th>
+                  <th>Адреса</th>
+                  <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.bankCards}">
-                  <td class="col-md-2" th:text=" ${bankCard.cardNumber}"></td>
-                  <td th:text=" ${bankCard.bankName}"></td>
-                  <td th:text=" ${bankCard.holder.passport}"></td>
-                  <td th:text=" ${bankCard.holder.lastName}"></td>
-                  <td th:text=" ${bankCard.holder.firstName}"></td>
-                  <td th:text=" ${bankCard.holder.middleName}"></td>
-                  <td th:text=" ${bankCard.holder.region.name}"></td>
-                  <td th:text=" ${bankCard.holder.city}"></td>
-                  <td th:text=" ${bankCard.holder.street}"></td>
-                  <td th:text=" ${bankCard.holder.house}"></td>
-                  <td th:text=" ${bankCard.holder.apartment}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${bankCard.holder?.region?.name + ', ' + bankCard.holder?.city + ',' +
+                  bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
+                  <td style="width: 20px" >
+                    <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
                 </tr>
               </table>
-            </div>
-            <div class="col-md-2">
-              <ul class="nav navbar-right">
-                <li>
-                  <a th:href="@{{breachId}/bank-card/new(breachId=${breach.id})}" title="додати картку">
-                    <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
-                    <span>додати картку</span>
-                  </a>
-                </li>
-                <li class="active">
-                  <a href="/breach/find" title="додати телефон">
-                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-                    <span>додати телефон</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/vets.html" title="veterinarians">
-                    <span class="glyphicon  glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Veterinarians</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/oups" title="trigger a RuntimeException to see how it is handled">
-                    <span class="glyphicon  glyphicon-warning-sign" aria-hidden="true"></span>
-                    <span>Error</span>
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Вилучено</div>
+        <div class="panel-body"></div>
+      </div>
+
     </div>
+
+
 
     <div class="form-group">
       <div class="col-md-offset-10 col-md-2">
-        <button
-          th:with="text=${breach['new']} ? 'Додати' : 'Змінити'"
-          class="btn btn-default" type="submit" th:text="${text}">Додати порушення
+        <button th:with="text=${breach['new']} ? 'Додати' : 'Змінити'"
+                class="btn btn-default"
+                type="submit"
+                th:text="${text}">
+          Додати порушення
         </button>
       </div>
     </div>

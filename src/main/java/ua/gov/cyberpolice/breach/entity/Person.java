@@ -1,5 +1,7 @@
 package ua.gov.cyberpolice.breach.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -22,6 +24,7 @@ public class Person extends BaseEntity {
     @Column
     private String middleName;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column
     private LocalDate birthDate;
 
@@ -118,20 +121,5 @@ public class Person extends BaseEntity {
 
     public void setApartment(String apartment) {
         this.apartment = apartment;
-    }
-
-    public String getFullInfo() {
-        if (passport == null) {
-            return "Особа не вказана";
-        }
-        return passport + " " +
-                lastName + " " +
-                firstName + " " +
-                middleName + " " +
-                birthDate + " " +
-                region + " " +
-                city + "" +
-                street + " " +
-                house;
     }
 }

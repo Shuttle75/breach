@@ -1,9 +1,6 @@
 package ua.gov.cyberpolice.breach.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
@@ -21,7 +18,7 @@ public class BankCard extends BaseEntity {
     @Column
     private UUID userId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Person holder;
 
     public String getCardNumber() {
@@ -49,9 +46,6 @@ public class BankCard extends BaseEntity {
     }
 
     public Person getHolder() {
-        if (holder == null) {
-            return new Person();
-        }
         return holder;
     }
 

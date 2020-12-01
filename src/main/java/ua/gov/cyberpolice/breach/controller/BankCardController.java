@@ -14,6 +14,7 @@ import ua.gov.cyberpolice.breach.repository.PersonRepository;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
 
 import javax.validation.Valid;
+import javax.xml.ws.Holder;
 import java.util.UUID;
 
 @Controller
@@ -40,43 +41,57 @@ public class BankCardController {
     }
 
     @ModelAttribute("breach")
-    public Breach findOwner(@PathVariable("breachId") UUID breachId) {
+    public Breach findBreach(@PathVariable("breachId") UUID breachId) {
         return this.breachRepository.findById(breachId).get();
     }
 
+//    @ModelAttribute("bank-card")
+//    public BankCard findOwner(@PathVariable("bankCardId") UUID bankCardId) {
+//        return this.bankCardRepository.findById(bankCardId).get();
+//    }
+
     @GetMapping("/bank-card/new")
     public String initCreationForm(Breach breach, ModelMap model) {
+        BankCard bankCard = new BankCard();
         Person person = new Person();
 
         regionRepository.findById("8000000000")
                 .ifPresent(person::setRegion);
-
-        BankCard bankCard = new BankCard();
         bankCard.setUserId(breach.getId());
 
         model.put("bankCard", bankCard);
-        model.put("holder", person);
         model.put("regions", this.regions);
         return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping("/bank-card/new")
-    public String processCreationForm(
+    @GetMapping("/bank-card/{bankCardId}/edit")
+    public String initEditForm(@PathVariable("bankCardId") UUID bankCardId, ModelMap model) {
+        BankCard bankCard = bankCardRepository.findById(bankCardId).get();
+
+        model.put("bankCard", bankCard);
+        model.put("regions", this.regions);
+        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping({"/bank-card/new", "/bank-card/{bankCardId}/edit"})
+    public String processForm(
             @Valid BankCard bankCard,
-            @Valid Person holder,
             BindingResult result,
             ModelMap model) {
         if (result.hasErrors()) {
             model.put("bankCard", bankCard);
-            model.put("holder", holder);
+            model.put("regions", this.regions);
             return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
         }
         else {
-            this.personRepository.save(holder);
-            bankCard.setHolder(holder);
             this.bankCardRepository.save(bankCard);
             return "redirect:/breach/{breachId}";
         }
     }
 
+    @PostMapping("/bank-card/{bankCardId}/delete")
+    public String deleteForm(@PathVariable("bankCardId") UUID bankCardId) {
+        this.bankCardRepository.deleteById(bankCardId);
+        return "redirect:/breach/{breachId}";
+    }
 }
