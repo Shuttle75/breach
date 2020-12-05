@@ -40,7 +40,8 @@ public class BreachController {
     @GetMapping("/breach/new")
     public String initCreationForm(Map<String, Object> model) {
         Breach breach = new Breach();
-        breach.setBankCards(new ArrayList<>());
+        breach.setUsedBankCards(new ArrayList<>());
+        breach.setUsedBankCards(new ArrayList<>());
 
         model.put("breach", breach);
         model.put("methods", this.methods);
@@ -86,10 +87,11 @@ public class BreachController {
         ModelAndView modelAndView = new ModelAndView(VIEWS_BREACH_CREATE_OR_UPDATE_FORM);
 
         this.breachRepository.findById(breachId)
-                .ifPresent(breach -> modelAndView.addObject("breach", breach));
-        modelAndView.addObject("methods", this.methods);
-        modelAndView.addObject("regions", this.regions);
-
+                .ifPresent(breach -> {
+                    modelAndView.addObject("breach", breach);
+                    modelAndView.addObject("methods", this.methods);
+                    modelAndView.addObject("regions", this.regions);
+                });
         return modelAndView;
     }
 

@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -20,7 +17,7 @@ public class Participant extends BaseEntity {
     @Column
     private UUID breachId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Person person;
 
     @ManyToOne

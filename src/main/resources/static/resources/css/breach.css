@@ -2543,7 +2543,7 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 28px;
+  height: 32px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;
@@ -5663,6 +5663,8 @@ button.list-group-item-danger.active:focus {
   border-color: #ddd;
 }
 .panel-default > .panel-heading {
+  padding-left: 40px;
+  font-weight: bold;
   color: #333333;
   background-color: #cccccc;
   border-color: #ddd;
@@ -6872,9 +6874,6 @@ strong {
 .table-filter {
   background-color: #34302D;
   padding: 9px 12px;
-}
-.nav > li > a {
-  color: #000000;
 }
 .btn-default {
   border-width: 2px;

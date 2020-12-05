@@ -1,11 +1,18 @@
 package ua.gov.cyberpolice.breach.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import lombok.Data;
 
+import javax.persistence.*;
+
+@Data
 @Entity
 @Table(name = "participant_type", schema = "breach")
-public class ParticipantType extends BaseEntity {
+public class ParticipantType {
+
+    @Id
+    private Integer id;
+
+    @Column
+    private String name;
 
 }

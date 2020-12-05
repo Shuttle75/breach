@@ -60,8 +60,11 @@ public class Breach extends BaseEntity {
     @Column
     private String operInfo;
 
-    @OneToMany(mappedBy = "userId")
-    private List<BankCard> bankCards;
+    @OneToMany(mappedBy = "usedId")
+    private List<BankCard> usedBankCards;
+
+    @OneToMany(mappedBy = "confiscatedId")
+    private List<BankCard> confiscatedBankCards;
 
     @OneToMany(mappedBy = "breachId")
     private List<Participant> participants;

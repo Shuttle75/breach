@@ -67,8 +67,9 @@ create table breach.participant_type
     name        text   not null
 );
 alter table breach.participant_type owner to postgres;
-insert into breach.participant_type values (1, 'Розшукувана особа');
-insert into breach.participant_type values (2, 'Заявник');
+delete from breach.participant_type;
+insert into breach.participant_type values (1, 'Заявник');
+insert into breach.participant_type values (2, 'Розшукувана особа');
 
 
 drop table seized;
@@ -103,21 +104,24 @@ alter table device
 
 
 
-drop table breach.bank_card;
-create table breach.bank_card
+DROP TABLE IF EXISTS breach.bank_card;
+CREATE TABLE breach.bank_card
 (
     id             uuid not null
         constraint bank_card_pk primary key,
     card_number    text not null,
     bank_name      text,
-    user_id        uuid,
+    used_id        uuid,
+    confiscated_id uuid,
     holder_id      uuid
 );
-alter table breach.bank_card owner to postgres;
-INSERT INTO breach.bank_card (id, user_id, holder_id, bank_name, card_number) VALUES ('c5cd2cc2-a164-47d0-8834-77267a50999c', 'ad428b8c-a0fe-4ee2-a716-657f0042d11c', 'f65a21f1-2fa3-424c-9efc-b068dcdc4c7c', 'Приват', 1111111);
+ALTER TABLE breach.bank_card OWNER TO postgres;
+INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('0e56f7fd-accb-4a79-8330-2c6526b99bcd', '2222-2222-2222-2222', 'ПРИВАТ', '75642232-da09-4a96-9ed3-102774d69c09', null, 'a97dcc2b-4cbc-4b9a-8f43-1956c223a9eb');
+INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('f1364338-a0fd-4d0b-852e-faa8322b0a5f', '5555-5555-5555-5555', 'АВАЛЬ', '75642232-da09-4a96-9ed3-102774d69c09', null, '5ba9307c-8c60-4753-b5cd-8c41ecb83c5a');
+INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('c92710de-62b5-49a1-8554-fadffe738714', '3333-3333-3333-3333', 'SSSSSSSSSSSSSSSSSSS', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, 'a2d7ca09-ecbb-4fcc-892a-325a5a937e5e');
+INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('c002455f-141a-40a1-b1f1-22ada0f524d1', '6666-6666-6666-6666', 'АВАЛЬ', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '8a08eddb-01fb-4e6c-b2e0-13645584ac47');
+INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('bd847b7a-40c4-49e2-9384-5b63982197e0', '1111-1111-1111-1111', 'ПЕРШИЙ БАНК', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '11c886c7-2c9f-4163-aedf-478996cb8839');
 
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region, city, street, house, apartment, email) VALUES ('f65a21f1-2fa3-424c-9efc-b068dcdc4c7c', 'CC111111', 'Петров', 'Петро', 'Петрович', '1986-10-24 12:38:11.000000', '00000000', 'Киев', 'Ленина', '20', '44', 'email@gmail.com');
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region, city, street, house, apartment, email) VALUES ('b1d974bb-3bef-45c7-91c2-3b8f34f417a4', 'CC222222', 'Иванов', 'Иван', 'Иванович', '1989-10-24 12:40:41.000000', '111111111', 'Чернигов', 'Кирова', '1', '222', null);
 
 
 drop table breach.region;
@@ -152,8 +156,25 @@ create table breach.method
 );
 
 alter table breach.method owner to postgres;
-
 INSERT INTO breach.method (id, name) VALUES (1, 'Соцінженерія');
 INSERT INTO breach.method (id, name) VALUES (2, 'Колл-центр');
 INSERT INTO breach.method (id, name) VALUES (3, 'Телефонне шахрайство');
 INSERT INTO breach.method (id, name) VALUES (4, 'Піраміда');
+
+drop table breach.confiscated;
+create table breach.confiscated
+(
+    id             uuid not null
+        constraint confiscated_pk primary key,
+    card_number    ,
+    bank_name      text,
+    user_id        uuid,
+    holder_id      uuid
+);
+alter table breach.bank_card owner to postgres;
+INSERT INTO breach.bank_card (id, user_id, holder_id, bank_name, card_number) VALUES ('c5cd2cc2-a164-47d0-8834-77267a50999c', 'ad428b8c-a0fe-4ee2-a716-657f0042d11c', 'f65a21f1-2fa3-424c-9efc-b068dcdc4c7c', 'Приват', 1111111);
+
+INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region, city, street, house, apartment, email) VALUES ('f65a21f1-2fa3-424c-9efc-b068dcdc4c7c', 'CC111111', 'Петров', 'Петро', 'Петрович', '1986-10-24 12:38:11.000000', '00000000', 'Киев', 'Ленина', '20', '44', 'email@gmail.com');
+INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region, city, street, house, apartment, email) VALUES ('b1d974bb-3bef-45c7-91c2-3b8f34f417a4', 'CC222222', 'Иванов', 'Иван', 'Иванович', '1989-10-24 12:40:41.000000', '111111111', 'Чернигов', 'Кирова', '1', '222', null);
+
+

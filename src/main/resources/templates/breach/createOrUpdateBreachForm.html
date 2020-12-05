@@ -1,45 +1,48 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
+  <!--/*@thymesVar id="breach" type="ua.gov.cyberpolice.breach.entity.Breach"*/-->
   <form th:object="${breach}" class="form-horizontal" id="add-breach-form" method="post" autocomplete="off">
-    <input hidden id="id" name="id" th:field="*{id}">
-
+    <input hidden th:field="${breach.id}">
     <div class="form-group has-feedback">
       <div class="panel panel-default">
-        <div class="panel-heading">Загальна інформація</div>
+        <div class="panel-heading">ЗАГАЛЬНА ІНФОРМАЦІЯ</div>
         <div class="panel-body">
           <div class="row">
             <label class="control-label col-md-1">Id</label>
             <div class="col-md-1">
-              <input class="form-control" type="text" th:field="*{sentId}"/>
+              <input class="form-control" type="text" th:field="${breach.sentId}"/>
             </div>
             <label class="control-label col-md-1">Номер</label>
             <div class="col-md-1">
-              <input class="form-control" type="text" th:field="*{sentNumber}" />
+              <input class="form-control" type="text" th:field="${breach.sentNumber}" />
             </div>
             <label class="control-label col-md-1">Дата</label>
             <div class="col-md-2">
-              <input class="form-control" type="datetime-local" th:field="*{sentDate}" />
+              <input class="form-control" type="datetime-local" th:field="${breach.sentDate}" />
             </div>
             <label class="control-label col-md-1">Метод</label>
             <div class="col-md-4">
-              <select class="form-control" id="method" name="method" th:field="*{method}">
-                <option th:each="method : ${methods}" th:value="${method.id}" th:text="${method.name}"></option>
+              <select class="form-control" th:field="${breach.method}">
+                <option th:each="method : ${methods}"
+                        th:value="${method.id}"
+                        th:text="${method.name}">
+                </option>
               </select>
             </div>
           </div>
           <div class="row">
             <label class="control-label col-lg-offset-2 col-md-1">Вх номер</label>
             <div class="col-md-1">
-              <input class="form-control" type="text" th:field="*{incomeNumber}" />
+              <input class="form-control" type="text" th:field="${breach.incomeNumber}" />
             </div>
             <label class="control-label col-md-1">Вх дата</label>
             <div class="col-md-2">
-              <input class="form-control" type="datetime-local" th:field="*{incomeDate}" />
+              <input class="form-control" type="datetime-local" th:field="${breach.incomeDate}" />
             </div>
             <label class="control-label col-md-1">Регіон</label>
             <div class="col-md-4">
-              <select class="form-control" id="region" name="region" th:field="*{region}">
+              <select id="region" class="form-control" th:field="${breach.region}">
                 <option th:each="region : ${regions}" th:value="${region.id}" th:text="${region.name}"></option>
               </select>
             </div>
@@ -47,27 +50,31 @@
           <div class="row">
             <label class="control-label col-lg-offset-2 col-md-1">ЕО номер</label>
             <div class="col-md-1">
-              <input class="form-control" type="text" th:field="*{eoNumber}" />
+              <input class="form-control" type="text" th:field="${breach.eoNumber}" />
             </div>
             <label class="control-label col-md-1">ЕО дата</label>
             <div class="col-md-2">
-              <input class="form-control" type="datetime-local" th:field="*{eoDate}" />
+              <input class="form-control" type="datetime-local" th:field="${breach.eoDate}" />
             </div>
           </div>
           <div class="row">
             <label class="control-label col-lg-offset-2 col-md-1">ЕРДР номер</label>
             <div class="col-md-1">
-              <input class="form-control" type="text" th:field="*{erdrNumber}" />
+              <input class="form-control"
+                     type="text"
+                     th:field="${breach.erdrNumber}" />
             </div>
             <label class="control-label col-md-1">ЕРДР дата</label>
             <div class="col-md-2">
-              <input class="form-control" type="datetime-local" th:field="*{erdrDate}" />
+              <input class="form-control"
+                     type="datetime-local"
+                     th:field="${breach.erdrDate}" />
             </div>
             <label class="control-label col-md-1">ЕРДР стаття</label>
             <div class="col-md-4">
               <input class="form-control"
                      type="text"
-                     th:field="*{erdrArticle}"
+                     th:field="${breach.erdrArticle}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
@@ -75,10 +82,7 @@
           <div class="row">
             <label class="control-label col-lg-offset-2 col-md-1">Фабула</label>
             <div class="col-md-9">
-              <textarea class="form-control"
-                        rows="2"
-                        th:field="*{story}"
-                        onkeyup="this.value = this.value.toUpperCase();">
+              <textarea class="form-control" th:field="${breach.story}" onkeyup="this.value = this.value.toUpperCase();">
               </textarea>
             </div>
           </div>
@@ -86,13 +90,13 @@
       </div>
 
       <div class="panel panel-default">
-        <div class="panel-heading">Заявник</div>
+        <div class="panel-heading">ОСОБИ</div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
                 <li>
-                  <a th:href="@{{breachId}/participant/new(breachId=${breach.id})}" title="додати особу">
+                  <a th:href="@{{breachId}/participant/new(breachId=${breach.id})}" title="додати особу" data-toggle="modal">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>особу</span>
@@ -101,9 +105,9 @@
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped" th:if="${not breach.bankCards.isEmpty()}">
+              <table class="table table-striped" th:if="${not breach.participants.isEmpty()}">
                 <tr>
-                  <th>Тип особи</th>
+                  <th>Тип участі</th>
                   <th>Пасспорт</th>
                   <th>Прізвище</th>
                   <th>Ім'я</th>
@@ -121,8 +125,8 @@
                   <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.birthDate}"></td>
                   <td style="width: 500px" th:text="${participant.person?.region?.name + ', ' + participant.person?.city + ', ' +
                   participant.person?.street + ' ' + participant.person?.house + ' КВ.' + participant.person?.apartment}"></td>
-                  <td style="width: 20px" >
-                    <a th:href="@{{breachId}/participant/{participantId}/edit(breachId=${breach.id},bankCardId=${participant.id})}">
+                  <td style="width: 30px" >
+                    <a th:href="@{{breachId}/participant/{participantId}/edit(breachId=${breach.id},participantId=${participant.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                   </td>
@@ -134,13 +138,13 @@
       </div>
 
       <div class="panel panel-default">
-        <div class="panel-heading">Отримувач</div>
+        <div class="panel-heading">ОТРИМУВАЧ</div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
                 <li>
-                  <a th:href="@{{breachId}/bank-card/new(breachId=${breach.id})}" title="додати картку">
+                  <a th:href="@{{breachId}/bank-card/new/used(breachId=${breach.id})}" title="додати картку">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
                     <span>картку</span>
@@ -170,7 +174,7 @@
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped" th:if="${not breach.bankCards.isEmpty()}">
+              <table class="table table-striped" th:if="${not breach.usedBankCards.isEmpty()}">
                 <tr>
                   <th>Номер картки</th>
                   <th>Назва банку</th>
@@ -182,7 +186,7 @@
                   <th>Адреса</th>
                   <th></th>
                 </tr>
-                <tr th:each="bankCard : ${breach.bankCards}">
+                <tr th:each="bankCard : ${breach.usedBankCards}">
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
@@ -192,7 +196,7 @@
                   <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.birthDate}"></td>
                   <td style="width: 500px" th:text="${bankCard.holder?.region?.name + ', ' + bankCard.holder?.city + ', ' +
                   bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
-                  <td style="width: 20px" >
+                  <td style="width: 30px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
                     </a>
@@ -203,23 +207,89 @@
           </div>
         </div>
       </div>
-
       <div class="panel panel-default">
-        <div class="panel-heading">Вилучено</div>
-        <div class="panel-body"></div>
+        <div class="panel-heading">ВИЛУЧЕНО</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-1" style="padding: 0">
+              <ul class="nav navbar-right">
+                <li>
+                  <a th:href="@{{breachId}/bank-card/new/confiscated(breachId=${breach.id})}" title="додати картку">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+                    <span>картку</span>
+                  </a>
+                </li>
+                <li class="active">
+                  <a href="/breach/find" title="додати телефон">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                    <span>телефон</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/vets.html" title="veterinarians">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon  glyphicon-user" aria-hidden="true"></span>
+                    <span>особу</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="/oups" title="trigger a RuntimeException to see how it is handled">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon  glyphicon-warning-sign" aria-hidden="true"></span>
+                    <span>Error</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-11">
+              <table class="table table-striped" th:if="${not breach.confiscatedBankCards.isEmpty()}">
+                <tr>
+                  <th>Номер картки</th>
+                  <th>Назва банку</th>
+                  <th>Пасспорт</th>
+                  <th>Прізвище</th>
+                  <th>Ім'я</th>
+                  <th>По батькові</th>
+                  <th>Дата народ</th>
+                  <th>Адреса</th>
+                  <th></th>
+                </tr>
+                <tr th:each="bankCard : ${breach.confiscatedBankCards}">
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${bankCard.holder?.region?.name + ', ' + bankCard.holder?.city + ', ' +
+                  bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
+                  <td style="width: 30px" >
+                    <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
       </div>
-
     </div>
-
-
 
     <div class="form-group">
       <div class="col-md-offset-10 col-md-2">
         <button th:with="text=${breach['new']} ? 'Додати' : 'Змінити'"
                 class="btn btn-default"
-                type="submit"
-                th:text="${text}">
-          Додати порушення
+                type="submit">
+          Зберегти
         </button>
       </div>
     </div>

@@ -37,17 +37,23 @@ public class BankCardController {
 
     @ModelAttribute("breach")
     public Breach findBreach(@PathVariable("breachId") UUID breachId) {
-        return this.breachRepository.findById(breachId).get();
+        return this.breachRepository.findById(breachId)
+                .orElseThrow(() -> new RuntimeException("Not found breachId " + breachId));
     }
 
-    @GetMapping("/bank-card/new")
-    public String initCreationForm(Breach breach, ModelMap model) {
+    @GetMapping("/bank-card/new/{type}")
+    public String initCreationForm(Breach breach, @PathVariable("type") String type, ModelMap model) {
         BankCard bankCard = new BankCard();
         Person person = new Person();
 
         regionRepository.findById("8000000000")
                 .ifPresent(person::setRegion);
-        bankCard.setUserId(breach.getId());
+        if ("used".equals(type)) {
+            bankCard.setUsedId(breach.getId());
+        }
+        if ("confiscated".equals(type)) {
+            bankCard.setConfiscatedId(breach.getId());
+        }
 
         model.put("bankCard", bankCard);
         model.put("regions", this.regions);
@@ -63,7 +69,7 @@ public class BankCardController {
         return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping({"/bank-card/new", "/bank-card/{bankCardId}/edit"})
+    @PostMapping({"/bank-card/new/used", "/bank-card/new/confiscated", "/bank-card/{bankCardId}/edit"})
     public String processForm(
             @Valid BankCard bankCard,
             BindingResult result,

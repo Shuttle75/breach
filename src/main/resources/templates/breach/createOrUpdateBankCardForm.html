@@ -13,19 +13,21 @@
 </form>
 
 
+  <!--/*@thymesVar id="bankCard" type="ua.gov.cyberpolice.breach.entity.BankCard"*/-->
+  <!--/*@thymesVar id="region" type="ua.gov.cyberpolice.breach.entity.Region"*/-->
   <form th:object="${bankCard}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
     <div class="form-group has-feedback">
       <div class="panel panel-default">
         <input hidden th:field="${bankCard.id}">
-        <input hidden th:field="${bankCard.userId}">
+        <input hidden th:field="${bankCard.usedId}">
+        <input hidden th:field="${bankCard.confiscatedId}">
         <input hidden th:field="${bankCard.holder}">
         <div class="panel-heading">Банківська картка</div>
         <div class="panel-body">
           <div class="row">
-            <label for="cardNumber" class="control-label col-md-1">Номер</label>
+            <label class="control-label col-md-1">Номер</label>
             <div th:class="${'col-md-2' + (!#fields.hasErrors('cardNumber') ? '' : ' has-error')}">
-              <input id="cardNumber"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="${bankCard.cardNumber}"
                      placeholder="0000-0000-0000-0000"
@@ -34,10 +36,9 @@
                      pattern="^([0-9]{4}[-]){3}([0-9]{4})$"/>
               <span class="help-inline" th:errors="*{cardNumber}">Error</span>
             </div>
-            <label for="bankName" class="control-label col-md-1">Банк</label>
+            <label class="control-label col-md-1">Банк</label>
             <div class="col-md-2">
-              <input id="bankName"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="*{bankName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
@@ -50,34 +51,30 @@
         <div class="panel-heading">Власник</div>
         <div class="panel-body">
           <div class="row">
-            <label for="passport" class="control-label col-md-1">Пасспорт</label>
+            <label class="control-label col-md-1">Пасспорт</label>
             <div class="col-md-1">
-              <input id="passport"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.passport}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label for="lastName" class="control-label col-md-1">Прізвище</label>
+            <label class="control-label col-md-1">Прізвище</label>
             <div class="col-md-3">
-              <input id="lastName"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.lastName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label for="firstName" class="control-label col-md-1">Ім'я</label>
+            <label class="control-label col-md-1">Ім'я</label>
             <div class="col-md-2">
-              <input id="firstName"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="*{holder.firstName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label for="middleName" class="control-label col-md-1">По батькові</label>
+            <label class="control-label col-md-1">По батькові</label>
             <div class="col-md-2">
-              <input id="middleName"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="*{holder.middleName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
@@ -90,40 +87,39 @@
             </div>
             <label class="control-label col-md-offset-3 col-md-1">Регіон</label>
             <div class="col-md-5">
-              <select class="form-control" id="region" name="region" th:field="*{holder.region}">
-                <option th:each="region : ${regions}" th:value="${region.id}" th:text="${region.name}"></option>
+              <select class="form-control" th:field="*{holder.region}">
+                <option th:each="region : ${regions}"
+                        th:value="${region.id}"
+                        th:text="${region.name}">
+                </option>
               </select>
             </div>
           </div>
           <div class="row">
-            <label for="city" class="control-label col-md-1">Місто</label>
+            <label class="control-label col-md-1">Місто</label>
             <div class="col-md-3">
-              <input id="city"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="*{holder.city}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label for="street" class="control-label col-md-1">Вулиця</label>
+            <label class="control-label col-md-1">Вулиця</label>
             <div class="col-md-3">
-              <input id="street"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="*{holder.street}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label for="house" class="control-label col-md-1">Будинок</label>
+            <label class="control-label col-md-1">Будинок</label>
             <div class="col-md-1">
-              <input id="house"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="*{holder.house}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label for="apartment" class="control-label col-md-1">Квартира</label>
+            <label class="control-label col-md-1">Квартира</label>
             <div class="col-md-1">
-              <input id="apartment"
-                     class="form-control"
+              <input class="form-control"
                      type="text"
                      th:field="*{holder.apartment}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
