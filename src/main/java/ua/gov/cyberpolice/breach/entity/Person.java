@@ -5,11 +5,9 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -17,13 +15,13 @@ import java.time.LocalDate;
 @Table(name = "person", schema = "breach")
 public class Person extends BaseEntity {
 
-    @Column
+    @Column(nullable = false)
     private String passport;
 
-    @Column
+    @Column(nullable = false)
     private String lastName;
 
-    @Column
+    @Column(nullable = false)
     private String firstName;
 
     @Column
@@ -49,6 +47,6 @@ public class Person extends BaseEntity {
     private String apartment;
 
     @CreationTimestamp
-    @Column
-    private LocalDate modified;
+    @Column(nullable = false)
+    private LocalDateTime modified;
 }

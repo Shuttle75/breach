@@ -24,7 +24,7 @@
             <label class="control-label col-md-1">Метод</label>
             <div class="col-md-4">
               <select class="form-control" th:field="${breach.method}">
-                <option th:each="method : ${methods}"
+                <option th:each="method : ${@methodRepository.findAll()}"
                         th:value="${method.id}"
                         th:text="${method.name}">
                 </option>
@@ -43,7 +43,9 @@
             <label class="control-label col-md-1">Регіон</label>
             <div class="col-md-4">
               <select id="region" class="form-control" th:field="${breach.region}">
-                <option th:each="region : ${regions}" th:value="${region.id}" th:text="${region.name}"></option>
+                <option th:each="region : ${@regionRepository.findAll()}"
+                        th:value="${region.id}"
+                        th:text="${region.name}"></option>
               </select>
             </div>
           </div>
@@ -275,18 +277,9 @@
               </table>
             </div>
           </div>
-
-
-
-
-
         </div>
       </div>
     </div>
-
-    <div th:text="${@personRepository.findAll()}">...</div>
-
-
     <div class="form-group">
       <div class="col-md-offset-10 col-md-2">
         <button class="btn btn-default" type="submit">

@@ -13,7 +13,8 @@
   <title>Облік правопорушень</title>
 
   <link rel="stylesheet" th:href="@{/resources/css/breach.css}" />
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -21,15 +22,7 @@
   <nav class="navbar navbar-default" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" th:href="@{/}"><span></span></a>
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-          <span class="sr-only">
-            <os-p>Toggle navigation</os-p>
-          </span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+        <a class="navbar-brand" th:href="@{/}" tabindex="-1"><span></span></a>
       </div>
       <div class="navbar-collapse collapse" id="main-navbar">
 
@@ -37,7 +30,7 @@
 
           <li th:fragment="menuItem (link,active,title,glyph,text)" class="active"
             th:class="${active==menu ? 'active' : ''}">
-            <a th:href="@{__${link}__}" th:title="${title}">
+            <a th:href="@{__${link}__}" th:title="${title}" tabindex="-1">
               <span th:class="'glyphicon  glyphicon-'+${glyph}" class="glyphicon glyphicon-home"
                 aria-hidden="true"></span>
               <span th:text="${text}">Template</span>

@@ -1,18 +1,8 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
-  <form class="form-horizontal" id="bank-card-delete-form" method="post" th:action="@{delete}">
-    <div class="form-group">
-      <div class="col-md-offset-10 col-md-2">
-        <button class="btn btn-default">
-          Видалити
-        </button>
-      </div>
-    </div>
-  </form>
-
   <!--/*@thymesVar id="participant" type="ua.gov.cyberpolice.breach.entity.Participant"*/-->
-  <form th:object="${participant}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
+  <form class="form-horizontal" th:object="${participant}" method="post" autocomplete="off">
     <input hidden th:field="${participant.id}">
     <input hidden th:field="${participant.breachId}">
     <input hidden th:field="${participant.person}">
@@ -21,9 +11,9 @@
         <div class="panel-heading">Особа</div>
         <div class="panel-body">
           <div class="row">
-            <label for="participantType" class="control-label col-md-1">Тип особи</label>
+            <label class="control-label col-md-1">Тип особи</label>
             <div class="col-md-5">
-              <select id="participantType" class="form-control" th:field="${participant.participantType}">
+              <select class="form-control" th:field="${participant.participantType}">
                 <option th:each="type : ${@participantTypeRepository.findAll()}"
                         th:value="${type.id}"
                         th:text="${type.name}">
@@ -38,7 +28,7 @@
                      type="text"
                      th:field="${participant.person.passport}"
                      onkeyup="this.value = this.value.toUpperCase();"
-                     onblur="updateEventCount()"/>
+                     onblur="updatePerson()"/>
             </div>
             <label class="control-label col-md-1">Прізвище</label>
             <div class="col-md-3">
@@ -107,6 +97,11 @@
             </div>
           </div>
         </div>
+        <div th:if="${participant.id}" class="panel-footer">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialogDelete">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -118,10 +113,29 @@
       </div>
     </div>
   </form>
+  <div class="container">
+    <div class="modal fade" id="dialogDelete" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Видалення</h4>
+          </div>
+          <div class="modal-body">
+            <p>Ви впевнені, що хочете видалити?</p>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-danger" th:href="@{delete}">Так</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ні</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 <script>
-  function updateEventCount() {
+  function updatePerson() {
     if (document.getElementById('person').value === "" && document.getElementById('person.passport').value !== "") {
       const request = new XMLHttpRequest();
       request.open('get', 'person/'.concat(document.getElementById('person.passport').value), true);

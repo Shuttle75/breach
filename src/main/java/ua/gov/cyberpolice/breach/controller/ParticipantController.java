@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import ua.gov.cyberpolice.breach.entity.*;
 import ua.gov.cyberpolice.breach.repository.*;
 
@@ -14,7 +13,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/breach/{breachId}")
+@RequestMapping("breach/{breachId}/participant")
 public class ParticipantController {
     private static final String VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateParticipantForm";
 
@@ -40,7 +39,7 @@ public class ParticipantController {
                 .orElseThrow(() -> new RuntimeException("Not found breachId " + breachId));
     }
 
-    @GetMapping("/participant/new")
+    @GetMapping("new")
     public String initCreationForm(Breach breach, ModelMap model) {
         Participant participant = new Participant();
         Person person = new Person();
@@ -55,14 +54,14 @@ public class ParticipantController {
         return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
     }
 
-    @GetMapping("/participant/{participantId}/edit")
+    @GetMapping("{participantId}/edit")
     public String initEditForm(@PathVariable("participantId") UUID participantId, ModelMap model) {
         participantRepository.findById(participantId)
                 .ifPresent(participant -> model.put("participant", participant));
         return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping({"/participant/new", "/participant/{participantId}/edit"})
+    @PostMapping({"new", "{participantId}/edit"})
     public String processForm(
             @Valid Participant participant,
             BindingResult result,
@@ -77,15 +76,14 @@ public class ParticipantController {
         }
     }
 
-    @PostMapping("participant/{participantId}/delete")
+    @GetMapping("{participantId}/delete")
     public String deleteForm(@PathVariable("participantId") UUID participantId) {
         this.participantRepository.deleteById(participantId);
         return "redirect:/breach/{breachId}";
     }
 
-    @GetMapping("/participant/person/{passport}")
+    @GetMapping("person/{passport}")
     public ResponseEntity<Person> getPerson(@PathVariable("passport") String passport) {
         return new ResponseEntity<>(personRepository.findTopByPassportOrderByModifiedDesc(passport), HttpStatus.OK);
     }
-
 }

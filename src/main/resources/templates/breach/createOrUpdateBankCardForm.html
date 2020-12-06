@@ -1,20 +1,7 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
-  <form class="form-horizontal" id="bank-card-delete-form" method="post" autocomplete="off"
-      th:action="@{delete}">
-  <div class="form-group">
-    <div class="col-md-offset-10 col-md-2">
-      <button class="btn btn-default">
-        Видалити
-      </button>
-    </div>
-  </div>
-</form>
-
-
   <!--/*@thymesVar id="bankCard" type="ua.gov.cyberpolice.breach.entity.BankCard"*/-->
-  <!--/*@thymesVar id="region" type="ua.gov.cyberpolice.breach.entity.Region"*/-->
   <form th:object="${bankCard}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
     <div class="form-group has-feedback">
       <div class="panel panel-default">
@@ -56,8 +43,8 @@
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.passport}"
-                     th:onblur=""
-                     onkeyup="this.value = this.value.toUpperCase();" />
+                     onkeyup="this.value = this.value.toUpperCase();"
+                     onblur="updatePerson()"/>
             </div>
             <label class="control-label col-md-1">Прізвище</label>
             <div class="col-md-3">
@@ -127,6 +114,11 @@
             </div>
           </div>
         </div>
+        <div th:if="${bankCard.id}" class="panel-footer">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialogDelete">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -138,5 +130,51 @@
       </div>
     </div>
   </form>
+  <div class="container">
+    <div class="modal fade" id="dialogDelete" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Видалення</h4>
+          </div>
+          <div class="modal-body">
+            <p>Ви впевнені, що хочете видалити?</p>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-danger" th:href="@{delete}">Так</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ні</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
+<script>
+  function updatePerson() {
+    if (document.getElementById('holder').value === "" && document.getElementById('holder.passport').value !== "") {
+      const request = new XMLHttpRequest();
+      request.open('get', 'holder/'.concat(document.getElementById('holder.passport').value), true);
+      request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+          try {
+            const person = JSON.parse(this.response);
+            document.getElementById('holder.lastName').value = person.lastName;
+            document.getElementById('holder.firstName').value = person.firstName;
+            document.getElementById('holder.middleName').value = person.middleName;
+            document.getElementById('holder.birthDate').value = person.birthDate;
+            document.getElementById('holder.region').value = person.region.id;
+            document.getElementById('holder.city').value = person.city;
+            document.getElementById('holder.street').value = person.street;
+            document.getElementById('holder.house').value = person.house;
+            document.getElementById('holder.apartment').value = person.apartment;
+          } catch (e) {
+            return false;
+          }
+        }
+      }
+      request.send();
+    }
+  }
+</script>

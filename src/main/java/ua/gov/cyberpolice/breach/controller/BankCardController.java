@@ -1,5 +1,7 @@
 package ua.gov.cyberpolice.breach.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -9,27 +11,31 @@ import ua.gov.cyberpolice.breach.entity.Breach;
 import ua.gov.cyberpolice.breach.entity.Person;
 import ua.gov.cyberpolice.breach.repository.BankCardRepository;
 import ua.gov.cyberpolice.breach.repository.BreachRepository;
+import ua.gov.cyberpolice.breach.repository.PersonRepository;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/breach/{breachId}")
+@RequestMapping("/breach/{breachId}/bank-card")
 public class BankCardController {
     private static final String VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateBankCardForm";
 
-    private BreachRepository breachRepository;
-    private BankCardRepository bankCardRepository;
-    private RegionRepository regionRepository;
+    private final BreachRepository breachRepository;
+    private final BankCardRepository bankCardRepository;
+    private final RegionRepository regionRepository;
+    private final PersonRepository personRepository;
 
     public BankCardController(
             BreachRepository breachRepository,
             BankCardRepository bankCardRepository,
-            RegionRepository regionRepository) {
+            RegionRepository regionRepository,
+            PersonRepository personRepository) {
         this.bankCardRepository = bankCardRepository;
         this.breachRepository = breachRepository;
         this.regionRepository = regionRepository;
+        this.personRepository = personRepository;
     }
 
     @ModelAttribute("breach")
@@ -38,7 +44,7 @@ public class BankCardController {
                 .orElseThrow(() -> new RuntimeException("Not found breachId " + breachId));
     }
 
-    @GetMapping("/bank-card/new/{type}")
+    @GetMapping("new/{type}")
     public String initCreationForm(Breach breach, @PathVariable("type") String type, ModelMap model) {
         BankCard bankCard = new BankCard();
         Person person = new Person();
@@ -56,7 +62,7 @@ public class BankCardController {
         return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
     }
 
-    @GetMapping("/bank-card/{bankCardId}/edit")
+    @GetMapping("{bankCardId}/edit")
     public String initEditForm(@PathVariable("bankCardId") UUID bankCardId, ModelMap model) {
         BankCard bankCard = bankCardRepository.findById(bankCardId).get();
 
@@ -64,7 +70,7 @@ public class BankCardController {
         return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping({"/bank-card/new/used", "/bank-card/new/confiscated", "/bank-card/{bankCardId}/edit"})
+    @PostMapping({"new/used", "new/confiscated", "{bankCardId}/edit"})
     public String processForm(
             @Valid BankCard bankCard,
             BindingResult result,
@@ -79,9 +85,14 @@ public class BankCardController {
         }
     }
 
-    @PostMapping("/bank-card/{bankCardId}/delete")
+    @GetMapping("{bankCardId}/delete")
     public String deleteForm(@PathVariable("bankCardId") UUID bankCardId) {
         this.bankCardRepository.deleteById(bankCardId);
         return "redirect:/breach/{breachId}";
+    }
+
+    @GetMapping("new/holder/{passport}")
+    public ResponseEntity<Person> getPerson(@PathVariable("passport") String passport) {
+        return new ResponseEntity<>(personRepository.findTopByPassportOrderByModifiedDesc(passport), HttpStatus.OK);
     }
 }
