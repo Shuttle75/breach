@@ -69,7 +69,6 @@
             </div>
             <label class="control-label col-md-offset-3 col-md-1">Регіон</label>
             <div class="col-md-5">
-              <input type="hidden" th:field="${participant.person.region.id}">
               <select class="form-control" th:field="${participant.person.region}">
                 <option th:each="region : ${@regionRepository.findAll()}"
                         th:value="${region.id}"
@@ -134,7 +133,7 @@
             document.getElementById('person.firstName').value = person.firstName;
             document.getElementById('person.middleName').value = person.middleName;
             document.getElementById('person.birthDate').value = person.birthDate;
-            document.getElementById('person.region').value = person.region;
+            document.getElementById('person.region').value = person.region.id;
             document.getElementById('person.city').value = person.city;
             document.getElementById('person.street').value = person.street;
             document.getElementById('person.house').value = person.house;
