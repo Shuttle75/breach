@@ -12,8 +12,6 @@
   </form>
 
   <!--/*@thymesVar id="participant" type="ua.gov.cyberpolice.breach.entity.Participant"*/-->
-  <!--/*@thymesVar id="participantType" type="ua.gov.cyberpolice.breach.entity.ParticipantType"*/-->
-  <!--/*@thymesVar id="region" type="ua.gov.cyberpolice.breach.entity.Region"*/-->
   <form th:object="${participant}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
     <input hidden th:field="${participant.id}">
     <input hidden th:field="${participant.breachId}">
@@ -26,9 +24,9 @@
             <label for="participantType" class="control-label col-md-1">Тип особи</label>
             <div class="col-md-5">
               <select id="participantType" class="form-control" th:field="${participant.participantType}">
-                <option th:each="participantType : ${participantTypes}"
-                        th:value="${participantType.id}"
-                        th:text="${participantType.name}">
+                <option th:each="type : ${@participantTypeRepository.findAll()}"
+                        th:value="${type.id}"
+                        th:text="${type.name}">
                 </option>
               </select>
             </div>
@@ -39,7 +37,8 @@
               <input class="form-control"
                      type="text"
                      th:field="${participant.person.passport}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
+                     onkeyup="this.value = this.value.toUpperCase();"
+                     onblur="updateEventCount()"/>
             </div>
             <label class="control-label col-md-1">Прізвище</label>
             <div class="col-md-3">
@@ -70,8 +69,11 @@
             </div>
             <label class="control-label col-md-offset-3 col-md-1">Регіон</label>
             <div class="col-md-5">
-              <select class="form-control" id="region" th:field="${participant.person.region}">
-                <option th:each="region : ${regions}" th:value="${region.id}" th:text="${region.name}"></option>
+              <input type="hidden" th:field="${participant.person.region.id}">
+              <select class="form-control" th:field="${participant.person.region}">
+                <option th:each="region : ${@regionRepository.findAll()}"
+                        th:value="${region.id}"
+                        th:text="${region.name}"></option>
               </select>
             </div>
           </div>
@@ -119,3 +121,30 @@
   </form>
 </body>
 </html>
+<script>
+  function updateEventCount() {
+    if (document.getElementById('person').value === "" && document.getElementById('person.passport').value !== "") {
+      const request = new XMLHttpRequest();
+      request.open('get', 'person/'.concat(document.getElementById('person.passport').value), true);
+      request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+          try {
+            const person = JSON.parse(this.response);
+            document.getElementById('person.lastName').value = person.lastName;
+            document.getElementById('person.firstName').value = person.firstName;
+            document.getElementById('person.middleName').value = person.middleName;
+            document.getElementById('person.birthDate').value = person.birthDate;
+            document.getElementById('person.region').value = person.region;
+            document.getElementById('person.city').value = person.city;
+            document.getElementById('person.street').value = person.street;
+            document.getElementById('person.house').value = person.house;
+            document.getElementById('person.apartment').value = person.apartment;
+          } catch (e) {
+            return false;
+          }
+        }
+      }
+      request.send();
+    }
+  }
+</script>

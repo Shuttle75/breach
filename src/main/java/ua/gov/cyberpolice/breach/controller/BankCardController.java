@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ua.gov.cyberpolice.breach.entity.BankCard;
 import ua.gov.cyberpolice.breach.entity.Breach;
 import ua.gov.cyberpolice.breach.entity.Person;
-import ua.gov.cyberpolice.breach.entity.Region;
 import ua.gov.cyberpolice.breach.repository.BankCardRepository;
 import ua.gov.cyberpolice.breach.repository.BreachRepository;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
@@ -23,7 +22,6 @@ public class BankCardController {
     private BreachRepository breachRepository;
     private BankCardRepository bankCardRepository;
     private RegionRepository regionRepository;
-    private Iterable<Region> regions;
 
     public BankCardController(
             BreachRepository breachRepository,
@@ -32,7 +30,6 @@ public class BankCardController {
         this.bankCardRepository = bankCardRepository;
         this.breachRepository = breachRepository;
         this.regionRepository = regionRepository;
-        this.regions = regionRepository.findAll();
     }
 
     @ModelAttribute("breach")
@@ -56,7 +53,6 @@ public class BankCardController {
         }
 
         model.put("bankCard", bankCard);
-        model.put("regions", this.regions);
         return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
     }
 
@@ -65,7 +61,6 @@ public class BankCardController {
         BankCard bankCard = bankCardRepository.findById(bankCardId).get();
 
         model.put("bankCard", bankCard);
-        model.put("regions", this.regions);
         return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
     }
 
@@ -76,7 +71,6 @@ public class BankCardController {
             ModelMap model) {
         if (result.hasErrors()) {
             model.put("bankCard", bankCard);
-            model.put("regions", this.regions);
             return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
         }
         else {

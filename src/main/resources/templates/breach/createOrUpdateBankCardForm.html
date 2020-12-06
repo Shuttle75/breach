@@ -56,7 +56,8 @@
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.passport}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
+                     th:onblur=""
+                     onkeyup="this.value = this.value.toUpperCase();" />
             </div>
             <label class="control-label col-md-1">Прізвище</label>
             <div class="col-md-3">
@@ -69,14 +70,14 @@
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="*{holder.firstName}"
+                     th:field="${bankCard.holder.firstName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1">По батькові</label>
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="*{holder.middleName}"
+                     th:field="${bankCard.holder.middleName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
@@ -87,8 +88,8 @@
             </div>
             <label class="control-label col-md-offset-3 col-md-1">Регіон</label>
             <div class="col-md-5">
-              <select class="form-control" th:field="*{holder.region}">
-                <option th:each="region : ${regions}"
+              <select class="form-control" th:field="${bankCard.holder.region}">
+                <option th:each="region : ${@regionRepository.findAll()}"
                         th:value="${region.id}"
                         th:text="${region.name}">
                 </option>
@@ -100,28 +101,28 @@
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
-                     th:field="*{holder.city}"
+                     th:field="${bankCard.holder.city}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1">Вулиця</label>
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
-                     th:field="*{holder.street}"
+                     th:field="${bankCard.holder.street}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1">Будинок</label>
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
-                     th:field="*{holder.house}"
+                     th:field="${bankCard.holder.house}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1">Квартира</label>
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
-                     th:field="*{holder.apartment}"
+                     th:field="${bankCard.holder.apartment}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
           </div>

@@ -1,9 +1,12 @@
 package ua.gov.cyberpolice.breach.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ua.gov.cyberpolice.breach.entity.*;
 import ua.gov.cyberpolice.breach.repository.*;
 
@@ -15,22 +18,20 @@ import java.util.UUID;
 public class ParticipantController {
     private static final String VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateParticipantForm";
 
-    private BreachRepository breachRepository;
-    private ParticipantRepository participantRepository;
-    private RegionRepository regionRepository;
-    private Iterable<Region> regions;
-    private Iterable<ParticipantType> participantTypes;
+    private final BreachRepository breachRepository;
+    private final ParticipantRepository participantRepository;
+    private final RegionRepository regionRepository;
+    private final PersonRepository personRepository;
 
     public ParticipantController(
             BreachRepository breachRepository,
             ParticipantRepository participantRepository,
             RegionRepository regionRepository,
-            ParticipantTypeRepository participantTypeRepository) {
+            PersonRepository personRepository) {
         this.participantRepository = participantRepository;
         this.breachRepository = breachRepository;
         this.regionRepository = regionRepository;
-        this.regions = regionRepository.findAll();
-        this.participantTypes = participantTypeRepository.findAll();
+        this.personRepository = personRepository;
     }
 
     @ModelAttribute("breach")
@@ -51,19 +52,13 @@ public class ParticipantController {
                 .ifPresent(person::setRegion);
 
         model.put("participant", participant);
-        model.put("regions", this.regions);
-        model.put("participantTypes", this.participantTypes);
         return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
     }
 
     @GetMapping("/participant/{participantId}/edit")
     public String initEditForm(@PathVariable("participantId") UUID participantId, ModelMap model) {
         participantRepository.findById(participantId)
-                .ifPresent(participant -> {
-                    model.put("participant", participant);
-                    model.put("regions", this.regions);
-                    model.put("participantTypes", this.participantTypes);
-                });
+                .ifPresent(participant -> model.put("participant", participant));
         return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
     }
 
@@ -74,7 +69,6 @@ public class ParticipantController {
             ModelMap model) {
         if (result.hasErrors()) {
             model.put("participant", participant);
-            model.put("regions", this.regions);
             return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
         }
         else {
@@ -83,9 +77,15 @@ public class ParticipantController {
         }
     }
 
-    @PostMapping("/participant/{participantId}/delete")
+    @PostMapping("participant/{participantId}/delete")
     public String deleteForm(@PathVariable("participantId") UUID participantId) {
         this.participantRepository.deleteById(participantId);
         return "redirect:/breach/{breachId}";
     }
+
+    @GetMapping("/participant/person/{passport}")
+    public ResponseEntity<Person> getPerson(@PathVariable("passport") String passport) {
+        return new ResponseEntity<>(personRepository.findTopByPassportOrderByModifiedDesc(passport), HttpStatus.OK);
+    }
+
 }
