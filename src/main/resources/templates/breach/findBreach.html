@@ -2,33 +2,187 @@
   th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
-
-  <h2>Пошук порушень</h2>
-
-  <form th:object="${breach}" th:action="@{/breach}" method="get"
-    class="form-horizontal" id="search-owner-form">
-    <div class="form-group">
-      <div class="control-group" id="numberGroup">
-        <label class="col-sm-2 control-label">Last name </label>
-        <div class="col-sm-10">
-          <input class="form-control" th:field="*{sentNumber}" size="30"
-            maxlength="80" /> <span class="help-inline"><div
-              th:if="${#fields.hasAnyErrors()}">
-              <p th:each="err : ${#fields.allErrors()}" th:text="${err}">Error</p>
-            </div></span>
+<!--/*@thymesVar id="find" type="ua.gov.cyberpolice.breach.entity.Find"*/-->
+  <form id="form" class="form-horizontal" th:object="${find}" method="post" autocomplete="off">
+    <input type="hidden" th:field="${find.page}">
+    <input type="hidden" th:field="${find.size}">
+    <input type="hidden" th:field="${find.sortField}">
+    <input type="hidden" th:field="${find.sortAsc}">
+    <div class="panel panel-default">
+      <div class="panel-heading">ПОШУК</div>
+      <div class="panel-body">
+        <div class="row">
+          <label class="control-label col-md-1">Дата с</label>
+          <div class="col-md-2">
+            <input class="form-control"
+                   type="date"
+                   th:field="${find.fromDate}" />
+          </div>
+          <label class="control-label col-md-1">Пасспорт</label>
+          <div class="col-md-2">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.passport}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+          <label class="control-label col-md-1">Банк картка</label>
+          <div class="col-md-4">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.cardNumber}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+          <div class="col-md-1">
+            <a class="btn btn-default" th:href="@{/breach/new}" title="Додати порушення">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <label class="control-label col-md-1">Дата по</label>
+          <div class="col-md-2">
+            <input class="form-control"
+                   type="date"
+                   th:field="${find.toDate}" />
+          </div>
+          <label class="control-label col-md-1">Прізвище</label>
+          <div class="col-md-2">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.lastName}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+          <label class="control-label col-md-1">IMEI</label>
+          <div class="col-md-4">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.imei}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+        </div>
+        <div class="row">
+          <label class="control-label col-md-1">Телефон</label>
+          <div class="col-md-2">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.phone}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+          <label class="control-label col-md-1">Ім'я</label>
+          <div class="col-md-2">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.firstName}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+          <label class="control-label col-md-1">МАС</label>
+          <div class="col-md-4">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.mac}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+        </div>
+        <div class="row">
+          <label class="control-label col-md-offset-3 col-md-1">По батькові</label>
+          <div class="col-md-2">
+            <input class="form-control"
+                   type="text"
+                   th:field="${find.middleName}"
+                   onkeyup="this.value = this.value.toUpperCase();"/>
+          </div>
+          <div class="col-sm-offset-4 col-md-2">
+            <button style="width: 100%" type="submit" class="btn btn-default">Пошук</button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-default">Пошук</button>
+    <!--/*@thymesVar id="breach" type="ua.gov.cyberpolice.breach.entity.Breach"*/-->
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-striped">
+          <tr>
+            <th>
+              <a onclick="sort('incomeNumber')">
+                <span th:if="${find.sortField} == 'incomeNumber' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'incomeNumber' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                Вход номер
+              </a>
+            </th>
+            <th>
+              <a onclick="sort('incomeDate')">
+                <span th:if="${find.sortField} == 'incomeDate' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'incomeDate' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                Вход дата
+              </a>
+            </th>
+            <th>
+              <a onclick="sort('eoNumber')">
+                <span th:if="${find.sortField} == 'eoNumber' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'eoNumber' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                ЕО номер
+              </a>
+            </th>
+            <th>
+              <a onclick="sort('eoDate')">
+                <span th:if="${find.sortField} == 'eoDate' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'eoDate' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                ЕО дата
+              </a>
+            </th>
+            <th>
+              <a onclick="sort('erdrArticle')">
+                <span th:if="${find.sortField} == 'erdrArticle' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'erdrArticle' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                ЕРДР стаття
+              </a>
+            </th>
+            <th>
+              <a onclick="sort('erdrDate')">
+                <span th:if="${find.sortField} == 'erdrDate' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'erdrDate' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                </span>ЕРДР дата
+              </a>
+            </th>
+            <th>
+              <a onclick="sort('erdrNumber')">
+                <span th:if="${find.sortField} == 'erdrNumber' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'erdrNumber' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                ЕРДР номер
+              </a>
+            </th>
+            <th></th>
+          </tr>
+          <tr th:each="breach : ${breaches}">
+            <td th:text="${breach.incomeNumber}" style="white-space: nowrap"></td>
+            <td th:text="${breach.incomeDate}" style="width: 200px; white-space: nowrap"></td>
+            <td th:text="${breach.eoNumber}" style="white-space: nowrap"></td>
+            <td th:text="${breach.eoDate}" style="width: 200px; white-space: nowrap"></td>
+            <td th:text="${breach.erdrArticle}" style="white-space: nowrap"></td>
+            <td th:text="${breach.erdrDate}" style="width: 200px; white-space: nowrap"></td>
+            <td th:text="${breach.erdrNumber}" style="white-space: nowrap"></td>
+            <td style="width: 30px" >
+              <a th:href="@{/breach/__${breach.id}__}">
+                <span class="glyphicon glyphicon-pencil"></span>
+              </a>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   </form>
-
   <br/>
-
-  <a class="btn btn-default" th:href="@{/breach/new}">Додати порушення</a>
-
 </body>
 </html>
+<script>
+  function sort(field) {
+    document.getElementById('sortField').value = field;
+    if (document.getElementById('sortAsc').value === 'true') {
+      document.getElementById('sortAsc').value = 'false';
+    } else {
+      document.getElementById('sortAsc').value = 'true';
+    }
+    document.getElementById('sortAsc').value
+    document.getElementById('form').submit();
+  }
+</script>

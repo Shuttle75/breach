@@ -48,12 +48,6 @@ public class BreachController {
         }
     }
 
-    @GetMapping("/breach/find")
-    public String initFindForm(Map<String, Object> model) {
-        model.put("breach", new Breach());
-        return "breach/findBreach";
-    }
-
     @GetMapping("/breach")
     public String processFindForm(Breach breach, BindingResult result, Map<String, Object> model) {
         List<Breach> results = this.breachRepository.findAll();
