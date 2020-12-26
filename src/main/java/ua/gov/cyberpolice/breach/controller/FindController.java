@@ -1,19 +1,19 @@
 package ua.gov.cyberpolice.breach.controller;
 
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.gov.cyberpolice.breach.entity.Breach;
 import ua.gov.cyberpolice.breach.entity.Find;
+import ua.gov.cyberpolice.breach.entity.QBreach;
 import ua.gov.cyberpolice.breach.repository.BreachRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Root;
-import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
@@ -34,18 +34,19 @@ public class FindController {
 
     @GetMapping("breach/find")
     public String initCreationForm(Find find, Map<String, Object> model) {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Breach> criteriaQuery = criteriaBuilder.createQuery(Breach.class);
-        Root<Breach> root = criteriaQuery.from(Breach.class);
+        JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
-        Order order = criteriaBuilder.asc(root.get(find.getSortField()));;
-        if (find.getSortAsc()) {
-            order.reverse();
-        }
+        OrderSpecifier<String> specifier =
+                new OrderSpecifier<>(
+                        Order.valueOf(find.getSortOrder()),
+                        Expressions.path(String.class, QBreach.breach, find.getSortField()));
 
-        criteriaQuery.select(root)
-                .orderBy(order);
-        List<Breach> breaches = entityManager.createQuery(criteriaQuery).getResultList();
+        List<Breach> breaches = queryFactory
+                .select(QBreach.breach)
+                .from(QBreach.breach)
+                .orderBy(specifier)
+                .fetch();
+
         model.put("breaches", breaches);
         return VIEWS_BREACH_FIND_FORM;
     }

@@ -20,7 +20,7 @@ public class Find {
 
     private String sortField = "incomeDate";
 
-    private Boolean sortAsc = true;
+    private String sortOrder = "ASC";
 
     private String passport;
 

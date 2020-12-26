@@ -7,7 +7,7 @@
     <input type="hidden" th:field="${find.page}">
     <input type="hidden" th:field="${find.size}">
     <input type="hidden" th:field="${find.sortField}">
-    <input type="hidden" th:field="${find.sortAsc}">
+    <input type="hidden" th:field="${find.sortOrder}">
     <div class="panel panel-default">
       <div class="panel-heading">ПОШУК</div>
       <div class="panel-body">
@@ -104,50 +104,50 @@
           <tr>
             <th>
               <a onclick="sort('incomeNumber')">
-                <span th:if="${find.sortField} == 'incomeNumber' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
-                <span th:if="${find.sortField} == 'incomeNumber' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                <span th:if="${find.sortField} == 'incomeNumber' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'incomeNumber' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 Вход номер
               </a>
             </th>
             <th>
               <a onclick="sort('incomeDate')">
-                <span th:if="${find.sortField} == 'incomeDate' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
-                <span th:if="${find.sortField} == 'incomeDate' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                <span th:if="${find.sortField} == 'incomeDate' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'incomeDate' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 Вход дата
               </a>
             </th>
             <th>
               <a onclick="sort('eoNumber')">
-                <span th:if="${find.sortField} == 'eoNumber' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
-                <span th:if="${find.sortField} == 'eoNumber' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                <span th:if="${find.sortField} == 'eoNumber' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'eoNumber' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 ЕО номер
               </a>
             </th>
             <th>
               <a onclick="sort('eoDate')">
-                <span th:if="${find.sortField} == 'eoDate' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
-                <span th:if="${find.sortField} == 'eoDate' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                <span th:if="${find.sortField} == 'eoDate' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'eoDate' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 ЕО дата
               </a>
             </th>
             <th>
               <a onclick="sort('erdrArticle')">
-                <span th:if="${find.sortField} == 'erdrArticle' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
-                <span th:if="${find.sortField} == 'erdrArticle' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                <span th:if="${find.sortField} == 'erdrArticle' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'erdrArticle' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 ЕРДР стаття
               </a>
             </th>
             <th>
               <a onclick="sort('erdrDate')">
-                <span th:if="${find.sortField} == 'erdrDate' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
-                <span th:if="${find.sortField} == 'erdrDate' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                <span th:if="${find.sortField} == 'erdrDate' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'erdrDate' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 </span>ЕРДР дата
               </a>
             </th>
             <th>
               <a onclick="sort('erdrNumber')">
-                <span th:if="${find.sortField} == 'erdrNumber' and ${find.sortAsc}" class="glyphicon glyphicon-arrow-up"></span>
-                <span th:if="${find.sortField} == 'erdrNumber' and not ${find.sortAsc}" class="glyphicon glyphicon-arrow-down"></span>
+                <span th:if="${find.sortField} == 'erdrNumber' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
+                <span th:if="${find.sortField} == 'erdrNumber' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 ЕРДР номер
               </a>
             </th>
@@ -177,12 +177,11 @@
 <script>
   function sort(field) {
     document.getElementById('sortField').value = field;
-    if (document.getElementById('sortAsc').value === 'true') {
-      document.getElementById('sortAsc').value = 'false';
+    if (document.getElementById('sortOrder').value === 'ASC') {
+      document.getElementById('sortOrder').value = 'DESC';
     } else {
-      document.getElementById('sortAsc').value = 'true';
+      document.getElementById('sortOrder').value = 'ASC';
     }
-    document.getElementById('sortAsc').value
     document.getElementById('form').submit();
   }
 </script>
