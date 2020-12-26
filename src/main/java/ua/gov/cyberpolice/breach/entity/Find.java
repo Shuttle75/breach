@@ -22,23 +22,23 @@ public class Find {
 
     private String sortOrder = "ASC";
 
-    private String passport;
+    private String passport = "";
 
-    private String lastName;
+    private String lastName = "";
 
-    private String firstName;
+    private String firstName = "";
 
-    private String middleName;
+    private String middleName = "";
 
-    private String region;
+    private String region = "";
 
     private Integer method;
 
-    private String cardNumber;
+    private String cardNumber = "";
 
-    private String phone;
+    private String phone = "";
 
-    private String mac;
+    private String mac = "";
 
-    private String imei;
+    private String imei = "";
 }
