@@ -193,7 +193,7 @@ CREATE TABLE breach.phone
         constraint phone_pk primary key,
     imei_1         text,
     imei_2         text,
-    wifi_mac       text,
+    mac            text,
     holder_id      uuid
 );
 ALTER TABLE breach.phone OWNER TO postgres;

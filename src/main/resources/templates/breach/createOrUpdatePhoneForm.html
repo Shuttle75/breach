@@ -1,0 +1,197 @@
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
+
+<body>
+  <!--/*@thymesVar id="phone" type="ua.gov.cyberpolice.breach.entity.Phone"*/-->
+  <form th:object="${phone}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
+    <div class="form-group has-feedback">
+      <div class="panel panel-default">
+        <input hidden th:field="${phone.id}">
+        <input hidden th:field="${phone.holder}">
+        <div class="panel-heading">th:text="#{phone}"</div>
+        <div class="panel-body">
+          <div class="row">
+            <label class="control-label col-md-1" th:text="#{phone.imei1}"></label>
+            <div th:class="${'col-md-2' + (!#fields.hasErrors('imei1') ? '' : ' has-error')}">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.getImei1()}"
+                     placeholder="AA BBBBBB CCCCCC D"
+                     maxlength="18"
+                     size="18"
+                     pattern="^([0-9]{2}[ ])([0-9]{6}[ ]){2}([0-9])$"/>
+              <span class="help-inline" th:errors="${phone.imei1}">Error</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <input hidden th:field="${phone.holder.id}">
+        <div class="panel-heading" th:text="#{holder}"></div>
+        <div class="panel-body">
+          <div class="row">
+            <label class="control-label col-md-1" th:text="#{person.passport}"></label>
+            <div class="col-md-1">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.passport}"
+                     onkeyup="this.value = this.value.toUpperCase();"
+                     onblur="updatePerson()"/>
+            </div>
+            <label class="control-label col-md-1"
+                   th:text="#{person.lastName}"></label>
+            <div class="col-md-3">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.lastName}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label class="control-label col-md-1"
+                   th:text="#{person.firstName}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.firstName}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label class="control-label col-md-1"
+                   th:text="#{person.middleName}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.middleName}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+          </div>
+          <div class="row">
+            <label class="control-label col-md-1"
+                   th:text="#{person.birthDate}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="date"
+                     th:field="${phone.holder.birthDate}"/>
+            </div>
+            <label class="control-label col-md-offset-3 col-md-1"
+                   th:text="#{person.region}"></label>
+            <div class="col-md-5">
+              <select class="form-control" th:field="${phone.holder.region}">
+                <option th:each="region : ${@regionRepository.findAll()}"
+                        th:value="${region.id}"
+                        th:text="${region.name}">
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <label class="control-label col-md-1"
+                   th:text="#{person.city}"></label>
+            <div class="col-md-3">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.city}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label class="control-label col-md-1"
+                   th:text="#{person.street}"></label>
+            <div class="col-md-3">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.street}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label class="control-label col-md-1"
+                   th:text="#{person.house}"></label>
+            <div class="col-md-1">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.house}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+            <label class="control-label col-md-1"
+                   th:text="#{person.apartment}"></label>
+            <div class="col-md-1">
+              <input class="form-control"
+                     type="text"
+                     th:field="${phone.holder.apartment}"
+                     onkeyup="this.value = this.value.toUpperCase();"/>
+            </div>
+          </div>
+        </div>
+        <div th:if="${phone.id}" class="panel-footer">
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialogDelete">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-md-offset-10 col-md-2">
+        <button class="btn btn-default" type="submit">
+          Зберегти
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="container">
+    <div class="modal fade" id="dialogDelete" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Видалення</h4>
+          </div>
+          <div class="modal-body">
+            <p>Ви впевнені, що хочете видалити?</p>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-danger" th:href="@{delete}">Так</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Ні</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+  document.getElementById('imei1').addEventListener('input', function (e) {
+    var target = e.target, position = target.selectionEnd, length = target.value.length;
+
+    target.value = target.value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+    target.selectionEnd = position += ((target.value.charAt(position - 1) === ' ' && target.value.charAt(length - 1) === ' ' && length !== target.value.length) ? 1 : 0);
+  });
+  document.getElementById('imei1').addEventListener('input', function (e) {
+    var target = e.target, position = target.selectionEnd, length = target.value.length;
+
+    target.value = target.value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+    target.selectionEnd = position += ((target.value.charAt(position - 1) === ' ' && target.value.charAt(length - 1) === ' ' && length !== target.value.length) ? 1 : 0);
+  });
+
+
+
+  function updatePerson() {
+    if (document.getElementById('holder').value === "" && document.getElementById('holder.passport').value !== "") {
+      const request = new XMLHttpRequest();
+      request.open('get', 'holder/'.concat(document.getElementById('holder.passport').value), true);
+      request.onload = function () {
+        if (this.status >= 200 && this.status < 400) {
+          try {
+            const person = JSON.parse(this.response);
+            document.getElementById('holder.lastName').value = person.lastName;
+            document.getElementById('holder.firstName').value = person.firstName;
+            document.getElementById('holder.middleName').value = person.middleName;
+            document.getElementById('holder.birthDate').value = person.birthDate;
+            document.getElementById('holder.region').value = person.region.id;
+            document.getElementById('holder.city').value = person.city;
+            document.getElementById('holder.street').value = person.street;
+            document.getElementById('holder.house').value = person.house;
+            document.getElementById('holder.apartment').value = person.apartment;
+          } catch (e) {
+            return false;
+          }
+        }
+      }
+      request.send();
+    }
+  }
+</script>

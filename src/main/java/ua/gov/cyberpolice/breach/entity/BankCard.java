@@ -34,7 +34,7 @@ public class BankCard extends BaseEntity {
             return cardNumber.substring(0, 4) + " " +
                     cardNumber.substring(4, 8) + " " +
                     cardNumber.substring(8, 12) + " " +
-                    cardNumber.substring(12, 16);
+                    cardNumber.substring(12);
         }
         return cardNumber;
     }
