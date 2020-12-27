@@ -17,10 +17,10 @@
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.cardNumber}"
-                     placeholder="0000-0000-0000-0000"
+                     placeholder="0000 0000 0000 0000"
                      maxlength="19"
                      size="19"
-                     pattern="^([0-9]{4}[-]){3}([0-9]{4})$"/>
+                     pattern="^([0-9]{4}[ ]){3}([0-9]{4})$"/>
               <span class="help-inline" th:errors="${bankCard.cardNumber}">Error</span>
             </div>
             <label class="control-label col-md-1" th:text="#{bankCard.bankName}"></label>
@@ -163,6 +163,13 @@
 </body>
 </html>
 <script>
+  document.getElementById('cardNumber').addEventListener('input', function (e) {
+    var target = e.target, position = target.selectionEnd, length = target.value.length;
+
+    target.value = target.value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+    target.selectionEnd = position += ((target.value.charAt(position - 1) === ' ' && target.value.charAt(length - 1) === ' ' && length !== target.value.length) ? 1 : 0);
+  });
+
   function updatePerson() {
     if (document.getElementById('holder').value === "" && document.getElementById('holder.passport').value !== "") {
       const request = new XMLHttpRequest();

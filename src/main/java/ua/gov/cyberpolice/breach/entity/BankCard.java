@@ -28,4 +28,18 @@ public class BankCard extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private Person holder;
+
+    public String getCardNumber() {
+        if(cardNumber != null && cardNumber.length() == 16) {
+            return cardNumber.substring(0, 4) + " " +
+                    cardNumber.substring(4, 8) + " " +
+                    cardNumber.substring(8, 12) + " " +
+                    cardNumber.substring(12, 16);
+        }
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber.replace(" ", "");
+    }
 }
