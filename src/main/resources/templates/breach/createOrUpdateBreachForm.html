@@ -109,13 +109,14 @@
             <div class="col-md-11">
               <table class="table table-striped">
                 <tr>
-                  <th>Тип участі</th>
-                  <th>Пасспорт</th>
-                  <th>Прізвище</th>
-                  <th>Ім'я</th>
-                  <th>По батькові</th>
-                  <th>Дата народ</th>
-                  <th>Адреса</th>
+                  <th th:text="#{participant.type}"></th>
+                  <th th:text="#{person.passport}"></th>
+                  <th th:text="#{person.lastName}"></th>
+                  <th th:text="#{person.firstName}"></th>
+                  <th th:text="#{person.middleName}"></th>
+                  <th th:text="#{person.birthDate}"></th>
+                  <th th:text="#{person.address}"></th>
+                  <th th:text="#{participant.nsrd}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="participant : ${breach.participants}">
@@ -127,6 +128,7 @@
                   <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.birthDate}"></td>
                   <td style="width: 500px" th:text="${participant.person?.region?.name + ', ' + participant.person?.city + ', ' +
                   participant.person?.street + ' ' + participant.person?.house + ' КВ.' + participant.person?.apartment}"></td>
+                  <td style="width: 50px" th:text=" ${participant.nsrd}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/participant/{participantId}/edit(breachId=${breach.id},participantId=${participant.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -178,14 +180,14 @@
             <div class="col-md-11">
               <table class="table table-striped">
                 <tr>
-                  <th>Номер картки</th>
-                  <th>Назва банку</th>
-                  <th>Пасспорт</th>
-                  <th>Прізвище</th>
-                  <th>Ім'я</th>
-                  <th>По батькові</th>
-                  <th>Дата народ</th>
-                  <th>Адреса</th>
+                  <th th:text="#{bankCard.cardNumber}"></th>
+                  <th th:text="#{bankCard.bankName}"></th>
+                  <th th:text="#{person.passport}"></th>
+                  <th th:text="#{person.lastName}"></th>
+                  <th th:text="#{person.firstName}"></th>
+                  <th th:text="#{person.middleName}"></th>
+                  <th th:text="#{person.birthDate}"></th>
+                  <th th:text="#{person.address}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.usedBankCards}">
@@ -248,14 +250,14 @@
             <div class="col-md-11">
               <table class="table table-striped">
                 <tr>
-                  <th>Номер картки</th>
-                  <th>Назва банку</th>
-                  <th>Пасспорт</th>
-                  <th>Прізвище</th>
-                  <th>Ім'я</th>
-                  <th>По батькові</th>
-                  <th>Дата народ</th>
-                  <th>Адреса</th>
+                  <th th:text="#{bankCard.cardNumber}"></th>
+                  <th th:text="#{bankCard.bankName}"></th>
+                  <th th:text="#{person.passport}"></th>
+                  <th th:text="#{person.lastName}"></th>
+                  <th th:text="#{person.firstName}"></th>
+                  <th th:text="#{person.middleName}"></th>
+                  <th th:text="#{person.birthDate}"></th>
+                  <th th:text="#{person.address}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.confiscatedBankCards}">

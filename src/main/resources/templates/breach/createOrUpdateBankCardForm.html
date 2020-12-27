@@ -12,7 +12,7 @@
         <div class="panel-heading">Банківська картка</div>
         <div class="panel-body">
           <div class="row">
-            <label class="control-label col-md-1">Номер</label>
+            <label class="control-label col-md-1" th:text="#{bankCard.cardNumber}"></label>
             <div th:class="${'col-md-2' + (!#fields.hasErrors('cardNumber') ? '' : ' has-error')}">
               <input class="form-control"
                      type="text"
@@ -21,13 +21,13 @@
                      maxlength="19"
                      size="19"
                      pattern="^([0-9]{4}[-]){3}([0-9]{4})$"/>
-              <span class="help-inline" th:errors="*{cardNumber}">Error</span>
+              <span class="help-inline" th:errors="${bankCard.cardNumber}">Error</span>
             </div>
-            <label class="control-label col-md-1">Банк</label>
+            <label class="control-label col-md-1" th:text="#{bankCard.bankName}"></label>
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="*{bankName}"
+                     th:field="${bankCard.bankName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
@@ -35,10 +35,10 @@
       </div>
       <div class="panel panel-default">
         <input hidden th:field="${bankCard.holder.id}">
-        <div class="panel-heading">Власник</div>
+        <div class="panel-heading" th:text="#{bankCard.holder}"></div>
         <div class="panel-body">
           <div class="row">
-            <label class="control-label col-md-1">Пасспорт</label>
+            <label class="control-label col-md-1" th:text="#{person.passport}"></label>
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
@@ -46,21 +46,24 @@
                      onkeyup="this.value = this.value.toUpperCase();"
                      onblur="updatePerson()"/>
             </div>
-            <label class="control-label col-md-1">Прізвище</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.lastName}"></label>
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.lastName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label class="control-label col-md-1">Ім'я</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.firstName}"></label>
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.firstName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label class="control-label col-md-1">По батькові</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.middleName}"></label>
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
@@ -69,11 +72,15 @@
             </div>
           </div>
           <div class="row">
-            <label class="control-label col-md-1">Дата народж</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.birthDate}"></label>
             <div class="col-md-2">
-              <input class="form-control" type="date" th:field="*{holder.birthDate}" />
+              <input class="form-control"
+                     type="date"
+                     th:field="${bankCard.holder.birthDate}"/>
             </div>
-            <label class="control-label col-md-offset-3 col-md-1">Регіон</label>
+            <label class="control-label col-md-offset-3 col-md-1"
+                   th:text="#{person.region}"></label>
             <div class="col-md-5">
               <select class="form-control" th:field="${bankCard.holder.region}">
                 <option th:each="region : ${@regionRepository.findAll()}"
@@ -84,28 +91,32 @@
             </div>
           </div>
           <div class="row">
-            <label class="control-label col-md-1">Місто</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.city}"></label>
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.city}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label class="control-label col-md-1">Вулиця</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.street}"></label>
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.street}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label class="control-label col-md-1">Будинок</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.house}"></label>
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.house}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label class="control-label col-md-1">Квартира</label>
+            <label class="control-label col-md-1"
+                   th:text="#{person.apartment}"></label>
             <div class="col-md-1">
               <input class="form-control"
                      type="text"

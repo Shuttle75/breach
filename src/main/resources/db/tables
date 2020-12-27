@@ -73,9 +73,17 @@ create table breach.participant
             references breach.participant_type,
     person_id            uuid
         constraint participant_person_id_fk
-        references breach.person
+        references breach.person,
+    nsrd                 int
 );
-alter table breach.participant owner to postgres;
+ALTER TABLE breach.participant OWNER TO postgres;
+INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('71822a0d-6874-47df-a3eb-8b7c7060152e', 'ad428b8c-a0fe-4ee2-a716-657f0042d11c', 1, '0a429e10-f099-4197-9db3-8e2f65fd0e0c', 1);
+INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('c4b52053-6660-45e2-a047-b6c1ff6cf27a', 'ad428b8c-a0fe-4ee2-a716-657f0042d11c', 1, 'b4f4be0a-01aa-417b-8be7-8a6f7892903a', 2);
+INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('ee268955-2857-4a8b-ad54-5f278d2e5c54', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', 1, 'e6131e95-b8d5-47aa-a6ba-cd63e2cb8e53', 3);
+INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('ee5f4d8c-677a-4a10-9501-dce6ae3f8451', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', 2, 'b0338323-e37e-4285-825b-f273cb2e48a3', 4);
+
+
+
 
 drop table if exists breach.participant_type;
 create table breach.participant_type

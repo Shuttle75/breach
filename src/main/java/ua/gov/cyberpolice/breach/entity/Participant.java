@@ -22,4 +22,7 @@ public class Participant extends BaseEntity {
 
     @ManyToOne
     private ParticipantType participantType;
+
+    @Column
+    private Integer nsrd;
 }
