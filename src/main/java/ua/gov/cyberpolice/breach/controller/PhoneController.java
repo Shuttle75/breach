@@ -9,30 +9,28 @@ import org.springframework.web.bind.annotation.*;
 import ua.gov.cyberpolice.breach.entity.BankCard;
 import ua.gov.cyberpolice.breach.entity.Breach;
 import ua.gov.cyberpolice.breach.entity.Person;
-import ua.gov.cyberpolice.breach.repository.BankCardRepository;
-import ua.gov.cyberpolice.breach.repository.BreachRepository;
-import ua.gov.cyberpolice.breach.repository.PersonRepository;
-import ua.gov.cyberpolice.breach.repository.RegionRepository;
+import ua.gov.cyberpolice.breach.entity.Phone;
+import ua.gov.cyberpolice.breach.repository.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/breach/{breachId}/bank-card")
-public class BankCardController {
-    private static final String VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateBankCardForm";
+@RequestMapping("/breach/{breachId}/phone")
+public class PhoneController {
+    private static final String VIEWS_PHONE_CREATE_OR_UPDATE_FORM = "breach/createOrUpdatePhoneForm";
 
     private final BreachRepository breachRepository;
-    private final BankCardRepository bankCardRepository;
+    private final PhoneRepository phoneRepository;
     private final RegionRepository regionRepository;
     private final PersonRepository personRepository;
 
-    public BankCardController(
+    public PhoneController(
             BreachRepository breachRepository,
-            BankCardRepository bankCardRepository,
+            PhoneRepository phoneRepository,
             RegionRepository regionRepository,
             PersonRepository personRepository) {
-        this.bankCardRepository = bankCardRepository;
+        this.phoneRepository = phoneRepository;
         this.breachRepository = breachRepository;
         this.regionRepository = regionRepository;
         this.personRepository = personRepository;
@@ -46,47 +44,47 @@ public class BankCardController {
 
     @GetMapping("new/{type}")
     public String initCreationForm(Breach breach, @PathVariable("type") String type, ModelMap model) {
-        BankCard bankCard = new BankCard();
+        Phone phone = new Phone();
         Person person = new Person();
 
         regionRepository.findById("8000000000")
                 .ifPresent(person::setRegion);
         if ("used".equals(type)) {
-            bankCard.setBreachId(breach.getId());
+            phone.setBreachId(breach.getId());
         }
         if ("confiscated".equals(type)) {
-            bankCard.setConfiscatedId(breach.getId());
+            phone.setConfiscatedId(breach.getId());
         }
 
-        model.put("bankCard", bankCard);
-        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+        model.put("phone", phone);
+        return VIEWS_PHONE_CREATE_OR_UPDATE_FORM;
     }
 
-    @GetMapping("{bankCardId}/edit")
-    public String initEditForm(@PathVariable("bankCardId") UUID bankCardId, ModelMap model) {
-        bankCardRepository.findById(bankCardId)
-                .ifPresent(bankCard -> model.put("bankCard", bankCard));
-        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+    @GetMapping("{phoneId}/edit")
+    public String initEditForm(@PathVariable("phoneId") UUID phoneId, ModelMap model) {
+        phoneRepository.findById(phoneId)
+                .ifPresent(phone -> model.put("phone", phone));
+        return VIEWS_PHONE_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping({"new/used", "new/confiscated", "{bankCardId}/edit"})
     public String processForm(
-            @Valid BankCard bankCard,
+            @Valid Phone phone,
             BindingResult result,
             ModelMap model) {
         if (result.hasErrors()) {
-            model.put("bankCard", bankCard);
-            return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+            model.put("phone", phone);
+            return VIEWS_PHONE_CREATE_OR_UPDATE_FORM;
         }
         else {
-            this.bankCardRepository.save(bankCard);
+            this.phoneRepository.save(phone);
             return "redirect:/breach/{breachId}";
         }
     }
 
-    @GetMapping("{bankCardId}/delete")
-    public String deleteForm(@PathVariable("bankCardId") UUID bankCardId) {
-        this.bankCardRepository.deleteById(bankCardId);
+    @GetMapping("{phoneId}/delete")
+    public String deleteForm(@PathVariable("phoneId") UUID phoneId) {
+        this.phoneRepository.deleteById(phoneId);
         return "redirect:/breach/{breachId}";
     }
 

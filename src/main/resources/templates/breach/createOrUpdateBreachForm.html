@@ -1,7 +1,7 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
+<!--/*@thymesVar id="breach" type="ua.gov.cyberpolice.breach.entity.Breach"*/-->
 <body>
-  <!--/*@thymesVar id="breach" type="ua.gov.cyberpolice.breach.entity.Breach"*/-->
   <form th:object="${breach}" class="form-horizontal" id="add-breach-form" method="post" autocomplete="off">
     <input hidden th:field="${breach.id}">
     <div class="form-group has-feedback">
@@ -107,8 +107,9 @@
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped">
+              <table class="table table-striped"  th:if="${!breach.participants.isEmpty()}">
                 <tr>
+                  <th class="glyphicon glyphicon-user"></th>
                   <th th:text="#{participant.type}"></th>
                   <th th:text="#{person.passport}"></th>
                   <th th:text="#{person.lastName}"></th>
@@ -120,6 +121,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="participant : ${breach.participants}">
+                  <td></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${participant.participantType.name}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.passport}"></td>
                   <td style="white-space: nowrap" th:text=" ${participant.person?.lastName}"></td>
@@ -148,38 +150,18 @@
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
                 <li>
-                  <a th:href="@{{breachId}/bank-card/new/used(breachId=${breach.id})}" title="додати картку">
+                  <a th:href="@{{breachId}/bank-card/new/breach(breachId=${breach.id})}" title="додати картку">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
                     <span>картку</span>
                   </a>
                 </li>
-                <li class="active">
-                  <a href="/breach/find" title="додати телефон">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                    <span>телефон</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/vets.html" title="veterinarians">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon  glyphicon-user" aria-hidden="true"></span>
-                    <span>особу</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/oups" title="trigger a RuntimeException to see how it is handled">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon  glyphicon-warning-sign" aria-hidden="true"></span>
-                    <span>Error</span>
-                  </a>
-                </li>
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped">
+              <table class="table table-striped"  th:if="${!breach.usedBankCards.isEmpty()}">
                 <tr>
+                  <th class="glyphicon glyphicon-credit-card"></th>
                   <th th:text="#{bankCard.cardNumber}"></th>
                   <th th:text="#{bankCard.bankName}"></th>
                   <th th:text="#{person.passport}"></th>
@@ -191,6 +173,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.usedBankCards}">
+                  <td></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
@@ -225,31 +208,26 @@
                   </a>
                 </li>
                 <li class="active">
-                  <a href="/breach/find" title="додати телефон">
+                  <a th:href="@{{breachId}/phone/new/confiscated(breachId=${breach.id})}" title="додати телефон">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                     <span>телефон</span>
                   </a>
                 </li>
                 <li>
-                  <a href="/vets.html" title="veterinarians">
+                  <a th:href="@{{breachId}/sim-card/new/confiscated(breachId=${breach.id})}" title="додати sim карту">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon  glyphicon-user" aria-hidden="true"></span>
-                    <span>особу</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="/oups" title="trigger a RuntimeException to see how it is handled">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon  glyphicon-warning-sign" aria-hidden="true"></span>
-                    <span>Error</span>
+                    <span class="glyphicon  glyphicon-signal" aria-hidden="true"></span>
+                    <span>SIM карту</span>
                   </a>
                 </li>
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped">
+              <!--/*@thymesVar id="bankCard" type="ua.gov.cyberpolice.breach.entity.BankCard"*/-->
+              <table class="table table-striped" th:if="${!breach.confiscatedBankCards.isEmpty()}">
                 <tr>
+                  <th class="glyphicon glyphicon-credit-card"></th>
                   <th th:text="#{bankCard.cardNumber}"></th>
                   <th th:text="#{bankCard.bankName}"></th>
                   <th th:text="#{person.passport}"></th>
@@ -261,6 +239,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.confiscatedBankCards}">
+                  <td></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
@@ -272,6 +251,72 @@
                   bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!--/*@thymesVar id="phone" type="ua.gov.cyberpolice.breach.entity.Phone"*/-->
+              <table class="table table-striped" th:if="${!breach.confiscatedPhones.isEmpty()}">
+                <tr>
+                  <th class="glyphicon glyphicon-phone"></th>
+                  <th th:text="#{phone.imei1}"></th>
+                  <th th:text="#{phone.imei2}"></th>
+                  <th th:text="#{person.passport}"></th>
+                  <th th:text="#{person.lastName}"></th>
+                  <th th:text="#{person.firstName}"></th>
+                  <th th:text="#{person.middleName}"></th>
+                  <th th:text="#{person.birthDate}"></th>
+                  <th th:text="#{person.address}"></th>
+                  <th></th>
+                </tr>
+                <tr th:each="phone : ${breach.confiscatedPhones}">
+                  <td></td>
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei1}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei2}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${phone.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text=" ${phone.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${phone.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${phone.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${phone.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${phone.holder?.region?.name + ', ' + phone.holder?.city + ', ' +
+                  phone.holder?.street + ' ' + phone.holder?.house + ' КВ.' + phone.holder?.apartment}"></td>
+                  <td style="width: 30px" >
+                    <a th:href="@{{breachId}/phone/{phoneId}/edit(breachId=${breach.id},phoneId=${phone.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!--/*@thymesVar id="simCard" type="ua.gov.cyberpolice.breach.entity.SimCard"*/-->
+              <table class="table table-striped" th:if="${!breach.confiscatedSimCards.isEmpty()}">
+                <tr>
+                  <th class="glyphicon glyphicon-signal"></th>
+                  <th th:text="#{simCard.phoneNumber}"></th>
+                  <th th:text="#{simCard.iccid}"></th>
+                  <th th:text="#{person.passport}"></th>
+                  <th th:text="#{person.lastName}"></th>
+                  <th th:text="#{person.firstName}"></th>
+                  <th th:text="#{person.middleName}"></th>
+                  <th th:text="#{person.birthDate}"></th>
+                  <th th:text="#{person.address}"></th>
+                  <th></th>
+                </tr>
+                <tr th:each="simCard : ${breach.confiscatedSimCards}">
+                  <td></td>
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.phoneNumber}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.iccid}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${simCard.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text=" ${simCard.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${simCard.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text=" ${simCard.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text=" ${simCard.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${simCard.holder?.region?.name + ', ' + simCard.holder?.city + ', ' +
+                  simCard.holder?.street + ' ' + simCard.holder?.house + ' КВ.' + simCard.holder?.apartment}"></td>
+                  <td style="width: 30px" >
+                    <a th:href="@{{breachId}/sim-card/{simCardId}/edit(breachId=${breach.id},simCardId=${simCard.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                   </td>

@@ -6,33 +6,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.gov.cyberpolice.breach.entity.BankCard;
 import ua.gov.cyberpolice.breach.entity.Breach;
 import ua.gov.cyberpolice.breach.entity.Person;
-import ua.gov.cyberpolice.breach.repository.BankCardRepository;
-import ua.gov.cyberpolice.breach.repository.BreachRepository;
-import ua.gov.cyberpolice.breach.repository.PersonRepository;
-import ua.gov.cyberpolice.breach.repository.RegionRepository;
+import ua.gov.cyberpolice.breach.entity.SimCard;
+import ua.gov.cyberpolice.breach.repository.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/breach/{breachId}/bank-card")
-public class BankCardController {
-    private static final String VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateBankCardForm";
+@RequestMapping("/breach/{breachId}/sim-card")
+public class SimCardController {
+    private static final String VIEWS_SIM_CARD_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateSimCardForm";
 
     private final BreachRepository breachRepository;
-    private final BankCardRepository bankCardRepository;
+    private final SimCardRepository simCardRepository;
     private final RegionRepository regionRepository;
     private final PersonRepository personRepository;
 
-    public BankCardController(
+    public SimCardController(
             BreachRepository breachRepository,
-            BankCardRepository bankCardRepository,
+            SimCardRepository simCardRepository,
             RegionRepository regionRepository,
             PersonRepository personRepository) {
-        this.bankCardRepository = bankCardRepository;
+        this.simCardRepository = simCardRepository;
         this.breachRepository = breachRepository;
         this.regionRepository = regionRepository;
         this.personRepository = personRepository;
@@ -46,47 +43,47 @@ public class BankCardController {
 
     @GetMapping("new/{type}")
     public String initCreationForm(Breach breach, @PathVariable("type") String type, ModelMap model) {
-        BankCard bankCard = new BankCard();
+        SimCard simCard = new SimCard();
         Person person = new Person();
 
         regionRepository.findById("8000000000")
                 .ifPresent(person::setRegion);
         if ("used".equals(type)) {
-            bankCard.setBreachId(breach.getId());
+            simCard.setBreachId(breach.getId());
         }
         if ("confiscated".equals(type)) {
-            bankCard.setConfiscatedId(breach.getId());
+            simCard.setConfiscatedId(breach.getId());
         }
 
-        model.put("bankCard", bankCard);
-        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+        model.put("simCard", simCard);
+        return VIEWS_SIM_CARD_CREATE_OR_UPDATE_FORM;
     }
 
-    @GetMapping("{bankCardId}/edit")
-    public String initEditForm(@PathVariable("bankCardId") UUID bankCardId, ModelMap model) {
-        bankCardRepository.findById(bankCardId)
-                .ifPresent(bankCard -> model.put("bankCard", bankCard));
-        return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+    @GetMapping("{simCardId}/edit")
+    public String initEditForm(@PathVariable("simCardId") UUID simCardId, ModelMap model) {
+        simCardRepository.findById(simCardId)
+                .ifPresent(simCard -> model.put("simCard", simCard));
+        return VIEWS_SIM_CARD_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping({"new/used", "new/confiscated", "{bankCardId}/edit"})
     public String processForm(
-            @Valid BankCard bankCard,
+            @Valid SimCard simCard,
             BindingResult result,
             ModelMap model) {
         if (result.hasErrors()) {
-            model.put("bankCard", bankCard);
-            return VIEWS_BANK_CARD_CREATE_OR_UPDATE_FORM;
+            model.put("simCard", simCard);
+            return VIEWS_SIM_CARD_CREATE_OR_UPDATE_FORM;
         }
         else {
-            this.bankCardRepository.save(bankCard);
+            this.simCardRepository.save(simCard);
             return "redirect:/breach/{breachId}";
         }
     }
 
-    @GetMapping("{bankCardId}/delete")
-    public String deleteForm(@PathVariable("bankCardId") UUID bankCardId) {
-        this.bankCardRepository.deleteById(bankCardId);
+    @GetMapping("{simCardId}/delete")
+    public String deleteForm(@PathVariable("simCardId") UUID simCardId) {
+        this.simCardRepository.deleteById(simCardId);
         return "redirect:/breach/{breachId}";
     }
 

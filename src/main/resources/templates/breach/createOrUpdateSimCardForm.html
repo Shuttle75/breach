@@ -1,44 +1,34 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
-  <!--/*@thymesVar id="phone" type="ua.gov.cyberpolice.breach.entity.Phone"*/-->
-  <form th:object="${phone}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
+  <!--/*@thymesVar id="simCard" type="ua.gov.cyberpolice.breach.entity.SimCard"*/-->
+  <form th:object="${simCard}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
     <div class="form-group has-feedback">
       <div class="panel panel-default">
-        <input hidden th:field="${phone.id}">
-        <input hidden th:field="${phone.breachId}">
-        <input hidden th:field="${phone.confiscatedId}">
-        <input hidden th:field="${phone.holder}">
-        <div class="panel-heading" th:text="#{phone}"></div>
+        <input hidden th:field="${simCard.id}">
+        <input hidden th:field="${simCard.breachId}">
+        <input hidden th:field="${simCard.confiscatedId}">
+        <input hidden th:field="${simCard.holder}">
+        <div class="panel-heading" th:text="#{simCard}"></div>
         <div class="panel-body">
           <div class="row">
-            <label class="control-label col-md-1" th:text="#{phone.imei1}"></label>
-            <div th:class="${'col-md-2' + (!#fields.hasErrors('imei1') ? '' : ' has-error')}">
+            <label class="control-label col-md-1" th:text="#{simCard.phoneNumber}"></label>
+            <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.imei1}"
-                     placeholder="AA BBBBBB CCCCCC D"
-                     maxlength="18"
-                     size="18"
-                     pattern="^([0-9]{2}[ ])([0-9]{6}[ ]){2}([0-9])$"/>
-              <span class="help-inline" th:errors="${phone.imei1}">Error</span>
+                     th:field="${simCard.phoneNumber}"/>
             </div>
-            <label class="control-label col-md-1" th:text="#{phone.imei2}"></label>
-            <div th:class="${'col-md-2' + (!#fields.hasErrors('imei1') ? '' : ' has-error')}">
+            <label class="control-label col-md-1" th:text="#{simCard.iccid}"></label>
+            <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.imei2}"
-                     placeholder="AA BBBBBB CCCCCC D"
-                     maxlength="18"
-                     size="18"
-                     pattern="^([0-9]{2}[ ])([0-9]{6}[ ]){2}([0-9])$"/>
-              <span class="help-inline" th:errors="${phone.imei1}">Error</span>
+                     th:field="${simCard.iccid}"/>
             </div>
           </div>
         </div>
       </div>
       <div class="panel panel-default">
-        <input hidden th:field="${phone.holder.id}">
+        <input hidden th:field="${simCard.holder.id}">
         <div class="panel-heading" th:text="#{holder}"></div>
         <div class="panel-body">
           <div class="row">
@@ -46,7 +36,7 @@
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.passport}"
+                     th:field="${simCard.holder.passport}"
                      onkeyup="this.value = this.value.toUpperCase();"
                      onblur="updatePerson()"/>
             </div>
@@ -55,7 +45,7 @@
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.lastName}"
+                     th:field="${simCard.holder.lastName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1"
@@ -63,7 +53,7 @@
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.firstName}"
+                     th:field="${simCard.holder.firstName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1"
@@ -71,7 +61,7 @@
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.middleName}"
+                     th:field="${simCard.holder.middleName}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
@@ -81,12 +71,12 @@
             <div class="col-md-2">
               <input class="form-control"
                      type="date"
-                     th:field="${phone.holder.birthDate}"/>
+                     th:field="${simCard.holder.birthDate}"/>
             </div>
             <label class="control-label col-md-offset-3 col-md-1"
                    th:text="#{person.region}"></label>
             <div class="col-md-5">
-              <select class="form-control" th:field="${phone.holder.region}">
+              <select class="form-control" th:field="${simCard.holder.region}">
                 <option th:each="region : ${@regionRepository.findAll()}"
                         th:value="${region.id}"
                         th:text="${region.name}">
@@ -100,7 +90,7 @@
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.city}"
+                     th:field="${simCard.holder.city}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1"
@@ -108,7 +98,7 @@
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.street}"
+                     th:field="${simCard.holder.street}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1"
@@ -116,7 +106,7 @@
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.house}"
+                     th:field="${simCard.holder.house}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1"
@@ -124,12 +114,12 @@
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
-                     th:field="${phone.holder.apartment}"
+                     th:field="${simCard.holder.apartment}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
           </div>
         </div>
-        <div th:if="${phone.id}" class="panel-footer">
+        <div th:if="${simCard.id}" class="panel-footer">
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dialogDelete">
             <span class="glyphicon glyphicon-remove"></span>
           </button>
@@ -167,15 +157,6 @@
 </body>
 </html>
 <script>
-  document.getElementById('imei1').addEventListener('input', ev => addSpaces4EMEI(ev));
-  document.getElementById('imei2').addEventListener('input', ev => addSpaces4EMEI(ev));
-
-  function addSpaces4EMEI(e) {
-    var target = e.target, position = target.selectionEnd, length = target.value.length;
-    target.value = target.value.replace(/\s/g, '').replace(/(\d{2})(\d{6})(\d{6})(\d)/g, '$1 $2 $3 $4').trim();
-    target.selectionEnd = position += ((target.value.charAt(position - 1) === ' ' && target.value.charAt(length - 1) === ' ' && length !== target.value.length) ? 1 : 0);
-  }
-
   function updatePerson() {
     if (document.getElementById('holder').value === "" && document.getElementById('holder.passport').value !== "") {
       const request = new XMLHttpRequest();

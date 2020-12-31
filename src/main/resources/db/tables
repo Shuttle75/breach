@@ -136,17 +136,19 @@ CREATE TABLE breach.bank_card
         constraint bank_card_pk primary key,
     card_number    text not null,
     bank_name      text,
-    used_id        uuid,
+    breach_id      uuid,
     confiscated_id uuid,
     holder_id      uuid
 );
 ALTER TABLE breach.bank_card OWNER TO postgres;
-INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('0e56f7fd-accb-4a79-8330-2c6526b99bcd', '2222-2222-2222-2222', 'ПРИВАТ', '75642232-da09-4a96-9ed3-102774d69c09', null, 'a97dcc2b-4cbc-4b9a-8f43-1956c223a9eb');
-INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('f1364338-a0fd-4d0b-852e-faa8322b0a5f', '5555-5555-5555-5555', 'АВАЛЬ', '75642232-da09-4a96-9ed3-102774d69c09', null, '5ba9307c-8c60-4753-b5cd-8c41ecb83c5a');
-INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('c92710de-62b5-49a1-8554-fadffe738714', '3333-3333-3333-3333', 'SSSSSSSSSSSSSSSSSSS', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, 'a2d7ca09-ecbb-4fcc-892a-325a5a937e5e');
-INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('c002455f-141a-40a1-b1f1-22ada0f524d1', '6666-6666-6666-6666', 'АВАЛЬ', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '8a08eddb-01fb-4e6c-b2e0-13645584ac47');
-INSERT INTO breach.bank_card (id, card_number, bank_name, used_id, confiscated_id, holder_id) VALUES ('bd847b7a-40c4-49e2-9384-5b63982197e0', '1111-1111-1111-1111', 'ПЕРШИЙ БАНК', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '11c886c7-2c9f-4163-aedf-478996cb8839');
-
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('0e56f7fd-accb-4a79-8330-2c6526b99bcd', '2222-2222-2222-2222', 'ПРИВАТ', '75642232-da09-4a96-9ed3-102774d69c09', null, 'a97dcc2b-4cbc-4b9a-8f43-1956c223a9eb');
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('f1364338-a0fd-4d0b-852e-faa8322b0a5f', '5555-5555-5555-5555', 'АВАЛЬ', '75642232-da09-4a96-9ed3-102774d69c09', null, '5ba9307c-8c60-4753-b5cd-8c41ecb83c5a');
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('92b52e34-a0da-4bf0-8dc3-9f96014174bd', '2222-2222-2222-2222', 'SSSSSSSSSSSS', null, '75642232-da09-4a96-9ed3-102774d69c09', 'f0bf0e2b-a571-4294-95ee-efefd15dc019');
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('bd847b7a-40c4-49e2-9384-5b63982197e0', '2345123412341234', 'ПЕРШИЙ БАНК', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '11c886c7-2c9f-4163-aedf-478996cb8839');
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('012269bf-845f-4c69-9dba-d54946309684', '3456345634563456', 'СЕВЕРНЫЙ', null, '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', '126d6056-7cf6-4939-82e9-78cd468c131f');
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('26b2c506-91ec-4230-8c00-16cccda63009', '2222333334444444', '3333333', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '7310c76f-ea86-41c6-bb17-0ea399da5e74');
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('50fdbe68-08b8-4bce-8fc7-b60f130b6d60', '1234567812345678', '', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '10f7cd3d-3d38-489a-a8b9-6870fa698883');
+INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('c92710de-62b5-49a1-8554-fadffe738714', '1111111111111111', 'SSSSSSSSSSSSSSSSSSS', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, 'a2d7ca09-ecbb-4fcc-892a-325a5a937e5e');
 
 
 drop table breach.region;
@@ -191,11 +193,25 @@ CREATE TABLE breach.phone
 (
     id             uuid not null
         constraint phone_pk primary key,
-    imei_1         text,
-    imei_2         text,
+    imei1          text,
+    imei2          text,
     mac            text,
+    breach_id      uuid,
+    confiscated_id uuid,
     holder_id      uuid
 );
 ALTER TABLE breach.phone OWNER TO postgres;
 
+DROP TABLE IF EXISTS breach.sim_card;
+CREATE TABLE breach.sim_card
+(
+    id             uuid not null
+        constraint sim_card_pk primary key,
+    phone_number   text,
+    iccid          text,
+    breach_id      uuid,
+    confiscated_id uuid,
+    holder_id      uuid
+);
+ALTER TABLE breach.sim_card OWNER TO postgres;
 

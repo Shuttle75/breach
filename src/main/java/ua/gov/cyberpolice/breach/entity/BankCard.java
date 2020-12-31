@@ -21,7 +21,7 @@ public class BankCard extends BaseEntity {
     private String bankName;
 
     @Column
-    private UUID usedId;
+    private UUID breachId;
 
     @Column
     private UUID confiscatedId;
