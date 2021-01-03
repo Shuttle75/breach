@@ -215,3 +215,18 @@ CREATE TABLE breach.sim_card
 );
 ALTER TABLE breach.sim_card OWNER TO postgres;
 
+DROP TABLE IF EXISTS breach.call_data_record;
+CREATE TABLE breach.call_data_record
+(
+    id             uuid not null
+        constraint call_data_record_pk primary key,
+    type           text,
+    date           timestamp,
+    imsi           text,
+    imei           text,
+    originator     text,
+    terminator     text,
+    base_station   text,
+    breach_id      uuid
+);
+ALTER TABLE breach.call_data_record OWNER TO postgres;

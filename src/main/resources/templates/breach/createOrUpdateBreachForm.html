@@ -107,6 +107,7 @@
               </ul>
             </div>
             <div class="col-md-11">
+              <!--/*@thymesVar id="participant" type="ua.gov.cyberpolice.breach.entity.Participant"*/-->
               <table class="table table-striped"  th:if="${!breach.participants.isEmpty()}">
                 <tr>
                   <th class="glyphicon glyphicon-user"></th>
@@ -121,7 +122,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="participant : ${breach.participants}">
-                  <td></td>
+                  <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${participant.participantType.name}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.passport}"></td>
                   <td style="white-space: nowrap" th:text=" ${participant.person?.lastName}"></td>
@@ -156,10 +157,17 @@
                     <span>картку</span>
                   </a>
                 </li>
+                <li>
+                  <a th:href="@{{breachId}/call-data-record/new(breachId=${breach.id})}" title="додати дзвінок">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                    <span>дзвінок</span>
+                  </a>
+                </li>
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped"  th:if="${!breach.usedBankCards.isEmpty()}">
+              <table class="table table-striped" th:if="${!breach.usedBankCards.isEmpty()}">
                 <tr>
                   <th class="glyphicon glyphicon-credit-card"></th>
                   <th th:text="#{bankCard.cardNumber}"></th>
@@ -173,7 +181,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.usedBankCards}">
-                  <td></td>
+                  <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
@@ -185,6 +193,35 @@
                   bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <table class="table table-striped" th:if="${!breach.usedCallDataRecords.isEmpty()}">
+                <tr>
+                  <th class="glyphicon glyphicon-earphone"></th>
+                  <th th:text="#{callDataRecord.type}"></th>
+                  <th th:text="#{callDataRecord.date}"></th>
+                  <th th:text="#{callDataRecord.imei}"></th>
+                  <th th:text="#{callDataRecord.imsi}"></th>
+                  <th th:text="#{callDataRecord.originator}"></th>
+                  <th th:text="#{callDataRecord.terminator}"></th>
+                  <th th:text="#{callDataRecord.base_station}"></th>
+                  <th></th>
+                </tr>
+                <tr th:each="callDataRecord : ${breach.usedCallDataRecords}">
+                  <td style="width: 40px"></td>
+                  <td style="width: 200px" th:text="${callDataRecord.type}"></td>
+                  <td style="width: 200px" th:text="${callDataRecord.date}"></td>
+                  <td style="width: 200px" th:text="${callDataRecord.imei}"></td>
+                  <td style="width: 200px" th:text="${callDataRecord.imsi}"></td>
+                  <td th:text="${callDataRecord.originator}"></td>
+                  <td th:text="${callDataRecord.terminator}"></td>
+                  <td style="width: 200px" th:text="${callDataRecord.baseStation}"></td>
+                  <td style="width: 30px" >
+                    <a th:href="@{{breachId}/call-data-record/{cdrId}/edit(breachId=${breach.id},cdrId=${callDataRecord.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                   </td>
@@ -239,7 +276,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.confiscatedBankCards}">
-                  <td></td>
+                  <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
@@ -272,7 +309,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="phone : ${breach.confiscatedPhones}">
-                  <td></td>
+                  <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei1}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei2}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${phone.holder?.passport}"></td>
@@ -305,7 +342,7 @@
                   <th></th>
                 </tr>
                 <tr th:each="simCard : ${breach.confiscatedSimCards}">
-                  <td></td>
+                  <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.phoneNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.iccid}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text=" ${simCard.holder?.passport}"></td>
