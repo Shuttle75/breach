@@ -20,12 +20,6 @@ public class BankCard extends BaseEntity {
     @Column
     private String bankName;
 
-    @Column
-    private UUID breachId;
-
-    @Column
-    private UUID confiscatedId;
-
     @OneToOne(cascade = CascadeType.PERSIST)
     private Person holder;
 

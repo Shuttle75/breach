@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -14,12 +13,12 @@ import java.util.UUID;
 @Table(name = "call_data_record", schema = "breach")
 public class CallDataRecord extends BaseEntity {
 
-    @Column
-    private String type;
-
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column
     private LocalDateTime date;
+
+    @Column
+    private String type;
 
     @Column
     private String imsi;
@@ -34,8 +33,16 @@ public class CallDataRecord extends BaseEntity {
     private String terminator;
 
     @Column
-    private String baseStation;
+    private String cellAddress;
 
     @Column
-    private UUID breachId;
+    private Float cellLatitude;
+
+    @Column
+    private Float cellLongitude;
+
+    @Column
+    private Float cellAzimuth;
+
+
 }

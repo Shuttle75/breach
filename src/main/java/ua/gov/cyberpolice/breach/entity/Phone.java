@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -20,12 +19,6 @@ public class Phone extends BaseEntity {
 
     @Column
     private String mac;
-
-    @Column
-    private UUID breachId;
-
-    @Column
-    private UUID confiscatedId;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private Person holder;

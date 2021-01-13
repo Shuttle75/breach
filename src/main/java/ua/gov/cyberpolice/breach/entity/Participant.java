@@ -14,9 +14,6 @@ import java.util.UUID;
 @Table(name = "participant", schema = "breach")
 public class Participant extends BaseEntity {
 
-    @Column
-    private UUID breachId;
-
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Person person;
 

@@ -16,12 +16,23 @@ public class BaseEntity implements Serializable {
 	@Column(name = "id", updatable = false, nullable = false)
 	private UUID id;
 
+	@Column
+	private UUID headId;
+
 	public UUID getId() {
 		return id;
 	}
 
 	public void setId(UUID id) {
 		this.id = id;
+	}
+
+	public UUID getHeadId() {
+		return headId;
+	}
+
+	public void setHeadId(UUID headId) {
+		this.headId = headId;
 	}
 
 	public boolean isNew() {

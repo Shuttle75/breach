@@ -49,4 +49,8 @@ public class Person extends BaseEntity {
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime modified;
+
+    public String getAddress() {
+        return region.getName() + ", " + city + ", " + street + " " + house + ", КВ." + apartment;
+    }
 }

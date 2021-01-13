@@ -1,154 +1,219 @@
-drop table if exists breach;
-create table breach
+DROP TABLE IF EXISTS breach.breach;
+CREATE TABLE breach.breach
 (
-    id             uuid not null
-        constraint breach_pk primary key,
-    sent_id        integer,
-    sent_number    text,
-    sent_date      timestamp,
-    income_number  text,
-    income_date    timestamp,
-    eo_number      text,
-    eo_date        timestamp,
-    erdr_number    text,
-    erdr_date      timestamp,
-    erdr_article   text,
-    method_id      integer not null,
-    region_id      text not null,
-    story          text,
-    oper_info      text
+    id                  uuid not null constraint breach_pk primary key,
+    head_id             uuid,
+    breach_method_id    int not null,
+    sent_id             integer,
+    sent_number         text,
+    sent_date           timestamp,
+    income_number       text,
+    income_date         timestamp,
+    eo_number           text,
+    eo_date             timestamp,
+    erdr_number         text,
+    erdr_date           timestamp,
+    erdr_article        text,
+    region_id           text not null,
+    story               text,
+    oper_info           text
 );
-alter table breach owner to postgres;
+ALTER TABLE breach.breach OWNER TO postgres;
 
-INSERT INTO breach.breach (id, sent_id, sent_number, sent_date, income_number, income_date, eo_number, eo_date, erdr_number, erdr_date, erdr_article, method_id, region_id, story, oper_info)VALUES ('8a719835-941d-48fa-b2dc-3d81c8023dfe', 11, '', null, '11', '2020-10-24 11:37:00.000000', '11', '2020-10-24 11:37:00.000000', '11', '2020-10-24 11:37:00.000000', '', 1, null, 'qqqqqqqqqqqqqqqqqqqqqq', null);
-INSERT INTO breach.breach (id, sent_id, sent_number, sent_date, income_number, income_date, eo_number, eo_date, erdr_number, erdr_date, erdr_article, method_id, region_id, story, oper_info)VALUES ('ad428b8c-a0fe-4ee2-a716-657f0042d11c', 11, '', null, '11', '2020-10-10 11:35:00.000000', '11', '2020-10-24 11:35:00.000000', '11', '2020-10-24 11:35:00.000000', '', 2, null, '', null);
-
-drop table if exists breach.person;
-create table breach.person
+DROP TABLE IF EXISTS breach.person;
+CREATE TABLE breach.person
 (
-    id          uuid not null
-        constraint person_pk primary key,
-    passport    text not null,
-    last_name   text not null,
-    first_name  text not null,
-    middle_name text,
-    birth_date  timestamp,
-    region_id   text,
-    city        text,
-    street      text,
-    house       text,
-    apartment   text,
-    email       text,
-    modified    timestamp not null default CURRENT_TIMESTAMP
+    id                  uuid not null constraint person_pk primary key,
+    head_id             uuid,
+    passport            text not null,
+    last_name           text not null,
+    first_name          text not null,
+    middle_name         text,
+    birth_date          timestamp,
+    region_id           text,
+    city                text,
+    street              text,
+    house               text,
+    apartment           text,
+    email               text,
+    modified            timestamp not null default CURRENT_TIMESTAMP
 );
-alter table breach.person owner to postgres;
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('a97dcc2b-4cbc-4b9a-8f43-1956c223a9eb', 'СС123456', 'ПЕТРОВ', 'ПЕТРО', 'ПЕТРОВИЧ', null, '8000000000', '', 'ЛЕНИНА', '12', '12', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('5ba9307c-8c60-4753-b5cd-8c41ecb83c5a', 'СС555555', 'ИВАНОВ', 'ИВАН', 'ИВАНОВИЧ', null, '8000000000', '', 'ФЕЛЬДМАНА', '11', '1', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('688e4c8a-c1a1-4722-b06f-19c43de75ec6', '1111', 'sssssssssssss', 'sssssssssssssssssssssss', 'SSSSSSS', null, '8000000000', 'SSSSSSS', 'SSSSSS', '11', '11', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('7480ab48-c813-4588-ba74-3988feefe392', '22222', 'dddddddddddddddddd', 'ddddddddddddddddd', 'dddddddddddddddddddddd', null, '8500000000', 'DDDDDDDDDDDDDDDDD', 'dddddddddddd', 'ddddddddddddddddd', 'DDDD', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('80bf0ddc-8a0c-4d0d-964b-0e505c92d32b', 'SSSSSSSSSS', 'sssssssssssssssssssssssssssss', 'SSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSS', null, '1200000000', 'SSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSS', 'SSSSSSSSSS', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('85907ab5-05e7-4a11-86dc-0c54880c95e6', 'SSSSSSSSSS', 'sssssssssssssssssssssssssssss', 'SSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSS', null, '1200000000', 'SSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSS', 'SSSSSSSSSS', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('e2c2d052-6acd-42ab-a48c-6c5891ec2dcb', 'SSSSSSSSSS', 'sssssssssssssssssssssssssssss', 'SSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSS', null, '1200000000', 'SSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSS', 'SSSSSSSSSS', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('968f958d-b472-4bd9-8c55-158bd1fb1786', 'SSSSSSSSSS', 'sssssssssssssssssssssssssssss', 'SSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSS', null, '1200000000', 'SSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSS', 'SSSSSSSSSS', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('9dc148ce-628e-4c8d-9212-8b0b40887897', 'SSSSSSSSSS', 'sssssssssssssssssssssssssssss', 'SSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSS', null, '1200000000', 'SSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSS', 'SSSSSSSSSS', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('ce802b5b-bdfc-4f75-ac09-08a40a150ef7', 'SSSSSSSSSS', 'sssssssssssssssssssssssssssss', 'SSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSS', null, '1200000000', 'SSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS', 'SSSSSSSSSSSSS', 'SSSSSSSSSS', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('126d6056-7cf6-4939-82e9-78cd468c131f', 'ВВ1919191', 'ГРИШИН', 'ГРИГОРИЙ', 'ГРИГОРЬЕВИЧ', '1975-01-01 00:00:00.000000', '8000000000', '', 'ГРИНЧЕНКО', '12', '122', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('a2d7ca09-ecbb-4fcc-892a-325a5a937e5e', 'CC1234566', 'ИВАНОВ', 'ИВАН', 'ИВАНОВИЧ', '1990-02-28 00:00:00.000000', '5600000000', 'ДНИПРО', 'ЛЕНИНА', '55', '22', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('b072fe33-930a-4b7e-ac89-0becb2da2ab4', '5555555', '55555555', '5555555', '55555', '2021-01-07 00:00:00.000000', '8000000000', '5555555555', '5555555', '55', '55', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('bc542a41-5683-40be-9652-cf7153ccd278', '222222', '222222222222', '2222222222222222222', '2222', null, '8000000000', '22', '2222222222222', '222', '22', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('11c886c7-2c9f-4163-aedf-478996cb8839', '11111', 'ПЕТРЕНКО', 'ПЕТР', 'ПЕТРОВИЧ', '2020-12-10 00:00:00.000000', '8000000000', '1111111111111', '11111111', '11', '11', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('a97f31c4-f3d2-443b-a6f9-b489a53708c3', 'CC123456', 'СИДОРОВ', 'СИДОР', 'СИДОРОВИЧ', '1985-01-30 00:00:00.000000', '8000000000', 'СИДОР', 'СИДОРОВА', '11', '22', null);
-INSERT INTO breach.person (id, passport, last_name, first_name, middle_name, birth_date, region_id, city, street, house, apartment, email) VALUES ('af90f597-6a8a-48bb-b4d5-2ef1cfd6afc7', 'ПП232323', 'ЛИБЕРМАН', 'ЕФИМ', 'СРУЛЕВИЧ', '1964-03-05 00:00:00.000000', '2300000000', 'БИШКЕК', 'ГОЛДИЧА', '22', '33', null);
+ALTER TABLE breach.person OWNER TO postgres;
 
-drop table if exists breach.participant;
-create table breach.participant
+DROP TABLE IF EXISTS breach.participant;
+CREATE TABLE breach.participant
 (
-    id                   uuid    not null
-        constraint participant_pk primary key,
-    breach_id            uuid    not null
+    id                  uuid not null constraint participant_pk primary key,
+    head_id             uuid not null
         constraint participant_breach_id_fk
             references breach.breach,
-    participant_type_id  int     not null
+    participant_type_id int not null
         constraint participant_type_id_fk
             references breach.participant_type,
-    person_id            uuid
+    person_id           uuid
         constraint participant_person_id_fk
-        references breach.person,
-    nsrd                 int
+            references breach.person,
+    nsrd                int
 );
 ALTER TABLE breach.participant OWNER TO postgres;
-INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('71822a0d-6874-47df-a3eb-8b7c7060152e', 'ad428b8c-a0fe-4ee2-a716-657f0042d11c', 1, '0a429e10-f099-4197-9db3-8e2f65fd0e0c', 1);
-INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('c4b52053-6660-45e2-a047-b6c1ff6cf27a', 'ad428b8c-a0fe-4ee2-a716-657f0042d11c', 1, 'b4f4be0a-01aa-417b-8be7-8a6f7892903a', 2);
-INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('ee268955-2857-4a8b-ad54-5f278d2e5c54', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', 1, 'e6131e95-b8d5-47aa-a6ba-cd63e2cb8e53', 3);
-INSERT INTO breach.participant (id, breach_id, participant_type_id, person_id, nsrd) VALUES ('ee5f4d8c-677a-4a10-9501-dce6ae3f8451', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', 2, 'b0338323-e37e-4285-825b-f273cb2e48a3', 4);
 
 
 
-
-drop table if exists breach.participant_type;
-create table breach.participant_type
+DROP TABLE IF EXISTS breach.participant_type;
+CREATE TABLE breach.participant_type
 (
-    id          int    not null
-        constraint participant_type_pk primary key,
-    name        text   not null
+    id                  int    not null constraint participant_type_pk primary key,
+    name                text   not null
 );
-alter table breach.participant_type owner to postgres;
-insert into breach.participant_type values (1, 'Заявник');
-insert into breach.participant_type values (2, 'Розшукувана особа');
+ALTER TABLE breach.participant_type OWNER TO postgres;
+
+INSERT INTO breach.participant_type VALUES (1, 'Заявник');
+INSERT INTO breach.participant_type VALUES (2, 'Розшукувана особа');
 
 
-drop table seized;
-create table seized
-(
-    id             uuid not null
-        constraint seized_pk primary key,
-    breach_id      integer
-);
-
-alter table seized
-    owner to postgres;
-
-
-
-drop table device;
-create table device
-(
-    id             uuid not null
-        constraint device_pk primary key,
-    type           integer,
-    mac_address    bigint,
-    imei1          bigint,
-    imei2          bigint,
-    ipv4           integer,
-    ipv6_high      bigint,
-    ipv6_low       bigint
-);
-
-alter table device
-    owner to postgres;
 
 
 
 DROP TABLE IF EXISTS breach.bank_card;
 CREATE TABLE breach.bank_card
 (
-    id             uuid not null
-        constraint bank_card_pk primary key,
-    card_number    text not null,
-    bank_name      text,
-    breach_id      uuid,
-    confiscated_id uuid,
-    holder_id      uuid
+    id                  uuid not null constraint bank_card_pk primary key,
+    head_id             uuid not null,
+    date                timestamp,
+    card_number         text not null,
+    bank_name           text,
+    holder_id           uuid
 );
 ALTER TABLE breach.bank_card OWNER TO postgres;
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('0e56f7fd-accb-4a79-8330-2c6526b99bcd', '2222-2222-2222-2222', 'ПРИВАТ', '75642232-da09-4a96-9ed3-102774d69c09', null, 'a97dcc2b-4cbc-4b9a-8f43-1956c223a9eb');
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('f1364338-a0fd-4d0b-852e-faa8322b0a5f', '5555-5555-5555-5555', 'АВАЛЬ', '75642232-da09-4a96-9ed3-102774d69c09', null, '5ba9307c-8c60-4753-b5cd-8c41ecb83c5a');
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('92b52e34-a0da-4bf0-8dc3-9f96014174bd', '2222-2222-2222-2222', 'SSSSSSSSSSSS', null, '75642232-da09-4a96-9ed3-102774d69c09', 'f0bf0e2b-a571-4294-95ee-efefd15dc019');
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('bd847b7a-40c4-49e2-9384-5b63982197e0', '2345123412341234', 'ПЕРШИЙ БАНК', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '11c886c7-2c9f-4163-aedf-478996cb8839');
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('012269bf-845f-4c69-9dba-d54946309684', '3456345634563456', 'СЕВЕРНЫЙ', null, '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', '126d6056-7cf6-4939-82e9-78cd468c131f');
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('26b2c506-91ec-4230-8c00-16cccda63009', '2222333334444444', '3333333', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '7310c76f-ea86-41c6-bb17-0ea399da5e74');
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('50fdbe68-08b8-4bce-8fc7-b60f130b6d60', '1234567812345678', '', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, '10f7cd3d-3d38-489a-a8b9-6870fa698883');
-INSERT INTO breach.bank_card (id, card_number, bank_name, breach_id, confiscated_id, holder_id) VALUES ('c92710de-62b5-49a1-8554-fadffe738714', '1111111111111111', 'SSSSSSSSSSSSSSSSSSS', '95f39d58-e0cf-4f67-b0c2-9fd828b2d693', null, 'a2d7ca09-ecbb-4fcc-892a-325a5a937e5e');
+
+DROP TABLE IF EXISTS breach.wallet;
+CREATE TABLE breach.wallet
+(
+    id                  uuid not null constraint wallet_pk primary key,
+    head_id             uuid not null,
+    date                timestamp,
+    payment_provider_id int not null,
+    wallet_number       text
+);
+ALTER TABLE breach.wallet OWNER TO postgres;
+
+DROP TABLE IF EXISTS breach.website;
+CREATE TABLE breach.website
+(
+    id                  uuid not null constraint website_pk primary key,
+    head_id             uuid not null,
+    date                timestamp,
+    link                text not null
+);
+ALTER TABLE breach.website OWNER TO postgres;
+
+DROP TABLE IF EXISTS breach.call_data_record;
+CREATE TABLE breach.call_data_record
+(
+    id                  uuid not null constraint call_data_record_pk primary key,
+    head_id             uuid not null,
+    date                timestamp,
+    type                text,
+    imsi                text,
+    imei                text,
+    originator          text,
+    terminator          text,
+    cell_address        text,
+    cell_latitude       float,
+    cell_longitude      float,
+    cell_azimuth        float
+);
+ALTER TABLE breach.call_data_record OWNER TO postgres;
+
+
+DROP TABLE IF EXISTS breach.config;
+CREATE TABLE breach.config
+(
+    id         text,
+    value      json
+);
+ALTER TABLE breach.config OWNER TO postgres;
+
+
+
+
+
+
+
+DROP TABLE IF EXISTS breach.confiscated;
+CREATE TABLE breach.confiscated
+(
+    id                  uuid not null constraint confiscated_pk primary key,
+    head_id             uuid not null,
+    date                timestamp,
+    region_id           text,
+    city                text,
+    street              text,
+    house               text,
+    apartment           text
+);
+ALTER TABLE breach.confiscated OWNER TO postgres;
+
+DROP TABLE IF EXISTS breach.phone;
+CREATE TABLE breach.phone
+(
+    id                  uuid not null constraint phone_pk primary key,
+    head_id             uuid not null,
+    imei1               text,
+    imei2               text,
+    mac                 text,
+    holder_id           uuid
+);
+ALTER TABLE breach.phone OWNER TO postgres;
+
+DROP TABLE IF EXISTS breach.sim_card;
+CREATE TABLE breach.sim_card
+(
+    id                  uuid not null constraint sim_card_pk primary key,
+    head_id             uuid not null,
+    phone_number        text,
+    iccid               text,
+    holder_id           uuid
+);
+ALTER TABLE breach.sim_card OWNER TO postgres;
+
+
+
+
+
+
+-- ******************************* dictionary *******************************
+
+drop table if exists breach.breach_type;
+create table breach.breach_type
+(
+    id             int not null constraint breach_type_pk primary key,
+    name           text
+);
+alter table breach.breach_type owner to postgres;
+
+INSERT INTO breach.breach_type (id, name) VALUES (1, 'Соцінженерія');
+INSERT INTO breach.breach_type (id, name) VALUES (2, 'Колл-центр');
+INSERT INTO breach.breach_type (id, name) VALUES (3, 'Телефонне шахрайство');
+INSERT INTO breach.breach_type (id, name) VALUES (4, 'Піраміда');
+
+drop table if exists breach.breach_method;
+create table breach.breach_method
+(
+    id             int not null constraint breach_method_pk primary key,
+    breach_type_id int not null,
+    name           text
+);
+alter table breach.breach_method owner to postgres;
+
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (1, 1, 'Соцінженерія 1');
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (2, 1, 'Соцінженерія 2');
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (3, 2, 'Колл-центр 1');
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (4, 2, 'Колл-центр 2');
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (5, 3, 'Телефонне шахрайство 1');
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (6, 3, 'Телефонне шахрайство 2');
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (7, 4, 'Піраміда 1');
+INSERT INTO breach.breach_method (id, breach_type_id, name) VALUES (8, 4, 'Піраміда 2');
 
 
 drop table breach.region;
@@ -166,67 +231,42 @@ FROM json_to_recordset((select value from breach.config where id = 'koatuu'))
 where level2 = '';
 
 
-drop table breach.config;
-create table breach.config
+DROP TABLE IF EXISTS breach.payment_provider;
+CREATE TABLE breach.payment_provider
 (
-    id         text,
-    value      json
+    id             int,
+    name           text,
+    website        text,
+    image          text,
+    local          boolean
 );
-alter table breach.config owner to postgres;
+ALTER TABLE breach.payment_provider OWNER TO postgres;
 
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (1, 'IBOX', 'ibox.ua', '', true);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (2, 'EsyPay', 'easypay.ua', '', true);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (3, 'Portmone', 'portmone.com.ua', '', true);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (4, 'iPay', 'ipay.ua', '', true);
 
-drop table breach.method;
-create table breach.method
-(
-    id   integer not null,
-    name text    not null
-);
-
-alter table breach.method owner to postgres;
-INSERT INTO breach.method (id, name) VALUES (1, 'Соцінженерія');
-INSERT INTO breach.method (id, name) VALUES (2, 'Колл-центр');
-INSERT INTO breach.method (id, name) VALUES (3, 'Телефонне шахрайство');
-INSERT INTO breach.method (id, name) VALUES (4, 'Піраміда');
-
-DROP TABLE IF EXISTS breach.phone;
-CREATE TABLE breach.phone
-(
-    id             uuid not null
-        constraint phone_pk primary key,
-    imei1          text,
-    imei2          text,
-    mac            text,
-    breach_id      uuid,
-    confiscated_id uuid,
-    holder_id      uuid
-);
-ALTER TABLE breach.phone OWNER TO postgres;
-
-DROP TABLE IF EXISTS breach.sim_card;
-CREATE TABLE breach.sim_card
-(
-    id             uuid not null
-        constraint sim_card_pk primary key,
-    phone_number   text,
-    iccid          text,
-    breach_id      uuid,
-    confiscated_id uuid,
-    holder_id      uuid
-);
-ALTER TABLE breach.sim_card OWNER TO postgres;
-
-DROP TABLE IF EXISTS breach.call_data_record;
-CREATE TABLE breach.call_data_record
-(
-    id             uuid not null
-        constraint call_data_record_pk primary key,
-    type           text,
-    date           timestamp,
-    imsi           text,
-    imei           text,
-    originator     text,
-    terminator     text,
-    base_station   text,
-    breach_id      uuid
-);
-ALTER TABLE breach.call_data_record OWNER TO postgres;
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (100, 'Perfect Money', 'perfectmoney.is ', 'perfectmoney.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (101, 'Payeer', 'payeer.com', 'payeer.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (102, 'PayPal', 'paypal.com', 'paypal.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (103, 'WebMoney', 'webmoney.ru', 'webmoney.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (104, 'QIWI', 'qiwi.com', 'qiwi.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (105, 'AdvCash', 'advcash.com', 'advcash.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (106, 'Yandex', 'money.yandex.ru', 'yandex.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (107, 'Payoneer', 'payoneer.com', 'payoneer.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (108, 'Neteller', 'neteller.com', 'neteller.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (109, 'WUnion', 'westernunion.com', 'western union.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (110, 'PaySera', 'paysera.com', 'paysera.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (111, 'Paxum', 'paxum.com', 'paxum.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (112, 'Alipay', 'alipay.com', 'alipay.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (113, 'Capitalist', 'capitalist.net', 'capitalist.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (114, 'AstroPay', 'astropay.com', 'astropay.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (115, 'MoneyGram', 'moneygram.com', 'moneygram.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (116, 'FasaPay', 'fasapay.com', 'fasapay.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (117, 'Paymer', 'paymer.com', 'paymer.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (118, 'Ria Money Transfers', 'riamoneytransfer.com', 'ria.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (119, 'SolidTrust Pay', 'solidtrustpay.com', 'solidtrustpay.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (120, 'Union Pay', 'unionpayintl.com', 'unionpay.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (121, 'Payza', 'payza.com', 'payza.png', false);
+INSERT INTO breach.payment_provider (id, name, website, image, local) VALUES (122, 'LiqPay', 'liqpay.com', 'liqpay.png', false);

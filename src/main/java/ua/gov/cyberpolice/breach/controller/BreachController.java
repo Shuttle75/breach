@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.gov.cyberpolice.breach.entity.Breach;
 import ua.gov.cyberpolice.breach.repository.BreachRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -30,30 +30,25 @@ public class BreachController {
     @GetMapping("/breach/new")
     public String initCreationForm(Map<String, Object> model) {
         Breach breach = new Breach();
-        breach.setUsedBankCards(new ArrayList<>());
-        breach.setUsedBankCards(new ArrayList<>());
+        breach.setParticipants(new ArrayList<>());
+        breach.setBankCards(new ArrayList<>());
+        breach.setCallDataRecords(new ArrayList<>());
+        breach.setConfiscated(new ArrayList<>());
 
         model.put("breach", breach);
         return VIEWS_BREACH_CREATE_OR_UPDATE_FORM;
     }
 
     @PostMapping("/breach/new")
-    public String processCreationForm(@Valid Breach breach, BindingResult result) {
+    public String processCreationForm(@Valid Breach breach, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return VIEWS_BREACH_CREATE_OR_UPDATE_FORM;
         }
         else {
-            this.breachRepository.save(breach);
-            return "redirect:/breach";
+            Breach savedBreach = this.breachRepository.save(breach);
+            redirectAttributes.addAttribute("breachId", savedBreach.getId());
+            return "redirect:/breach/{breachId}";
         }
-    }
-
-    @GetMapping("/breach")
-    public String processFindForm(Breach breach, BindingResult result, Map<String, Object> model) {
-        List<Breach> results = this.breachRepository.findAll();
-
-        model.put("selections", results);
-        return "breach/breachList";
     }
 
     @GetMapping("/breach/{breachId}")
@@ -72,7 +67,7 @@ public class BreachController {
         }
         else {
             this.breachRepository.save(breach);
-            return "redirect:/breach";
+            return "redirect:/breach/find";
         }
     }
 }

@@ -18,13 +18,6 @@ public class SimCard extends BaseEntity {
     @Column
     private String iccid;
 
-
-    @Column
-    private UUID breachId;
-
-    @Column
-    private UUID confiscatedId;
-
     @OneToOne(cascade = CascadeType.PERSIST)
     private Person holder;
 }

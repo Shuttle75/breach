@@ -49,7 +49,7 @@ public class Breach extends BaseEntity {
     private String erdrArticle;
 
     @ManyToOne
-    private Method method;
+    private BreachMethod breachMethod;
 
     @Column
     private String story;
@@ -60,21 +60,15 @@ public class Breach extends BaseEntity {
     @Column
     private String operInfo;
 
-    @OneToMany(mappedBy = "breachId")
+    @OneToMany(mappedBy = "headId")
     private List<Participant> participants;
 
-    @OneToMany(mappedBy = "breachId")
-    private List<BankCard> usedBankCards;
+    @OneToMany(mappedBy = "headId")
+    private List<BankCard> bankCards;
 
-    @OneToMany(mappedBy = "breachId")
-    private List<CallDataRecord> usedCallDataRecords;
+    @OneToMany(mappedBy = "headId")
+    private List<CallDataRecord> callDataRecords;
 
-    @OneToMany(mappedBy = "confiscatedId")
-    private List<BankCard> confiscatedBankCards;
-
-    @OneToMany(mappedBy = "confiscatedId")
-    private List<Phone> confiscatedPhones;
-
-    @OneToMany(mappedBy = "confiscatedId")
-    private List<SimCard> confiscatedSimCards;
+    @OneToMany(mappedBy = "headId")
+    private List<Confiscated> confiscated;
 }

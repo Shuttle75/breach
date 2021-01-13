@@ -21,12 +21,12 @@
             <div class="col-md-2">
               <input class="form-control" type="datetime-local" th:field="${breach.sentDate}" />
             </div>
-            <label class="control-label col-md-1">Метод</label>
+            <label class="control-label col-md-1" th:text="#{breach.method}"></label>
             <div class="col-md-4">
-              <select class="form-control" th:field="${breach.method}">
-                <option th:each="method : ${@methodRepository.findAll()}"
+              <select class="form-control" th:field="${breach.breachMethod}">
+                <option th:each="method : ${@breachMethodRepository.findAll()}"
                         th:value="${method.id}"
-                        th:text="${method.name}">
+                        th:text="${method.breachType.name + ' - ' + method.name}">
                 </option>
               </select>
             </div>
@@ -91,14 +91,14 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
+      <div class="panel panel-default" th:if="${breach.id}">
         <div class="panel-heading">ОСОБИ</div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
                 <li>
-                  <a th:href="@{{breachId}/participant/new(breachId=${breach.id})}" title="додати особу" data-toggle="modal">
+                  <a th:href="@{{breachId}/participant(breachId=${breach.id})}" title="додати особу" data-toggle="modal">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <span>особу</span>
@@ -117,7 +117,7 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{person.address}"></th>
+                  <th th:text="#{address}"></th>
                   <th th:text="#{participant.nsrd}"></th>
                   <th></th>
                 </tr>
@@ -144,21 +144,28 @@
         </div>
       </div>
 
-      <div class="panel panel-default">
+      <div class="panel panel-default" th:if="${breach.id}">
         <div class="panel-heading">ОТРИМУВАЧ</div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
                 <li>
-                  <a th:href="@{{breachId}/bank-card/new/breach(breachId=${breach.id})}" title="додати картку">
+                  <a th:href="@{{breachId}/bank-card(breachId=${breach.id})}" title="додати картку">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
                     <span>картку</span>
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{{breachId}/call-data-record/new(breachId=${breach.id})}" title="додати дзвінок">
+                  <a th:href="@{{breachId}/wallet(breachId=${breach.id})}" title="додати гаманець">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                    <span>гаманець</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{{breachId}/call-data-record(breachId=${breach.id})}" title="додати дзвінок">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
                     <span>дзвінок</span>
@@ -167,7 +174,7 @@
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped" th:if="${!breach.usedBankCards.isEmpty()}">
+              <table class="table table-striped" th:if="${!breach.bankCards.isEmpty()}">
                 <tr>
                   <th class="glyphicon glyphicon-credit-card"></th>
                   <th th:text="#{bankCard.cardNumber}"></th>
@@ -177,10 +184,10 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{person.address}"></th>
+                  <th th:text="#{address}"></th>
                   <th></th>
                 </tr>
-                <tr th:each="bankCard : ${breach.usedBankCards}">
+                <tr th:each="bankCard : ${breach.bankCards}">
                   <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
@@ -199,7 +206,7 @@
                 </tr>
               </table>
 
-              <table class="table table-striped" th:if="${!breach.usedCallDataRecords.isEmpty()}">
+              <table class="table table-striped" th:if="${!breach.callDataRecords.isEmpty()}">
                 <tr>
                   <th class="glyphicon glyphicon-earphone"></th>
                   <th th:text="#{callDataRecord.type}"></th>
@@ -211,7 +218,7 @@
                   <th th:text="#{callDataRecord.base_station}"></th>
                   <th></th>
                 </tr>
-                <tr th:each="callDataRecord : ${breach.usedCallDataRecords}">
+                <tr th:each="callDataRecord : ${breach.callDataRecords}">
                   <td style="width: 40px"></td>
                   <td style="width: 200px" th:text="${callDataRecord.type}"></td>
                   <td style="width: 200px" th:text="${callDataRecord.date}"></td>
@@ -219,7 +226,7 @@
                   <td style="width: 200px" th:text="${callDataRecord.imsi}"></td>
                   <td th:text="${callDataRecord.originator}"></td>
                   <td th:text="${callDataRecord.terminator}"></td>
-                  <td style="width: 200px" th:text="${callDataRecord.baseStation}"></td>
+                  <td style="width: 200px" th:text="${callDataRecord.cellAddress}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/call-data-record/{cdrId}/edit(breachId=${breach.id},cdrId=${callDataRecord.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -231,28 +238,53 @@
           </div>
         </div>
       </div>
-      <div class="panel panel-default">
-        <div class="panel-heading">ВИЛУЧЕНО</div>
+      <br><br>
+      <div class="row">
+        <div class="col-md-2" style="padding: 0">
+          <ul class="nav navbar-right">
+            <li>
+              <a th:href="@{{breachId}/confiscated(breachId=${breach.id})}" title="додати конфіскацію" data-toggle="modal">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-inbox" aria-hidden="true"></span>
+                <span>вилучення</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-offset-2 col-md-8" style="padding: 0">
+          <h2>Тимчасове вилучення майна під час обшуку</h2>
+        </div>
+      </div>
+      <div class="panel panel-default" th:each="confiscated : ${breach.confiscated}">
+        <div class="panel-heading">
+          <span th:text="${'ВИЛУЧЕНО ' + confiscated.dateFormatted + ' &nbsp; &nbsp; &nbsp; ' + confiscated.address + ' &nbsp; &nbsp; '}"></span>
+          <a th:href="@{{breachId}/confiscated/{confiscatedId}/edit(breachId=${breach.id},confiscatedId=${confiscated.id})}">
+            <span class="glyphicon glyphicon-pencil"></span>
+          </a>
+        </div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
                 <li>
-                  <a th:href="@{{breachId}/bank-card/new/confiscated(breachId=${breach.id})}" title="додати картку">
+                  <a th:href="@{{breachId}/confiscated/{confiscatedId}/bank-card(breachId=${breach.id},confiscatedId=${confiscated.id})}"
+                     title="додати картку">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
                     <span>картку</span>
                   </a>
                 </li>
                 <li class="active">
-                  <a th:href="@{{breachId}/phone/new/confiscated(breachId=${breach.id})}" title="додати телефон">
+                  <a th:href="@{{breachId}/confiscated/{confiscatedId}/phone(breachId=${breach.id},confiscatedId=${confiscated.id})}"
+                     title="додати телефон">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                     <span>телефон</span>
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{{breachId}/sim-card/new/confiscated(breachId=${breach.id})}" title="додати sim карту">
+                  <a th:href="@{{breachId}/confiscated/{confiscatedId}/sim-card(breachId=${breach.id},confiscatedId=${confiscated.id})}"
+                     title="додати sim карту">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon  glyphicon-signal" aria-hidden="true"></span>
                     <span>SIM карту</span>
@@ -261,8 +293,7 @@
               </ul>
             </div>
             <div class="col-md-11">
-              <!--/*@thymesVar id="bankCard" type="ua.gov.cyberpolice.breach.entity.BankCard"*/-->
-              <table class="table table-striped" th:if="${!breach.confiscatedBankCards.isEmpty()}">
+              <table class="table table-striped" th:if="${!confiscated.bankCards.isEmpty()}">
                 <tr>
                   <th class="glyphicon glyphicon-credit-card"></th>
                   <th th:text="#{bankCard.cardNumber}"></th>
@@ -272,10 +303,11 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{person.address}"></th>
+                  <th th:text="#{address}"></th>
                   <th></th>
                 </tr>
-                <tr th:each="bankCard : ${breach.confiscatedBankCards}">
+                <!--/*@thymesVar id="bankCard" type="ua.gov.cyberpolice.breach.entity.BankCard"*/-->
+                <tr th:each="bankCard : ${confiscated.bankCards}">
                   <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
@@ -294,8 +326,7 @@
                 </tr>
               </table>
 
-              <!--/*@thymesVar id="phone" type="ua.gov.cyberpolice.breach.entity.Phone"*/-->
-              <table class="table table-striped" th:if="${!breach.confiscatedPhones.isEmpty()}">
+              <table class="table table-striped" th:if="${!confiscated.phones.isEmpty()}">
                 <tr>
                   <th class="glyphicon glyphicon-phone"></th>
                   <th th:text="#{phone.imei1}"></th>
@@ -305,10 +336,11 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{person.address}"></th>
+                  <th th:text="#{address}"></th>
                   <th></th>
                 </tr>
-                <tr th:each="phone : ${breach.confiscatedPhones}">
+                <!--/*@thymesVar id="phone" type="ua.gov.cyberpolice.breach.entity.Phone"*/-->
+                <tr th:each="phone : ${confiscated.phones}">
                   <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei1}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei2}"></td>
@@ -327,8 +359,7 @@
                 </tr>
               </table>
 
-              <!--/*@thymesVar id="simCard" type="ua.gov.cyberpolice.breach.entity.SimCard"*/-->
-              <table class="table table-striped" th:if="${!breach.confiscatedSimCards.isEmpty()}">
+              <table class="table table-striped" th:if="${!confiscated.simCards.isEmpty()}">
                 <tr>
                   <th class="glyphicon glyphicon-signal"></th>
                   <th th:text="#{simCard.phoneNumber}"></th>
@@ -338,10 +369,11 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{person.address}"></th>
+                  <th th:text="#{address}"></th>
                   <th></th>
                 </tr>
-                <tr th:each="simCard : ${breach.confiscatedSimCards}">
+                <!--/*@thymesVar id="simCard" type="ua.gov.cyberpolice.breach.entity.SimCard"*/-->
+                <tr th:each="simCard : ${confiscated.simCards}">
                   <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.phoneNumber}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.iccid}"></td>

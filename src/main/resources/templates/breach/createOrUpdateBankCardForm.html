@@ -6,8 +6,7 @@
     <div class="form-group has-feedback">
       <div class="panel panel-default">
         <input hidden th:field="${bankCard.id}">
-        <input hidden th:field="${bankCard.breachId}">
-        <input hidden th:field="${bankCard.confiscatedId}">
+        <input hidden th:field="${bankCard.headId}">
         <input hidden th:field="${bankCard.holder}">
         <div class="panel-heading">Банківська картка</div>
         <div class="panel-body">
@@ -35,7 +34,7 @@
       </div>
       <div class="panel panel-default">
         <input hidden th:field="${bankCard.holder.id}">
-        <div class="panel-heading" th:text="#{bankCard.holder}"></div>
+        <div class="panel-heading" th:text="#{holder}"></div>
         <div class="panel-body">
           <div class="row">
             <label class="control-label col-md-1" th:text="#{person.passport}"></label>
@@ -80,7 +79,7 @@
                      th:field="${bankCard.holder.birthDate}"/>
             </div>
             <label class="control-label col-md-offset-3 col-md-1"
-                   th:text="#{person.region}"></label>
+                   th:text="#{region}"></label>
             <div class="col-md-5">
               <select class="form-control" th:field="${bankCard.holder.region}">
                 <option th:each="region : ${@regionRepository.findAll()}"
@@ -91,24 +90,21 @@
             </div>
           </div>
           <div class="row">
-            <label class="control-label col-md-1"
-                   th:text="#{person.city}"></label>
+            <label class="control-label col-md-1" th:text="#{city}"></label>
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.city}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label class="control-label col-md-1"
-                   th:text="#{person.street}"></label>
+            <label class="control-label col-md-1" th:text="#{street}"></label>
             <div class="col-md-3">
               <input class="form-control"
                      type="text"
                      th:field="${bankCard.holder.street}"
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
-            <label class="control-label col-md-1"
-                   th:text="#{person.house}"></label>
+            <label class="control-label col-md-1" th:text="#{house}"></label>
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
@@ -116,7 +112,7 @@
                      onkeyup="this.value = this.value.toUpperCase();"/>
             </div>
             <label class="control-label col-md-1"
-                   th:text="#{person.apartment}"></label>
+                   th:text="#{apartment}"></label>
             <div class="col-md-1">
               <input class="form-control"
                      type="text"
@@ -173,7 +169,7 @@
   function updatePerson() {
     if (document.getElementById('holder').value === "" && document.getElementById('holder.passport').value !== "") {
       const request = new XMLHttpRequest();
-      request.open('get', 'holder/'.concat(document.getElementById('holder.passport').value), true);
+      request.open('get', 'person/'.concat(document.getElementById('holder.passport').value), true);
       request.onload = function () {
         if (this.status >= 200 && this.status < 400) {
           try {
