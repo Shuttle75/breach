@@ -48,11 +48,31 @@
                      type="text"
                      th:field="${callDataRecord.terminator}"/>
             </div>
-            <label class="control-label col-md-1" th:text="#{callDataRecord.base_station}"></label>
+          </div>
+          <div class="row">
+            <label class="control-label col-md-1" th:text="#{callDataRecord.cell_address}"></label>
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="${callDataRecord.baseStation}"/>
+                     th:field="${callDataRecord.cellAddress}"/>
+            </div>
+            <label class="control-label col-md-1" th:text="#{callDataRecord.cell_latitude}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="text"
+                     th:field="${callDataRecord.cellLatitude}"/>
+            </div>
+            <label class="control-label col-md-1" th:text="#{callDataRecord.cell_longitude}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="text"
+                     th:field="${callDataRecord.cellLongitude}"/>
+            </div>
+            <label class="control-label col-md-1" th:text="#{callDataRecord.cell_azimuth}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="text"
+                     th:field="${callDataRecord.cellAzimuth}"/>
             </div>
           </div>
         </div>

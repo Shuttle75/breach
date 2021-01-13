@@ -215,18 +215,24 @@
                   <th th:text="#{callDataRecord.imsi}"></th>
                   <th th:text="#{callDataRecord.originator}"></th>
                   <th th:text="#{callDataRecord.terminator}"></th>
-                  <th th:text="#{callDataRecord.base_station}"></th>
+                  <th th:text="#{callDataRecord.cell_address}"></th>
+                  <th th:text="#{callDataRecord.cell_latitude}"></th>
+                  <th th:text="#{callDataRecord.cell_longitude}"></th>
+                  <th th:text="#{callDataRecord.cell_azimuth}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="callDataRecord : ${breach.callDataRecords}">
                   <td style="width: 40px"></td>
-                  <td style="width: 200px" th:text="${callDataRecord.type}"></td>
-                  <td style="width: 200px" th:text="${callDataRecord.date}"></td>
+                  <td th:text="${callDataRecord.type}"></td>
+                  <td th:text="${callDataRecord.date}"></td>
                   <td style="width: 200px" th:text="${callDataRecord.imei}"></td>
                   <td style="width: 200px" th:text="${callDataRecord.imsi}"></td>
                   <td th:text="${callDataRecord.originator}"></td>
                   <td th:text="${callDataRecord.terminator}"></td>
                   <td style="width: 200px" th:text="${callDataRecord.cellAddress}"></td>
+                  <td style="width: 100px" th:text="${callDataRecord.cellLatitude}"></td>
+                  <td style="width: 100px" th:text="${callDataRecord.cellLongitude}"></td>
+                  <td style="width: 100px" th:text="${callDataRecord.cellAzimuth}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/call-data-record/{cdrId}/edit(breachId=${breach.id},cdrId=${callDataRecord.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
