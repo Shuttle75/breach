@@ -178,7 +178,7 @@
   function updatePerson() {
     if (document.getElementById('holder').value === "" && document.getElementById('holder.passport').value !== "") {
       const request = new XMLHttpRequest();
-      request.open('get', 'holder/'.concat(document.getElementById('holder.passport').value), true);
+      request.open('get', 'person/'.concat(document.getElementById('holder.passport').value), true);
       request.onload = function () {
         if (this.status >= 200 && this.status < 400) {
           try {
