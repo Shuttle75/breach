@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -45,6 +46,13 @@ public class Person extends BaseEntity {
 
     @Column
     private String apartment;
+
+    @Column
+    private String email;
+
+    @Column
+    private byte[] image;
+
 
     @CreationTimestamp
     @Column(nullable = false)

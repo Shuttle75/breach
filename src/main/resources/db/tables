@@ -36,6 +36,7 @@ CREATE TABLE breach.person
     house               text,
     apartment           text,
     email               text,
+    image               bytea,
     modified            timestamp not null default CURRENT_TIMESTAMP
 );
 ALTER TABLE breach.person OWNER TO postgres;

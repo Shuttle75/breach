@@ -2,7 +2,7 @@
 
 <body>
   <!--/*@thymesVar id="participant" type="ua.gov.cyberpolice.breach.entity.Participant"*/-->
-  <form class="form-horizontal" th:object="${participant}" method="post" autocomplete="off">
+  <form class="form-horizontal" th:object="${participant}" method="post" autocomplete="off" enctype="multipart/form-data">
     <input hidden th:field="${participant.id}">
     <input hidden th:field="${participant.headId}">
     <input hidden th:field="${participant.person}">
@@ -11,106 +11,116 @@
         <div class="panel-heading">Особа</div>
         <div class="panel-body">
           <div class="row">
-            <label class="control-label col-md-1">Тип особи</label>
-            <div class="col-md-5">
-              <select class="form-control" th:field="${participant.participantType}">
-                <option th:each="type : ${@participantTypeRepository.findAll()}"
-                        th:value="${type.id}"
-                        th:text="${type.name}">
-                </option>
-              </select>
-            </div>
+            <div class="col-md-10">
+              <div class="row">
+                <label class="control-label col-md-1">Тип особи</label>
+                <div class="col-md-5">
+                  <select class="form-control" th:field="${participant.participantType}">
+                    <option th:each="type : ${@participantTypeRepository.findAll()}"
+                            th:value="${type.id}"
+                            th:text="${type.name}">
+                    </option>
+                  </select>
+                </div>
 
-            <label class="control-label col-md-offset-4 col-md-1" th:text="#{participant.nsrd}"></label>
-            <div class="col-md-1">
-              <select class="form-control" th:field="${participant.nsrd}">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-            </div>
+                <label class="control-label col-md-offset-4 col-md-1" th:text="#{participant.nsrd}"></label>
+                <div class="col-md-1">
+                  <select class="form-control" th:field="${participant.nsrd}">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </div>
 
-          </div>
-          <div class="row">
-            <label class="control-label col-md-1">Пасспорт</label>
-            <div class="col-md-1">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.passport}"
-                     onkeyup="this.value = this.value.toUpperCase();"
-                     onblur="updatePerson()"/>
+              </div>
+              <div class="row">
+                <label class="control-label col-md-1">Пасспорт</label>
+                <div class="col-md-2">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.passport}"
+                         onkeyup="this.value = this.value.toUpperCase();"
+                         onblur="updatePerson()"/>
+                </div>
+                <label class="control-label col-md-1">Прізвище</label>
+                <div class="col-md-2">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.lastName}"
+                         onkeyup="this.value = this.value.toUpperCase();"/>
+                </div>
+                <label class="control-label col-md-1">Ім'я</label>
+                <div class="col-md-2">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.firstName}"
+                         onkeyup="this.value = this.value.toUpperCase();"/>
+                </div>
+                <label class="control-label col-md-1">По батькові</label>
+                <div class="col-md-2">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.middleName}"
+                         onkeyup="this.value = this.value.toUpperCase();"/>
+                </div>
+              </div>
+              <div class="row">
+                <label class="control-label col-md-1">Дата народж</label>
+                <div class="col-md-2">
+                  <input class="form-control" type="date" th:field="${participant.person.birthDate}" />
+                </div>
+                <label class="control-label col-md-offset-3 col-md-1">Регіон</label>
+                <div class="col-md-5">
+                  <select class="form-control" th:field="${participant.person.region}">
+                    <option th:each="region : ${@regionRepository.findAll()}"
+                            th:value="${region.id}"
+                            th:text="${region.name}"></option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <label class="control-label col-md-1">Місто</label>
+                <div class="col-md-3">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.city}"
+                         onkeyup="this.value = this.value.toUpperCase();"/>
+                </div>
+                <label class="control-label col-md-1">Вулиця</label>
+                <div class="col-md-3">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.street}"
+                         onkeyup="this.value = this.value.toUpperCase();"/>
+                </div>
+                <label class="control-label col-md-1">Будинок</label>
+                <div class="col-md-1">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.house}"
+                         onkeyup="this.value = this.value.toUpperCase();"/>
+                </div>
+                <label class="control-label col-md-1">Квартира</label>
+                <div class="col-md-1">
+                  <input class="form-control"
+                         type="text"
+                         th:field="${participant.person.apartment}"
+                         onkeyup="this.value = this.value.toUpperCase();"/>
+                </div>
+              </div>
             </div>
-            <label class="control-label col-md-1">Прізвище</label>
-            <div class="col-md-3">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.lastName}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
-            </div>
-            <label class="control-label col-md-1">Ім'я</label>
             <div class="col-md-2">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.firstName}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
-            </div>
-            <label class="control-label col-md-1">По батькові</label>
-            <div class="col-md-2">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.middleName}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
-            </div>
-          </div>
-          <div class="row">
-            <label class="control-label col-md-1">Дата народж</label>
-            <div class="col-md-2">
-              <input class="form-control" type="date" th:field="${participant.person.birthDate}" />
-            </div>
-            <label class="control-label col-md-offset-3 col-md-1">Регіон</label>
-            <div class="col-md-5">
-              <select class="form-control" th:field="${participant.person.region}">
-                <option th:each="region : ${@regionRepository.findAll()}"
-                        th:value="${region.id}"
-                        th:text="${region.name}"></option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <label class="control-label col-md-1">Місто</label>
-            <div class="col-md-3">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.city}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
-            </div>
-            <label class="control-label col-md-1">Вулиця</label>
-            <div class="col-md-3">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.street}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
-            </div>
-            <label class="control-label col-md-1">Будинок</label>
-            <div class="col-md-1">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.house}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
-            </div>
-            <label class="control-label col-md-1">Квартира</label>
-            <div class="col-md-1">
-              <input class="form-control"
-                     type="text"
-                     th:field="${participant.person.apartment}"
-                     onkeyup="this.value = this.value.toUpperCase();"/>
+              <div class="col-md-2">
+                <input type="file" id="file" name="file" multiple>
+                <img th:src="@{imageDisplay}" width="200" height="300">
+              </div>
             </div>
           </div>
         </div>

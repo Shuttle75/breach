@@ -4,10 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.gov.cyberpolice.breach.entity.*;
 import ua.gov.cyberpolice.breach.repository.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.UUID;
 
 @Controller
@@ -50,13 +53,15 @@ public class ParticipantController {
     @PostMapping({"participant", "participant/{participantId}/edit"})
     public String processForm(
             @Valid Participant participant,
+            @RequestParam("file") MultipartFile multipartFile,
             BindingResult result,
-            ModelMap model) {
+            ModelMap model) throws IOException {
         if (result.hasErrors()) {
             model.put("participant", participant);
             return VIEWS_PARTICIPANT_CREATE_OR_UPDATE_FORM;
         }
         else {
+            participant.getPerson().setImage(multipartFile.getBytes());
             this.participantRepository.save(participant);
             return "redirect:/breach/{breachId}";
         }
@@ -66,5 +71,15 @@ public class ParticipantController {
     public String deleteForm(@PathVariable("participantId") UUID participantId) {
         this.participantRepository.deleteById(participantId);
         return "redirect:/breach/{breachId}";
+    }
+
+    @GetMapping("participant/{participantId}/imageDisplay")
+    public void getImageAsByteArray(
+            @PathVariable("participantId") UUID participantId,
+            HttpServletResponse response) throws IOException {
+
+        response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
+        response.getOutputStream().write(participantRepository.findById(participantId).get().getPerson().getImage());
+        response.getOutputStream().close();
     }
 }
