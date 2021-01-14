@@ -2,13 +2,12 @@ package ua.gov.cyberpolice.breach.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.*;
 
 @MappedSuperclass
-public class BaseEntity implements Serializable {
+public class BaseEntity {
 
 	@Id
 	@GeneratedValue(generator = "UUID")

@@ -33,6 +33,8 @@ public class BreachController {
         breach.setParticipants(new ArrayList<>());
         breach.setBankCards(new ArrayList<>());
         breach.setCallDataRecords(new ArrayList<>());
+        breach.setWallets(new ArrayList<>());
+        breach.setWebsites(new ArrayList<>());
         breach.setConfiscated(new ArrayList<>());
 
         model.put("breach", breach);

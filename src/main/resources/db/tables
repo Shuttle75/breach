@@ -79,7 +79,6 @@ CREATE TABLE breach.bank_card
 (
     id                  uuid not null constraint bank_card_pk primary key,
     head_id             uuid not null,
-    date                timestamp,
     card_number         text not null,
     bank_name           text,
     holder_id           uuid
@@ -91,7 +90,6 @@ CREATE TABLE breach.wallet
 (
     id                  uuid not null constraint wallet_pk primary key,
     head_id             uuid not null,
-    date                timestamp,
     payment_provider_id int not null,
     wallet_number       text
 );
@@ -102,7 +100,6 @@ CREATE TABLE breach.website
 (
     id                  uuid not null constraint website_pk primary key,
     head_id             uuid not null,
-    date                timestamp,
     link                text not null
 );
 ALTER TABLE breach.website OWNER TO postgres;
@@ -236,6 +233,7 @@ CREATE TABLE breach.payment_provider
 (
     id             int,
     name           text,
+    legal_name     text,
     website        text,
     image          text,
     local          boolean

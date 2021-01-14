@@ -21,6 +21,9 @@ public class PaymentProvider {
     private String name;
 
     @Column
+    private String legalName;
+
+    @Column
     private String website;
 
     @Column

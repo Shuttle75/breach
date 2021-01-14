@@ -51,6 +51,10 @@ public class Person extends BaseEntity {
     private LocalDateTime modified;
 
     public String getAddress() {
-        return region.getName() + ", " + city + ", " + street + " " + house + ", КВ." + apartment;
+        if (city == null || city.equals("")) {
+            return region.getName() + ", " + street + " " + house + ", КВ." + apartment;
+        } else {
+            return region.getName() + ", " + city + ", " + street + " " + house + ", КВ." + apartment;
+        }
     }
 }

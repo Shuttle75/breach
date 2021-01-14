@@ -70,5 +70,11 @@ public class Breach extends BaseEntity {
     private List<CallDataRecord> callDataRecords;
 
     @OneToMany(mappedBy = "headId")
+    private List<Wallet> wallets;
+
+    @OneToMany(mappedBy = "headId")
+    private List<Website> websites;
+
+    @OneToMany(mappedBy = "headId")
     private List<Confiscated> confiscated;
 }

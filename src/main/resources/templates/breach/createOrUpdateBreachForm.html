@@ -117,21 +117,20 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{address}"></th>
+                  <th th:text="#{person.address}"></th>
                   <th th:text="#{participant.nsrd}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="participant : ${breach.participants}">
                   <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${participant.participantType.name}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.passport}"></td>
-                  <td style="white-space: nowrap" th:text=" ${participant.person?.lastName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${participant.person?.firstName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${participant.person?.middleName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${participant.person?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${participant.person?.region?.name + ', ' + participant.person?.city + ', ' +
-                  participant.person?.street + ' ' + participant.person?.house + ' КВ.' + participant.person?.apartment}"></td>
-                  <td style="width: 50px" th:text=" ${participant.nsrd}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${participant.participantType.name}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${participant.person?.passport}"></td>
+                  <td style="white-space: nowrap" th:text="${participant.person?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text="${participant.person?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text="${participant.person?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${participant.person?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${participant.person?.address}"></td>
+                  <td style="width: 50px" th:text="${participant.nsrd}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/participant/{participantId}/edit(breachId=${breach.id},participantId=${participant.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -158,6 +157,13 @@
                   </a>
                 </li>
                 <li>
+                  <a th:href="@{{breachId}/call-data-record(breachId=${breach.id})}" title="додати дзвінок">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                    <span>дзвінок</span>
+                  </a>
+                </li>
+                <li>
                   <a th:href="@{{breachId}/wallet(breachId=${breach.id})}" title="додати гаманець">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
@@ -165,10 +171,10 @@
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{{breachId}/call-data-record(breachId=${breach.id})}" title="додати дзвінок">
+                  <a th:href="@{{breachId}/website(breachId=${breach.id})}" title="додати сайт">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>
-                    <span>дзвінок</span>
+                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                    <span>веб сайт</span>
                   </a>
                 </li>
               </ul>
@@ -184,20 +190,19 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{address}"></th>
+                  <th th:text="#{person.address}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="bankCard : ${breach.bankCards}">
                   <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
-                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.lastName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.firstName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.middleName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${bankCard.holder?.region?.name + ', ' + bankCard.holder?.city + ', ' +
-                  bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${bankCard.cardNumber}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${bankCard.bankName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${bankCard.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text="${bankCard.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text="${bankCard.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text="${bankCard.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${bankCard.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${bankCard.holder?.address}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -221,6 +226,7 @@
                   <th th:text="#{callDataRecord.cell_azimuth}"></th>
                   <th></th>
                 </tr>
+                <!--/*@thymesVar id="callDataRecord" type="ua.gov.cyberpolice.breach.entity.CallDataRecord"*/-->
                 <tr th:each="callDataRecord : ${breach.callDataRecords}">
                   <td style="width: 40px"></td>
                   <td th:text="${callDataRecord.type}"></td>
@@ -240,6 +246,49 @@
                   </td>
                 </tr>
               </table>
+
+              <table class="table table-striped" th:if="${!breach.wallets.isEmpty()}">
+                <tr>
+                  <th class="glyphicon glyphicon-lock"></th>
+                  <th th:text="#{wallet.payment_provider}"></th>
+                  <th th:text="#{wallet.legal_name}"></th>
+                  <th th:text="#{wallet.web_site}"></th>
+                  <th th:text="#{wallet.number}"></th>
+                  <th></th>
+                </tr>
+                <!--/*@thymesVar id="wallet" type="ua.gov.cyberpolice.breach.entity.Wallet"*/-->
+                <tr th:each="wallet : ${breach.wallets}">
+                  <td style="width: 40px"></td>
+                  <td th:text="${wallet.paymentProvider.name}"></td>
+                  <td th:text="${wallet.paymentProvider.legalName}"></td>
+                  <td th:text="${wallet.paymentProvider.website}"></td>
+                  <td th:text="${wallet.walletNumber}"></td>
+                  <td style="width: 30px" >
+                    <a th:href="@{{breachId}/wallet/{walletId}/edit(breachId=${breach.id},walletId=${wallet.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <table class="table table-striped" th:if="${!breach.websites.isEmpty()}">
+                <tr>
+                  <th class="glyphicon glyphicon-globe"></th>
+                  <th th:text="#{website.link}"></th>
+                  <th></th>
+                </tr>
+                <!--/*@thymesVar id="website" type="ua.gov.cyberpolice.breach.entity.Website"*/-->
+                <tr th:each="website : ${breach.websites}">
+                  <td style="width: 40px"></td>
+                  <td th:text="${website.link}"></td>
+                  <td style="width: 30px" >
+                    <a th:href="@{{breachId}/website/{websiteId}/edit(breachId=${breach.id},websiteId=${website.id})}">
+                      <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
             </div>
           </div>
         </div>
@@ -315,15 +364,14 @@
                 <!--/*@thymesVar id="bankCard" type="ua.gov.cyberpolice.breach.entity.BankCard"*/-->
                 <tr th:each="bankCard : ${confiscated.bankCards}">
                   <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.cardNumber}"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${bankCard.bankName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.passport}"></td>
-                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.lastName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.firstName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${bankCard.holder?.middleName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${bankCard.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${bankCard.holder?.region?.name + ', ' + bankCard.holder?.city + ', ' +
-                  bankCard.holder?.street + ' ' + bankCard.holder?.house + ' КВ.' + bankCard.holder?.apartment}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${bankCard.cardNumber}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${bankCard.bankName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${bankCard.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text="${bankCard.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text="${bankCard.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text="${bankCard.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${bankCard.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${bankCard.holder?.address}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -342,21 +390,20 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{address}"></th>
+                  <th th:text="#{person.address}"></th>
                   <th></th>
                 </tr>
                 <!--/*@thymesVar id="phone" type="ua.gov.cyberpolice.breach.entity.Phone"*/-->
                 <tr th:each="phone : ${confiscated.phones}">
                   <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei1}"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${phone.imei2}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${phone.holder?.passport}"></td>
-                  <td style="white-space: nowrap" th:text=" ${phone.holder?.lastName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${phone.holder?.firstName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${phone.holder?.middleName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${phone.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${phone.holder?.region?.name + ', ' + phone.holder?.city + ', ' +
-                  phone.holder?.street + ' ' + phone.holder?.house + ' КВ.' + phone.holder?.apartment}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${phone.imei1}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${phone.imei2}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${phone.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text="${phone.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text="${phone.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text="${phone.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${phone.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${phone.holder?.address}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/phone/{phoneId}/edit(breachId=${breach.id},phoneId=${phone.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -375,21 +422,20 @@
                   <th th:text="#{person.firstName}"></th>
                   <th th:text="#{person.middleName}"></th>
                   <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{address}"></th>
+                  <th th:text="#{person.address}"></th>
                   <th></th>
                 </tr>
                 <!--/*@thymesVar id="simCard" type="ua.gov.cyberpolice.breach.entity.SimCard"*/-->
                 <tr th:each="simCard : ${confiscated.simCards}">
                   <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.phoneNumber}"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text=" ${simCard.iccid}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${simCard.holder?.passport}"></td>
-                  <td style="white-space: nowrap" th:text=" ${simCard.holder?.lastName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${simCard.holder?.firstName}"></td>
-                  <td style="white-space: nowrap" th:text=" ${simCard.holder?.middleName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text=" ${simCard.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${simCard.holder?.region?.name + ', ' + simCard.holder?.city + ', ' +
-                  simCard.holder?.street + ' ' + simCard.holder?.house + ' КВ.' + simCard.holder?.apartment}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${simCard.phoneNumber}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${simCard.iccid}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${simCard.holder?.passport}"></td>
+                  <td style="white-space: nowrap" th:text="${simCard.holder?.lastName}"></td>
+                  <td style="white-space: nowrap" th:text="${simCard.holder?.firstName}"></td>
+                  <td style="white-space: nowrap" th:text="${simCard.holder?.middleName}"></td>
+                  <td style="width: 100px; white-space: nowrap" th:text="${simCard.holder?.birthDate}"></td>
+                  <td style="width: 500px" th:text="${simCard.holder?.address}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/sim-card/{simCardId}/edit(breachId=${breach.id},simCardId=${simCard.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
