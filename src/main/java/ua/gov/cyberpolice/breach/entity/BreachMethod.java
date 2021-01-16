@@ -1,12 +1,7 @@
 package ua.gov.cyberpolice.breach.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 
-@Data
-@EqualsAndHashCode
 @Entity
 @Table(name = "breach_method", schema = "breach")
 public class BreachMethod {
@@ -19,4 +14,28 @@ public class BreachMethod {
 
     @Column
     private String name;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public BreachType getBreachType() {
+        return breachType;
+    }
+
+    public void setBreachType(BreachType breachType) {
+        this.breachType = breachType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

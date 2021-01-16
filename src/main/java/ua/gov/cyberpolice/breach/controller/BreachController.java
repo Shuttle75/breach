@@ -31,10 +31,8 @@ public class BreachController {
     public String initCreationForm(Map<String, Object> model) {
         Breach breach = new Breach();
         breach.setParticipants(new ArrayList<>());
-        breach.setBankCards(new ArrayList<>());
+        breach.setPaymentMoves(new ArrayList<>());
         breach.setCallDataRecords(new ArrayList<>());
-        breach.setWallets(new ArrayList<>());
-        breach.setWebsites(new ArrayList<>());
         breach.setConfiscated(new ArrayList<>());
 
         model.put("breach", breach);

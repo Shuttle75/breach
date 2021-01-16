@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.gov.cyberpolice.breach.entity.Person;
-import ua.gov.cyberpolice.breach.entity.Website;
+import ua.gov.cyberpolice.breach.entity.WebsitePayment;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
 import ua.gov.cyberpolice.breach.repository.WebsiteRepository;
 
@@ -32,7 +32,7 @@ public class WebsiteController {
 
     @GetMapping("website")
     public String initCreationForm(@PathVariable("breachId") UUID breachId, ModelMap model) {
-        Website website = new Website();
+        WebsitePayment website = new WebsitePayment();
         Person person = new Person();
 
         regionRepository.findById("8000000000")
@@ -52,7 +52,7 @@ public class WebsiteController {
 
     @PostMapping({"website", "website/{websiteId}/edit"})
     public String processForm(
-            @Valid Website website,
+            @Valid WebsitePayment website,
             BindingResult result,
             ModelMap model) {
         if (result.hasErrors()) {

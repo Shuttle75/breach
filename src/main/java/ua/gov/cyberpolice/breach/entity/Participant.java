@@ -1,15 +1,7 @@
 package ua.gov.cyberpolice.breach.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.UUID;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "participant", schema = "breach")
 public class Participant extends BaseEntity {
@@ -22,4 +14,28 @@ public class Participant extends BaseEntity {
 
     @Column
     private Integer nsrd;
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public ParticipantType getParticipantType() {
+        return participantType;
+    }
+
+    public void setParticipantType(ParticipantType participantType) {
+        this.participantType = participantType;
+    }
+
+    public Integer getNsrd() {
+        return nsrd;
+    }
+
+    public void setNsrd(Integer nsrd) {
+        this.nsrd = nsrd;
+    }
 }

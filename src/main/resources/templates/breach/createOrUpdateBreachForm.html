@@ -144,18 +144,11 @@
       </div>
 
       <div class="panel panel-default" th:if="${breach.id}">
-        <div class="panel-heading">ОТРИМУВАЧ</div>
+        <div class="panel-heading">ДЗВІНКИ</div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
-                <li>
-                  <a th:href="@{{breachId}/bank-card(breachId=${breach.id})}" title="додати картку">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
-                    <span>картку</span>
-                  </a>
-                </li>
                 <li>
                   <a th:href="@{{breachId}/call-data-record(breachId=${breach.id})}" title="додати дзвінок">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -163,53 +156,9 @@
                     <span>дзвінок</span>
                   </a>
                 </li>
-                <li>
-                  <a th:href="@{{breachId}/wallet(breachId=${breach.id})}" title="додати гаманець">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-                    <span>гаманець</span>
-                  </a>
-                </li>
-                <li>
-                  <a th:href="@{{breachId}/website(breachId=${breach.id})}" title="додати сайт">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
-                    <span>веб сайт</span>
-                  </a>
-                </li>
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped" th:if="${!breach.bankCards.isEmpty()}">
-                <tr>
-                  <th class="glyphicon glyphicon-credit-card"></th>
-                  <th th:text="#{bankCard.cardNumber}"></th>
-                  <th th:text="#{bankCard.bankName}"></th>
-                  <th th:text="#{person.passport}"></th>
-                  <th th:text="#{person.lastName}"></th>
-                  <th th:text="#{person.firstName}"></th>
-                  <th th:text="#{person.middleName}"></th>
-                  <th th:text="#{person.birthDate}"></th>
-                  <th th:text="#{person.address}"></th>
-                  <th></th>
-                </tr>
-                <tr th:each="bankCard : ${breach.bankCards}">
-                  <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text="${bankCard.cardNumber}"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text="${bankCard.bankName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text="${bankCard.holder?.passport}"></td>
-                  <td style="white-space: nowrap" th:text="${bankCard.holder?.lastName}"></td>
-                  <td style="white-space: nowrap" th:text="${bankCard.holder?.firstName}"></td>
-                  <td style="white-space: nowrap" th:text="${bankCard.holder?.middleName}"></td>
-                  <td style="width: 100px; white-space: nowrap" th:text="${bankCard.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${bankCard.holder?.address}"></td>
-                  <td style="width: 30px" >
-                    <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                  </td>
-                </tr>
-              </table>
 
               <table class="table table-striped" th:if="${!breach.callDataRecords.isEmpty()}">
                 <tr>
@@ -247,42 +196,53 @@
                 </tr>
               </table>
 
-              <table class="table table-striped" th:if="${!breach.wallets.isEmpty()}">
-                <tr>
-                  <th class="glyphicon glyphicon-lock"></th>
-                  <th th:text="#{wallet.payment_provider}"></th>
-                  <th th:text="#{wallet.legal_name}"></th>
-                  <th th:text="#{wallet.web_site}"></th>
-                  <th th:text="#{wallet.number}"></th>
-                  <th></th>
-                </tr>
-                <!--/*@thymesVar id="wallet" type="ua.gov.cyberpolice.breach.entity.Wallet"*/-->
-                <tr th:each="wallet : ${breach.wallets}">
-                  <td style="width: 40px"></td>
-                  <td th:text="${wallet.paymentProvider.name}"></td>
-                  <td th:text="${wallet.paymentProvider.legalName}"></td>
-                  <td th:text="${wallet.paymentProvider.website}"></td>
-                  <td th:text="${wallet.walletNumber}"></td>
-                  <td style="width: 30px" >
-                    <a th:href="@{{breachId}/wallet/{walletId}/edit(breachId=${breach.id},walletId=${wallet.id})}">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                  </td>
-                </tr>
-              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
-              <table class="table table-striped" th:if="${!breach.websites.isEmpty()}">
+
+      <div class="panel panel-default" th:if="${breach.id}">
+        <div class="panel-heading">ПЛАТЕЖІ</div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-1" style="padding: 0">
+              <ul class="nav navbar-right">
+                <li>
+                  <a th:href="@{{breachId}/bank-card(breachId=${breach.id})}" title="додати картку">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+                    <span>картку</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{{breachId}/wallet(breachId=${breach.id})}" title="додати гаманець">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                    <span>гаманець</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{{breachId}/website(breachId=${breach.id})}" title="додати сайт">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                    <span>веб сайт</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-11">
+              <table class="table table-striped" th:each="paymentMove : ${breach.paymentMoves}">
                 <tr>
-                  <th class="glyphicon glyphicon-globe"></th>
-                  <th th:text="#{website.link}"></th>
+                  <th class="glyphicon glyphicon-credit-card"></th>
+                  <th th:text="#{moneyTransaction.date}"></th>
                   <th></th>
                 </tr>
-                <!--/*@thymesVar id="website" type="ua.gov.cyberpolice.breach.entity.Website"*/-->
-                <tr th:each="website : ${breach.websites}">
+                <tr th:each="moneyTransaction : ${paymentMove.moneyTransactions}">
                   <td style="width: 40px"></td>
-                  <td th:text="${website.link}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${moneyTransaction.getDate()}"></td>
                   <td style="width: 30px" >
-                    <a th:href="@{{breachId}/website/{websiteId}/edit(breachId=${breach.id},websiteId=${website.id})}">
+                    <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${moneyTransaction.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                   </td>
@@ -293,6 +253,11 @@
           </div>
         </div>
       </div>
+
+
+
+
+
       <br><br>
       <div class="row">
         <div class="col-md-2" style="padding: 0">

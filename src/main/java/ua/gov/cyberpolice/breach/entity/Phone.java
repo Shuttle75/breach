@@ -1,12 +1,7 @@
 package ua.gov.cyberpolice.breach.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 @Entity
 @Table(name = "phone", schema = "breach")
 public class Phone extends BaseEntity {
@@ -49,5 +44,21 @@ public class Phone extends BaseEntity {
 
     public void setImei2(String cardNumber) {
         this.imei1 = cardNumber.replace(" ", "");
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
+
+    public Person getHolder() {
+        return holder;
+    }
+
+    public void setHolder(Person holder) {
+        this.holder = holder;
     }
 }

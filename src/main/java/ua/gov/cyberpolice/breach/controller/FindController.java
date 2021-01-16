@@ -30,29 +30,29 @@ public class FindController {
 
         BooleanBuilder predicate = new BooleanBuilder();
 
-        if(!"".equals(find.getCardNumber())) {
-            predicate.and(breach.bankCards.any().cardNumber.contains(find.getCardNumber()));
-        }
-
-        if(!"".equals(find.getPassport())) {
-            predicate.and(breach.bankCards.any().holder.passport.contains(find.getPassport())
-                    .or(breach.participants.any().person.passport.contains(find.getPassport())));
-        }
-
-        if(!"".equals(find.getLastName())) {
-            predicate.and(breach.bankCards.any().holder.lastName.contains(find.getLastName())
-                    .or(breach.participants.any().person.lastName.contains(find.getLastName())));
-        }
-
-        if(!"".equals(find.getFirstName())) {
-            predicate.and(breach.bankCards.any().holder.firstName.contains(find.getFirstName())
-                    .or(breach.participants.any().person.firstName.contains(find.getFirstName())));
-        }
-
-        if(!"".equals(find.getMiddleName())) {
-            predicate.and(breach.bankCards.any().holder.middleName.contains(find.getMiddleName())
-                    .or(breach.participants.any().person.middleName.contains(find.getMiddleName())));
-        }
+//        if(!"".equals(find.getCardNumber())) {
+//            predicate.and(breach.bankCards.any().cardNumber.contains(find.getCardNumber()));
+//        }
+//
+//        if(!"".equals(find.getPassport())) {
+//            predicate.and(breach.bankCards.any().holder.passport.contains(find.getPassport())
+//                    .or(breach.participants.any().person.passport.contains(find.getPassport())));
+//        }
+//
+//        if(!"".equals(find.getLastName())) {
+//            predicate.and(breach.bankCards.any().holder.lastName.contains(find.getLastName())
+//                    .or(breach.participants.any().person.lastName.contains(find.getLastName())));
+//        }
+//
+//        if(!"".equals(find.getFirstName())) {
+//            predicate.and(breach.bankCards.any().holder.firstName.contains(find.getFirstName())
+//                    .or(breach.participants.any().person.firstName.contains(find.getFirstName())));
+//        }
+//
+//        if(!"".equals(find.getMiddleName())) {
+//            predicate.and(breach.bankCards.any().holder.middleName.contains(find.getMiddleName())
+//                    .or(breach.participants.any().person.middleName.contains(find.getMiddleName())));
+//        }
 
         OrderSpecifier<String> specifier =
                 new OrderSpecifier<>(

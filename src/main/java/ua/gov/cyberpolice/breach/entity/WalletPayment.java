@@ -1,0 +1,30 @@
+package ua.gov.cyberpolice.breach.entity;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "wallet_payment", schema = "breach")
+public class WalletPayment extends Payment {
+
+    @ManyToOne
+    private PaymentProvider paymentProvider;
+
+    @Column
+    private String walletNumber;
+
+    public PaymentProvider getPaymentProvider() {
+        return paymentProvider;
+    }
+
+    public void setPaymentProvider(PaymentProvider paymentProvider) {
+        this.paymentProvider = paymentProvider;
+    }
+
+    public String getWalletNumber() {
+        return walletNumber;
+    }
+
+    public void setWalletNumber(String walletNumber) {
+        this.walletNumber = walletNumber;
+    }
+}

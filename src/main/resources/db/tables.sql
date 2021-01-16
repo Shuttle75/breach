@@ -198,35 +198,49 @@ ALTER TABLE breach.participant OWNER TO postgres;
 
 
 
-DROP TABLE IF EXISTS breach.bank_card;
-CREATE TABLE breach.bank_card
-(
-    id                  uuid not null constraint bank_card_pk primary key,
-    head_id             uuid not null,
-    card_number         text not null,
-    bank_name           text,
-    holder_id           uuid
-);
-ALTER TABLE breach.bank_card OWNER TO postgres;
 
-DROP TABLE IF EXISTS breach.wallet;
-CREATE TABLE breach.wallet
+DROP TABLE IF EXISTS breach.payment_move;
+CREATE TABLE breach.payment_move
 (
-    id                  uuid not null constraint wallet_pk primary key,
+    id                  uuid not null constraint payment_move_pk primary key,
+    head_id             uuid not null
+);
+ALTER TABLE breach.payment_move OWNER TO postgres;
+
+DROP TABLE IF EXISTS breach.payment;
+CREATE TABLE breach.payment
+(
+    id                  uuid not null constraint payment_pk primary key,
     head_id             uuid not null,
+    date                timestamp
+);
+ALTER TABLE breach.payment OWNER TO postgres;
+
+
+
+DROP TABLE IF EXISTS breach.bank_card_payment;
+CREATE TABLE breach.bank_card_payment
+(
+    id                  uuid not null constraint bank_card_payment_pk primary key
+);
+ALTER TABLE breach.bank_card_payment OWNER TO postgres;
+
+DROP TABLE IF EXISTS breach.wallet_payment;
+CREATE TABLE breach.wallet_payment
+(
+    id                  uuid not null constraint wallet_payment_pk primary key,
     payment_provider_id int not null,
     wallet_number       text
 );
-ALTER TABLE breach.wallet OWNER TO postgres;
+ALTER TABLE breach.wallet_payment OWNER TO postgres;
 
-DROP TABLE IF EXISTS breach.website;
-CREATE TABLE breach.website
+DROP TABLE IF EXISTS breach.website_payment;
+CREATE TABLE breach.website_payment
 (
-    id                  uuid not null constraint website_pk primary key,
-    head_id             uuid not null,
+    id                  uuid not null constraint website_payment_pk primary key,
     link                text not null
 );
-ALTER TABLE breach.website OWNER TO postgres;
+ALTER TABLE breach.website_payment OWNER TO postgres;
 
 DROP TABLE IF EXISTS breach.call_data_record;
 CREATE TABLE breach.call_data_record
@@ -291,6 +305,14 @@ CREATE TABLE breach.sim_card
 );
 ALTER TABLE breach.sim_card OWNER TO postgres;
 
+DROP TABLE IF EXISTS breach.bank_card;
+CREATE TABLE breach.bank_card
+(
+    id                  uuid not null constraint bank_card_pk primary key,
+    head_id             uuid not null,
+    date                timestamp
+);
+ALTER TABLE breach.bank_card OWNER TO postgres;
 
 
 

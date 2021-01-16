@@ -1,20 +1,29 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
-  <!--/*@thymesVar id="website" type="ua.gov.cyberpolice.breach.entity.Website"*/-->
-  <form th:object="${website}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
+  <!--/*@thymesVar id="walletPayment" type="ua.gov.cyberpolice.breach.entity.WalletPayment"*/-->
+  <form th:object="${walletPayment}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
     <div class="form-group has-feedback">
       <div class="panel panel-default">
-        <input hidden th:field="${website.id}">
-        <input hidden th:field="${website.headId}">
-        <div class="panel-heading" th:text="#{website}"></div>
+        <input hidden th:field="${walletPayment.id}">
+        <input hidden th:field="${walletPayment.headId}">
+        <div class="panel-heading" th:text="#{wallet}"></div>
         <div class="panel-body">
           <div class="row">
-            <label class="control-label col-md-1" th:text="#{website.link}"></label>
-            <div class="col-md-11">
+            <label class="control-label col-md-2" th:text="#{wallet.payment_provider}"></label>
+            <div class="col-md-4">
+              <select class="form-control" th:field="${walletPayment.paymentProvider}">
+                <option th:each="paymentProvider : ${@paymentProviderRepository.findAll()}"
+                        th:value="${paymentProvider.id}"
+                        th:text="${paymentProvider.name}">
+                </option>
+              </select>
+            </div>
+            <label class="control-label col-md-1" th:text="#{wallet}"></label>
+            <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="${website.link}"/>
+                     th:field="${walletPayment.walletNumber}"/>
             </div>
           </div>
         </div>

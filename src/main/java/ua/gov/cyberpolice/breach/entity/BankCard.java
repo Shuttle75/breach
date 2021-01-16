@@ -1,14 +1,8 @@
 package ua.gov.cyberpolice.breach.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
 @Entity
 @Table(name = "bank_card", schema = "breach")
 public class BankCard extends BaseEntity {
@@ -22,6 +16,22 @@ public class BankCard extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private Person holder;
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public Person getHolder() {
+        return holder;
+    }
+
+    public void setHolder(Person holder) {
+        this.holder = holder;
+    }
 
     public String getCardNumber() {
         if(cardNumber != null && cardNumber.length() == 16) {

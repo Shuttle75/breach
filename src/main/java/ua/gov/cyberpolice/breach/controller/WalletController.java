@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.gov.cyberpolice.breach.entity.Person;
-import ua.gov.cyberpolice.breach.entity.Wallet;
+import ua.gov.cyberpolice.breach.entity.WalletPayment;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
 import ua.gov.cyberpolice.breach.repository.WalletRepository;
 
@@ -32,7 +32,7 @@ public class WalletController {
 
     @GetMapping("wallet")
     public String initCreationForm(@PathVariable("breachId") UUID breachId, ModelMap model) {
-        Wallet wallet = new Wallet();
+        WalletPayment wallet = new WalletPayment();
         Person person = new Person();
 
         regionRepository.findById("8000000000")
@@ -52,15 +52,15 @@ public class WalletController {
 
     @PostMapping({"wallet", "wallet/{walletId}/edit"})
     public String processForm(
-            @Valid Wallet wallet,
+            @Valid WalletPayment walletPayment,
             BindingResult result,
             ModelMap model) {
         if (result.hasErrors()) {
-            model.put("wallet", wallet);
+            model.put("wallet", walletPayment);
             return VIEWS_CREATE_OR_UPDATE_FORM;
         }
         else {
-            this.walletRepository.save(wallet);
+            this.walletRepository.save(walletPayment);
             return "redirect:/breach/{breachId}";
         }
     }
