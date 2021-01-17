@@ -6,7 +6,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "website_payment", schema = "breach")
-public class WebsitePayment extends BaseEntity {
+public class WebsitePayment extends Payment {
 
     @Column
     private String link;
@@ -17,5 +17,10 @@ public class WebsitePayment extends BaseEntity {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    @Override
+    public String getType() {
+        return "WebsitePayment";
     }
 }

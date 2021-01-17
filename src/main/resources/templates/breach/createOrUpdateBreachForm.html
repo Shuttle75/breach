@@ -202,8 +202,8 @@
       </div>
 
 
-      <div class="panel panel-default" th:if="${breach.id}">
-        <div class="panel-heading">ПЛАТЕЖІ</div>
+      <div class="panel panel-default" th:each="paymentMove, iter : ${breach.paymentMoves}">
+        <div class="panel-heading" th:text="${'РУХ ПЛАТЕЖІВ ' + iter.index}"></div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
@@ -232,15 +232,17 @@
               </ul>
             </div>
             <div class="col-md-11">
-              <table class="table table-striped" th:each="paymentMove : ${breach.paymentMoves}">
+              <table class="table table-striped">
                 <tr>
                   <th class="glyphicon glyphicon-credit-card"></th>
                   <th th:text="#{moneyTransaction.date}"></th>
+                  <th th:text="#{moneyTransaction.type}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="moneyTransaction : ${paymentMove.moneyTransactions}">
                   <td style="width: 40px"></td>
                   <td style="width: 200px; white-space: nowrap" th:text="${moneyTransaction.getDate()}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${moneyTransaction.getType()}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${moneyTransaction.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>

@@ -27,4 +27,9 @@ public class WalletPayment extends Payment {
     public void setWalletNumber(String walletNumber) {
         this.walletNumber = walletNumber;
     }
+
+    @Override
+    public String getType() {
+        return "WalletPayment";
+    }
 }
