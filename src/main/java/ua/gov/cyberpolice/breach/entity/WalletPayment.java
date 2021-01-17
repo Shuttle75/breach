@@ -30,6 +30,12 @@ public class WalletPayment extends Payment {
 
     @Override
     public String getType() {
-        return "WalletPayment";
+        return "Гаманець";
+    }
+
+    @Override
+    public String getInfo() {
+        return "Платіжна система: " + paymentProvider.getName() +
+                ", номер гаманця: " + walletNumber;
     }
 }

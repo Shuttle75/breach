@@ -21,8 +21,7 @@ public abstract class Payment extends BaseEntity {
         this.date = date;
     }
 
-    public String getType() {
-        return "Payment";
-    }
+    public abstract String getType();
 
+    public abstract String getInfo();
 }

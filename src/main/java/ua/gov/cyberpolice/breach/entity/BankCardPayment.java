@@ -19,4 +19,9 @@ public class BankCardPayment extends Payment {
     public String getType() {
         return "BankCardPayment";
     }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
 }

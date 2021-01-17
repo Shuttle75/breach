@@ -23,4 +23,9 @@ public class WebsitePayment extends Payment {
     public String getType() {
         return "WebsitePayment";
     }
+
+    @Override
+    public String getInfo() {
+        return null;
+    }
 }

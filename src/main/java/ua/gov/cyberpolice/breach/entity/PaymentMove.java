@@ -8,13 +8,13 @@ import java.util.List;
 public class PaymentMove extends BaseEntity {
 
     @OneToMany(mappedBy = "headId")
-    private List<Payment> moneyTransactions;
+    private List<Payment> payments;
 
-    public List<Payment> getMoneyTransactions() {
-        return moneyTransactions;
+    public List<Payment> getPayments() {
+        return payments;
     }
 
-    public void setMoneyTransactions(List<Payment> moneyTransactions) {
-        this.moneyTransactions = moneyTransactions;
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 }
