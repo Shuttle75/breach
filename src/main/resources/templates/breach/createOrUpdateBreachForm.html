@@ -202,28 +202,28 @@
       </div>
 
 
-      <div class="panel panel-default" th:each="paymentMove, iter : ${breach.paymentMoves}">
-        <div class="panel-heading" th:text="${'РУХ ПЛАТЕЖІВ ' + iter.index}"></div>
+      <div class="panel panel-default">
+        <div class="panel-heading">РУХ ПЛАТЕЖІВ</div>
         <div class="panel-body">
           <div class="row">
             <div class="col-md-1" style="padding: 0">
               <ul class="nav navbar-right">
                 <li>
-                  <a th:href="@{{breachId}/bank-card(breachId=${breach.id})}" title="додати картку">
+                  <a th:href="@{{breachId}/bank-card-payment(breachId=${breach.id})}" title="додати картку">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
                     <span>картку</span>
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{{breachId}/wallet(breachId=${breach.id})}" title="додати гаманець">
+                  <a th:href="@{{breachId}/wallet-payment(breachId=${breach.id})}" title="додати гаманець">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
                     <span>гаманець</span>
                   </a>
                 </li>
                 <li>
-                  <a th:href="@{{breachId}/website(breachId=${breach.id})}" title="додати сайт">
+                  <a th:href="@{{breachId}/website-payment(breachId=${breach.id})}" title="додати сайт">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
                     <span>веб сайт</span>
@@ -240,13 +240,13 @@
                   <th th:text="#{payment.info}"></th>
                   <th></th>
                 </tr>
-                <tr th:each="payment : ${paymentMove.payments}">
+                <tr th:each="payment : ${breach.payments}">
                   <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text="${payment.date}"></td>
+                  <td style="width: 200px; white-space: nowrap" th:text="${payment.dateFormatted}"></td>
                   <td style="width: 200px; white-space: nowrap" th:text="${payment.type}"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text="${payment.info}"></td>
+                  <td style="width: 800px; white-space: nowrap" th:text="${payment.info}"></td>
                   <td style="width: 30px" >
-                    <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${payment.id})}">
+                    <a th:href="@{{breachId}/{editLink}(breachId=${breach.id},editLink=${payment.editLink})}">
                       <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                   </td>

@@ -38,4 +38,9 @@ public class WalletPayment extends Payment {
         return "Платіжна система: " + paymentProvider.getName() +
                 ", номер гаманця: " + walletNumber;
     }
+
+    @Override
+    public String getEditLink() {
+        return "walletPayment/" + this.getId() + "/edit";
+    }
 }

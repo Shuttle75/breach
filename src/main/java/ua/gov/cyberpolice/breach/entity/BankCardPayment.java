@@ -15,13 +15,26 @@ public class BankCardPayment extends Payment {
         return bankCard;
     }
 
+    public void setBankCard(BankCard bankCard) {
+        this.bankCard = bankCard;
+    }
+
     @Override
     public String getType() {
-        return "BankCardPayment";
+        return "Банківська карта";
     }
 
     @Override
     public String getInfo() {
-        return null;
+        return "карта: " + this.bankCard.getCardNumber() +
+                " банк: " + this.bankCard.getBankName() +
+                " власник: " + this.bankCard.getHolder().getLastName() +
+                " " + this.bankCard.getHolder().getFirstName() +
+                " " + this.bankCard.getHolder().getMiddleName();
+    }
+
+    @Override
+    public String getEditLink() {
+        return "bank-card-payment/" + this.getId() + "/edit";
     }
 }

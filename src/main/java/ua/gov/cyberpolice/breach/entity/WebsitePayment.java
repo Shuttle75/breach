@@ -21,11 +21,16 @@ public class WebsitePayment extends Payment {
 
     @Override
     public String getType() {
-        return "WebsitePayment";
+        return "Сайт";
     }
 
     @Override
     public String getInfo() {
-        return null;
+        return this.link;
+    }
+
+    @Override
+    public String getEditLink() {
+        return "websitePayment/" + this.getId() + "/edit";
     }
 }

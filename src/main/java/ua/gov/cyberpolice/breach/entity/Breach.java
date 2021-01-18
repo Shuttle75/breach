@@ -60,7 +60,7 @@ public class Breach extends BaseEntity {
     private List<Participant> participants;
 
     @OneToMany(mappedBy = "headId")
-    private List<PaymentMove> paymentMoves;
+    private List<Payment> payments;
 
     @OneToMany(mappedBy = "headId")
     private List<CallDataRecord> callDataRecords;
@@ -188,12 +188,12 @@ public class Breach extends BaseEntity {
         this.participants = participants;
     }
 
-    public List<PaymentMove> getPaymentMoves() {
-        return paymentMoves;
+    public List<Payment> getPayments() {
+        return payments;
     }
 
-    public void setPaymentMoves(List<PaymentMove> paymentMoves) {
-        this.paymentMoves = paymentMoves;
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     public List<CallDataRecord> getCallDataRecords() {

@@ -19,7 +19,8 @@ public class PersonController {
         this.personRepository = personRepository;
     }
 
-    @GetMapping({"breach/{breachId}/person/{passport}", "breach/{breachId}/confiscated/{confiscatedId}/person/{passport}"})
+    @GetMapping({"breach/{breachId}/person/{passport}",
+            "breach/{breachId}/confiscated/{confiscatedId}/person/{passport}"})
     public ResponseEntity<Person> getPerson(@PathVariable("passport") String passport) {
         return new ResponseEntity<>(personRepository.findTopByPassportOrderByModifiedDesc(passport), HttpStatus.OK);
     }

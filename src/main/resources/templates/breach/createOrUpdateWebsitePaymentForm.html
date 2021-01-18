@@ -1,20 +1,26 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
-<!--/*@thymesVar id="websitePayment" type="ua.gov.cyberpolice.breach.entity.WebsitePayment"*/-->
-  <form th:object="${websitePayment}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
+<!--/*@thymesVar id="payment" type="ua.gov.cyberpolice.breach.entity.WebsitePayment"*/-->
+  <form th:object="${payment}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
     <div class="form-group has-feedback">
       <div class="panel panel-default">
-        <input hidden th:field="${websitePayment.id}">
-        <input hidden th:field="${websitePayment.headId}">
+        <input hidden th:field="${payment.id}">
+        <input hidden th:field="${payment.headId}">
         <div class="panel-heading" th:text="#{website}"></div>
         <div class="panel-body">
           <div class="row">
             <label class="control-label col-md-1" th:text="#{website.link}"></label>
-            <div class="col-md-11">
+            <div class="col-md-8">
               <input class="form-control"
                      type="text"
-                     th:field="${websitePayment.link}"/>
+                     th:field="${payment.link}"/>
+            </div>
+            <label class="control-label col-md-1" th:text="#{payment.date}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="datetime-local"
+                     th:field="${payment.date}"/>
             </div>
           </div>
         </div>

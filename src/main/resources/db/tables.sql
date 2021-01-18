@@ -196,28 +196,12 @@ ALTER TABLE breach.participant OWNER TO postgres;
 
 
 
-
-
-
-DROP TABLE IF EXISTS breach.payment_move;
-CREATE TABLE breach.payment_move
-(
-    id                  uuid not null constraint payment_move_pk primary key,
-    head_id             uuid not null
-);
-ALTER TABLE breach.payment_move OWNER TO postgres;
-
-INSERT INTO breach.payment_move(id, head_id)
-VALUES ('600ddaf3-7b48-4c78-9c20-0c9517c69270', 'a1c907e5-1a4c-418a-aadc-a94f6a49d4f9');
-INSERT INTO breach.payment_move(id, head_id)
-VALUES ('7bc421ff-110d-4fb2-9e3e-0ab4a4df0869', 'a1c907e5-1a4c-418a-aadc-a94f6a49d4f9');
-
 DROP TABLE IF EXISTS breach.bank_card_payment;
 CREATE TABLE breach.bank_card_payment
 (
     id                  uuid not null constraint bank_card_payment_pk primary key,
     head_id             uuid not null,
-    date                timestamp,
+    date                timestamp not null,
     bank_card_id        uuid not null
 );
 ALTER TABLE breach.bank_card_payment OWNER TO postgres;
@@ -227,22 +211,18 @@ CREATE TABLE breach.wallet_payment
 (
     id                  uuid not null constraint wallet_payment_pk primary key,
     head_id             uuid not null,
-    date                timestamp,
+    date                timestamp not null,
     payment_provider_id int not null,
     wallet_number       text
 );
 ALTER TABLE breach.wallet_payment OWNER TO postgres;
-
-INSERT INTO breach.wallet_payment(id, head_id, date, payment_provider_id, wallet_number)
-VALUES ('e2ee192b-5a85-44a4-89f8-4428641048dd', '600ddaf3-7b48-4c78-9c20-0c9517c69270', now(), 1, '123456');
-
 
 DROP TABLE IF EXISTS breach.website_payment;
 CREATE TABLE breach.website_payment
 (
     id                  uuid not null constraint website_payment_pk primary key,
     head_id             uuid not null,
-    date                timestamp,
+    date                timestamp not null,
     link                text not null
 );
 ALTER TABLE breach.website_payment OWNER TO postgres;

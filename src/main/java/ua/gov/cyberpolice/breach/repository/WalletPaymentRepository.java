@@ -5,5 +5,5 @@ import ua.gov.cyberpolice.breach.entity.WalletPayment;
 
 import java.util.UUID;
 
-public interface WalletRepository extends CrudRepository<WalletPayment, UUID> {
+public interface WalletPaymentRepository extends CrudRepository<WalletPayment, UUID> {
 }

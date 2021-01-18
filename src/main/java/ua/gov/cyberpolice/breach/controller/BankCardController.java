@@ -27,7 +27,7 @@ public class BankCardController {
         this.regionRepository = regionRepository;
     }
 
-    @GetMapping({"bank-card", "confiscated/{confiscatedId}/bank-card"})
+    @GetMapping("confiscated/{confiscatedId}/bank-card")
     public String initCreationForm(
             @PathVariable("breachId") UUID breachId,
             @PathVariable(value = "confiscatedId",required = false) UUID confiscatedId,

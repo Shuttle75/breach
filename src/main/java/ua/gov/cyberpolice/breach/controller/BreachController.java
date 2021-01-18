@@ -31,7 +31,7 @@ public class BreachController {
     public String initCreationForm(Map<String, Object> model) {
         Breach breach = new Breach();
         breach.setParticipants(new ArrayList<>());
-        breach.setPaymentMoves(new ArrayList<>());
+        breach.setPayments(new ArrayList<>());
         breach.setCallDataRecords(new ArrayList<>());
         breach.setConfiscated(new ArrayList<>());
 

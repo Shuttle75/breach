@@ -8,66 +8,66 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.gov.cyberpolice.breach.entity.Person;
-import ua.gov.cyberpolice.breach.entity.WalletPayment;
+import ua.gov.cyberpolice.breach.entity.WebsitePayment;
 import ua.gov.cyberpolice.breach.repository.RegionRepository;
-import ua.gov.cyberpolice.breach.repository.WalletRepository;
+import ua.gov.cyberpolice.breach.repository.WebsitePaymentRepository;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
 @RequestMapping("/breach/{breachId}")
-public class WalletController {
-    private static final String VIEWS_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateWalletForm";
+public class WebsitePaymentController {
+    private static final String VIEWS_CREATE_OR_UPDATE_FORM = "breach/createOrUpdateWebsitePaymentForm";
 
-    private final WalletRepository walletRepository;
+    private final WebsitePaymentRepository websitePaymentRepository;
     private final RegionRepository regionRepository;
 
-    public WalletController(
-            WalletRepository walletRepository,
+    public WebsitePaymentController(
+            WebsitePaymentRepository websitePaymentRepository,
             RegionRepository regionRepository) {
-        this.walletRepository = walletRepository;
+        this.websitePaymentRepository = websitePaymentRepository;
         this.regionRepository = regionRepository;
     }
 
-    @GetMapping("wallet")
+    @GetMapping("website-payment")
     public String initCreationForm(@PathVariable("breachId") UUID breachId, ModelMap model) {
-        WalletPayment wallet = new WalletPayment();
+        WebsitePayment payment = new WebsitePayment();
         Person person = new Person();
 
         regionRepository.findById("8000000000")
                 .ifPresent(person::setRegion);
-        wallet.setHeadId(breachId);
+        payment.setHeadId(breachId);
 
-        model.put("wallet", wallet);
+        model.put("payment", payment);
         return VIEWS_CREATE_OR_UPDATE_FORM;
     }
 
-    @GetMapping("wallet/{walletId}/edit")
-    public String initEditForm(@PathVariable("walletId") UUID walletId, ModelMap model) {
-        walletRepository.findById(walletId)
-                .ifPresent(wallet -> model.put("wallet", wallet));
+    @GetMapping("website-payment/{paymentId}/edit")
+    public String initEditForm(@PathVariable("paymentId") UUID paymentId, ModelMap model) {
+        this.websitePaymentRepository.findById(paymentId)
+                .ifPresent(payment -> model.put("payment", payment));
         return VIEWS_CREATE_OR_UPDATE_FORM;
     }
 
-    @PostMapping({"wallet", "wallet/{walletId}/edit"})
+    @PostMapping({"website-payment", "website-payment/{paymentId}/edit"})
     public String processForm(
-            @Valid WalletPayment walletPayment,
+            @Valid WebsitePayment website,
             BindingResult result,
             ModelMap model) {
         if (result.hasErrors()) {
-            model.put("wallet", walletPayment);
+            model.put("website", website);
             return VIEWS_CREATE_OR_UPDATE_FORM;
         }
         else {
-            this.walletRepository.save(walletPayment);
+            this.websitePaymentRepository.save(website);
             return "redirect:/breach/{breachId}";
         }
     }
 
-    @GetMapping("wallet/{walletId}/delete")
-    public String deleteForm(@PathVariable("walletId") UUID walletId) {
-        this.walletRepository.deleteById(walletId);
+    @GetMapping("website-payment/{paymentId}/delete")
+    public String deleteForm(@PathVariable("paymentId") UUID paymentId) {
+        this.websitePaymentRepository.deleteById(paymentId);
         return "redirect:/breach/{breachId}";
     }
 }

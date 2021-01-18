@@ -1,29 +1,35 @@
 <html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'breach')}">
 
 <body>
-  <!--/*@thymesVar id="walletPayment" type="ua.gov.cyberpolice.breach.entity.WalletPayment"*/-->
-  <form th:object="${walletPayment}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
+  <!--/*@thymesVar id="payment" type="ua.gov.cyberpolice.breach.entity.WalletPayment"*/-->
+  <form th:object="${payment}" class="form-horizontal" id="bank-card-edit-form" method="post" autocomplete="off">
     <div class="form-group has-feedback">
       <div class="panel panel-default">
-        <input hidden th:field="${walletPayment.id}">
-        <input hidden th:field="${walletPayment.headId}">
+        <input hidden th:field="${payment.id}">
+        <input hidden th:field="${payment.headId}">
         <div class="panel-heading" th:text="#{wallet}"></div>
         <div class="panel-body">
           <div class="row">
             <label class="control-label col-md-2" th:text="#{wallet.payment_provider}"></label>
             <div class="col-md-4">
-              <select class="form-control" th:field="${walletPayment.paymentProvider}">
+              <select class="form-control" th:field="${payment.paymentProvider}">
                 <option th:each="paymentProvider : ${@paymentProviderRepository.findAll()}"
                         th:value="${paymentProvider.id}"
                         th:text="${paymentProvider.name}">
                 </option>
               </select>
             </div>
-            <label class="control-label col-md-1" th:text="#{wallet}"></label>
+            <label class="control-label col-md-1" th:text="#{wallet.number}"></label>
             <div class="col-md-2">
               <input class="form-control"
                      type="text"
-                     th:field="${walletPayment.walletNumber}"/>
+                     th:field="${payment.walletNumber}"/>
+            </div>
+            <label class="control-label col-md-1" th:text="#{payment.date}"></label>
+            <div class="col-md-2">
+              <input class="form-control"
+                     type="datetime-local"
+                     th:field="${payment.date}"/>
             </div>
           </div>
         </div>
