@@ -29,8 +29,8 @@ public class WalletPayment extends Payment {
     }
 
     @Override
-    public String getType() {
-        return "Гаманець";
+    public String getIcon() {
+        return "glyphicon glyphicon-lock";
     }
 
     @Override
@@ -41,6 +41,6 @@ public class WalletPayment extends Payment {
 
     @Override
     public String getEditLink() {
-        return "walletPayment/" + this.getId() + "/edit";
+        return "wallet-payment/" + this.getId() + "/edit";
     }
 }

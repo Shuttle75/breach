@@ -20,8 +20,8 @@ public class WebsitePayment extends Payment {
     }
 
     @Override
-    public String getType() {
-        return "Сайт";
+    public String getIcon() {
+        return "glyphicon glyphicon-globe";
     }
 
     @Override
@@ -31,6 +31,6 @@ public class WebsitePayment extends Payment {
 
     @Override
     public String getEditLink() {
-        return "websitePayment/" + this.getId() + "/edit";
+        return "website-payment/" + this.getId() + "/edit";
     }
 }

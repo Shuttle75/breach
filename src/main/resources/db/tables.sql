@@ -294,7 +294,7 @@ DROP TABLE IF EXISTS breach.bank_card;
 CREATE TABLE breach.bank_card
 (
     id                  uuid not null constraint bank_card_pk primary key,
-    head_id             uuid not null,
+    head_id             uuid,
     card_number         text not null,
     bank_name           text,
     holder_id           uuid

@@ -60,6 +60,7 @@ public class Breach extends BaseEntity {
     private List<Participant> participants;
 
     @OneToMany(mappedBy = "headId")
+    @OrderBy("date")
     private List<Payment> payments;
 
     @OneToMany(mappedBy = "headId")

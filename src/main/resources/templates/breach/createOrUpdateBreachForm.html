@@ -234,17 +234,15 @@
             <div class="col-md-11">
               <table class="table table-striped">
                 <tr>
-                  <th class="glyphicon glyphicon-credit-card"></th>
+                  <th></th>
                   <th th:text="#{payment.date}"></th>
-                  <th th:text="#{payment.type}"></th>
                   <th th:text="#{payment.info}"></th>
                   <th></th>
                 </tr>
                 <tr th:each="payment : ${breach.payments}">
-                  <td style="width: 40px"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text="${payment.dateFormatted}"></td>
-                  <td style="width: 200px; white-space: nowrap" th:text="${payment.type}"></td>
-                  <td style="width: 800px; white-space: nowrap" th:text="${payment.info}"></td>
+                  <td th:class="${payment.icon}"></td>
+                  <td style="width: 160px; white-space: nowrap" th:text="${payment.dateFormatted}"></td>
+                  <td th:text="${payment.info}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/{editLink}(breachId=${breach.id},editLink=${payment.editLink})}">
                       <span class="glyphicon glyphicon-pencil"></span>

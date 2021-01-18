@@ -1,5 +1,6 @@
 package ua.gov.cyberpolice.breach.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -8,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "bank_card_payment", schema = "breach")
 public class BankCardPayment extends Payment {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private BankCard bankCard;
 
     public BankCard getBankCard() {
@@ -20,8 +21,8 @@ public class BankCardPayment extends Payment {
     }
 
     @Override
-    public String getType() {
-        return "Банківська карта";
+    public String getIcon() {
+        return "glyphicon glyphicon-credit-card";
     }
 
     @Override

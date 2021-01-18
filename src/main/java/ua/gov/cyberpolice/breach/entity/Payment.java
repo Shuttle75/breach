@@ -30,7 +30,7 @@ public abstract class Payment extends BaseEntity {
         }
     }
 
-    public abstract String getType();
+    public abstract String getIcon();
 
     public abstract String getInfo();
 
