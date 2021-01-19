@@ -1582,9 +1582,9 @@ pre code {
     width: 970px;
   }
 }
-@media (min-width: 1240px) {
+@media (min-width: 1200px) {
   .container {
-    width: 1200px;
+    width: 1280px;
   }
 }
 @media (min-width: 1800px) {

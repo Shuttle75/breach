@@ -30,7 +30,7 @@ public class WalletPayment extends Payment {
 
     @Override
     public String getIcon() {
-        return "glyphicon glyphicon-lock";
+        return "glyphicon glyphicon-briefcase";
     }
 
     @Override

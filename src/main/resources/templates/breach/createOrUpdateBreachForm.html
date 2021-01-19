@@ -218,7 +218,7 @@
                 <li>
                   <a th:href="@{{breachId}/wallet-payment(breachId=${breach.id})}" title="додати гаманець">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
                     <span>гаманець</span>
                   </a>
                 </li>
@@ -338,7 +338,7 @@
                   <td style="white-space: nowrap" th:text="${bankCard.holder?.firstName}"></td>
                   <td style="white-space: nowrap" th:text="${bankCard.holder?.middleName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text="${bankCard.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${bankCard.holder?.address}"></td>
+                  <td th:text="${bankCard.holder?.address}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/bank-card/{bankCardId}/edit(breachId=${breach.id},bankCardId=${bankCard.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -370,7 +370,7 @@
                   <td style="white-space: nowrap" th:text="${phone.holder?.firstName}"></td>
                   <td style="white-space: nowrap" th:text="${phone.holder?.middleName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text="${phone.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${phone.holder?.address}"></td>
+                  <td th:text="${phone.holder?.address}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/phone/{phoneId}/edit(breachId=${breach.id},phoneId=${phone.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
@@ -402,7 +402,7 @@
                   <td style="white-space: nowrap" th:text="${simCard.holder?.firstName}"></td>
                   <td style="white-space: nowrap" th:text="${simCard.holder?.middleName}"></td>
                   <td style="width: 100px; white-space: nowrap" th:text="${simCard.holder?.birthDate}"></td>
-                  <td style="width: 500px" th:text="${simCard.holder?.address}"></td>
+                  <td th:text="${simCard.holder?.address}"></td>
                   <td style="width: 30px" >
                     <a th:href="@{{breachId}/sim-card/{simCardId}/edit(breachId=${breach.id},simCardId=${simCard.id})}">
                       <span class="glyphicon glyphicon-pencil"></span>
