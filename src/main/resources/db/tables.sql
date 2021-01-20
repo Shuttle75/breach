@@ -17,6 +17,20 @@ DROP TABLE IF EXISTS breach.confiscated;
 DROP TABLE IF EXISTS breach.phone;
 DROP TABLE IF EXISTS breach.sim_card;
 
+
+DROP TABLE IF EXISTS breach.dictionary;
+CREATE TABLE breach.dictionary
+(
+    id                  int not null,
+    link                text,
+    name                text
+);
+ALTER TABLE breach.dictionary OWNER TO postgres;
+INSERT INTO breach.dictionary VALUES (1, 'dictionary/breach-method', 'Спосіб вчинення');
+INSERT INTO breach.dictionary VALUES (2, 'dictionary/participant-type', 'Тип участі особи');
+INSERT INTO breach.dictionary VALUES (3, 'dictionary/prison', 'Тюрми');
+INSERT INTO breach.dictionary VALUES (4, 'dictionary/payment-provider', 'Платіжна система');
+
 DROP TABLE IF EXISTS breach.config;
 CREATE TABLE breach.config
 (

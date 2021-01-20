@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.gov.cyberpolice.breach.entity.*;
+import ua.gov.cyberpolice.breach.repository.DictionaryRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +23,15 @@ public class FindController {
     EntityManager entityManager;
 
     private static final String VIEWS_BREACH_FIND_FORM = "breach/findBreach";
+    private static final String VIEWS_BREACH_DICTIONARY_FORM = "breach/createOrUpdateDictionaryForm";
+
+    private final DictionaryRepository dictionaryRepository;
+
+    public FindController (
+            DictionaryRepository dictionaryRepository) {
+        this.dictionaryRepository = dictionaryRepository;
+    }
+
 
     @GetMapping("breach/find")
     public String initCreationForm(Find find, Map<String, Object> model) {
@@ -73,5 +83,13 @@ public class FindController {
     public String processCreationForm(Find find, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("find", find);
         return "redirect:/breach/find";
+    }
+
+    @GetMapping("dictionary")
+    public String processDictionaryForm(Map<String, Object> model) {
+        Iterable<Dictionary> dictionaries = dictionaryRepository.findAll();
+
+        model.put("dictionaries", dictionaries);
+        return VIEWS_BREACH_DICTIONARY_FORM;
     }
 }
