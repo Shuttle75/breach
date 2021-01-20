@@ -5,18 +5,24 @@
     <div class="panel panel-default">
         <div class="panel-heading" th:text="#{dictionary}"></div>
         <div class="panel-body">
-            <table class="table table-striped">
-                <tr>
-                    <th th:text="#{dictionary.name}"></th>
-                </tr>
-                <tr th:each="dictionary : ${dictionaries}">
-                    <td>
-                        <a th:href="${dictionary.link}" th:title="${dictionary.name}">
-                            <span th:text="${dictionary.name}"></span>
-                        </a>
-                    </td>
-                </tr>
-            </table>
+            <div class="row">
+                <div class="col-lg-2">
+                    <table class="table table-striped">
+                        <tr>
+                            <th th:text="#{dictionary.name}"></th>
+                        </tr>
+                        <tr th:each="dictionary : ${dictionaries}">
+                            <td>
+                                <a th:href="${dictionary.link}" th:title="${dictionary.name}">
+                                    <span th:text="${dictionary.name}"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-10"></div>
+            </div>
+
         </div>
     </div>
 </body>
