@@ -84,12 +84,4 @@ public class FindController {
         redirectAttributes.addFlashAttribute("find", find);
         return "redirect:/breach/find";
     }
-
-    @GetMapping("dictionary")
-    public String processDictionaryForm(Map<String, Object> model) {
-        Iterable<Dictionary> dictionaries = dictionaryRepository.findAll();
-
-        model.put("dictionaries", dictionaries);
-        return VIEWS_BREACH_DICTIONARY_FORM;
-    }
 }

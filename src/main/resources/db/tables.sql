@@ -26,10 +26,11 @@ CREATE TABLE breach.dictionary
     name                text
 );
 ALTER TABLE breach.dictionary OWNER TO postgres;
-INSERT INTO breach.dictionary VALUES (1, 'dictionary/breach-method', 'Спосіб вчинення');
-INSERT INTO breach.dictionary VALUES (2, 'dictionary/participant-type', 'Тип участі особи');
-INSERT INTO breach.dictionary VALUES (3, 'dictionary/prison', 'Тюрми');
-INSERT INTO breach.dictionary VALUES (4, 'dictionary/payment-provider', 'Платіжна система');
+INSERT INTO breach.dictionary VALUES (1, '/dictionary/breach-type', 'Тип правопорушення');
+INSERT INTO breach.dictionary VALUES (2, '/dictionary/breach-method', 'Спосіб вчинення');
+INSERT INTO breach.dictionary VALUES (3, '/dictionary/participant-type', 'Тип участі особи');
+INSERT INTO breach.dictionary VALUES (4, '/dictionary/prison', 'Тюрми');
+INSERT INTO breach.dictionary VALUES (5, '/dictionary/payment-provider', 'Платіжна система');
 
 DROP TABLE IF EXISTS breach.config;
 CREATE TABLE breach.config
@@ -47,8 +48,8 @@ CREATE TABLE breach.prison
     id                  int not null constraint prison_pk primary key,
     name                text,
     code                text,
-    cell_latitude       float,
-    cell_longitude      float
+    latitude            float,
+    longitude           float
 );
 ALTER TABLE breach.prison OWNER TO postgres;
 INSERT INTO breach.prison VALUES (1, 'Державна установа «Одеська установа виконання покарань (№ 21)»','8564162',30.727396,46.4439);

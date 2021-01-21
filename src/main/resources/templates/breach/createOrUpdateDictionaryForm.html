@@ -7,7 +7,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-2">
-                    <table class="table table-striped">
+                    <table class="table table-bordered">
                         <tr>
                             <th th:text="#{dictionary.name}"></th>
                         </tr>
@@ -20,7 +20,79 @@
                         </tr>
                     </table>
                 </div>
-                <div class="col-lg-10"></div>
+                <div class="col-lg-10">
+                    <table class="table table-striped" th:if="${breachTypes}">
+                        <tr>
+                            <th th:text="#{id}"></th>
+                            <th th:text="#{name}"></th>
+                        </tr>
+                        <tr th:each="breachType : ${breachTypes}">
+                            <td th:text="${breachType.id}"></td>
+                            <td th:text="${breachType.name}"></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-striped" th:if="${breachMethods}">
+                        <tr>
+                            <th th:text="#{id}"></th>
+                            <th th:text="#{type}"></th>
+                            <th th:text="#{name}"></th>
+                        </tr>
+                        <tr th:each="breachMethod : ${breachMethods}">
+                            <td th:text="${breachMethod.id}"></td>
+                            <td th:text="${breachMethod.breachType.name}"></td>
+                            <td th:text="${breachMethod.name}"></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-striped" th:if="${participantTypes}">
+                        <tr>
+                            <th th:text="#{id}"></th>
+                            <th th:text="#{name}"></th>
+                        </tr>
+                        <tr th:each="participantType : ${participantTypes}">
+                            <td th:text="${participantType.id}"></td>
+                            <td th:text="${participantType.name}"></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-striped" th:if="${prisons}">
+                        <tr>
+                            <th th:text="#{id}"></th>
+                            <th th:text="#{name}"></th>
+                            <th th:text="#{prison.code}"></th>
+                            <th th:text="#{prison.latitude}"></th>
+                            <th th:text="#{prison.longitude}"></th>
+                        </tr>
+                        <!--/*@thymesVar id="prison" type="ua.gov.cyberpolice.breach.entity.Prison"*/-->
+                        <tr th:each="prison : ${prisons}">
+                            <td th:text="${prison.id}"></td>
+                            <td th:text="${prison.name}"></td>
+                            <td th:text="${prison.code}"></td>
+                            <td th:text="${prison.latitude}"></td>
+                            <td th:text="${prison.longitude}"></td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-striped" th:if="${paymentProviders}">
+                        <tr>
+                            <th th:text="#{id}"></th>
+                            <th th:text="#{name}"></th>
+                            <th th:text="#{paymentProvider.legalName}"></th>
+                            <th th:text="#{paymentProvider.website}"></th>
+                            <th th:text="#{paymentProvider.local}"></th>
+                        </tr>
+                        <!--/*@thymesVar id="paymentProvider" type="ua.gov.cyberpolice.breach.entity.PaymentProvider"*/-->
+                        <tr th:each="paymentProvider : ${paymentProviders}">
+                            <td th:text="${paymentProvider.id}"></td>
+                            <td th:text="${paymentProvider.name}"></td>
+                            <td th:text="${paymentProvider.legalName}"></td>
+                            <td th:text="${paymentProvider.website}"></td>
+                            <td th:text="${paymentProvider.local}"></td>
+                        </tr>
+                    </table>
+
+                </div>
             </div>
 
         </div>
