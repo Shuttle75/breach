@@ -21,14 +21,47 @@
                     </table>
                 </div>
                 <div class="col-lg-10">
+                    <!--/*@thymesVar id="breachType" type="ua.gov.cyberpolice.breach.entity.BreachType"*/-->
+                    <form th:object="${breachType}"
+                          th:if="${breachTypes}"
+                          method="post"
+                          autocomplete="off"
+                          action="/dictionary/breach-type">
+                        <div class="row">
+                            <label class="control-label col-md-1" th:text="#{id}"></label>
+                            <div class="col-md-2">
+                                <input class="form-control"
+                                       type="number"
+                                       th:field="${breachType.id}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{name}"></label>
+                            <div class="col-md-8">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${breachType.name}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-offset-10 col-md-2">
+                                <button class="btn btn-default" type="submit" th:text="#{submit}"></button>
+                            </div>
+                        </div>
+                    </form>
+
                     <table class="table table-striped" th:if="${breachTypes}">
                         <tr>
                             <th th:text="#{id}"></th>
                             <th th:text="#{name}"></th>
+                            <th></th>
                         </tr>
                         <tr th:each="breachType : ${breachTypes}">
                             <td th:text="${breachType.id}"></td>
                             <td th:text="${breachType.name}"></td>
+                            <td style="width: 30px" >
+                                <a th:href="@{/dictionary/breach-type/{breachTypeId}(breachTypeId=${breachType.id})}">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
                         </tr>
                     </table>
 
