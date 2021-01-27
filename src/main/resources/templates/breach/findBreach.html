@@ -154,7 +154,7 @@
           </tr>
           <tr th:each="breach : ${breaches}">
             <td th:text="${breach.incomeNumber}" style="white-space: nowrap"></td>
-            <td th:text="${breach.incomeDate}" style="width: 200px; white-space: nowrap"></td>
+            <td th:text="${#dates.format(breach.incomeDate, 'dd.MM.yyyy HH:mm')}" style="width: 200px; white-space: nowrap"></td>
             <td th:text="${breach.eoNumber}" style="white-space: nowrap"></td>
             <td th:text="${breach.eoDate}" style="width: 200px; white-space: nowrap"></td>
             <td th:text="${breach.erdrArticle}" style="white-space: nowrap"></td>

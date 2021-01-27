@@ -359,9 +359,6 @@ CREATE TABLE breach.participant
 );
 ALTER TABLE breach.participant OWNER TO postgres;
 
-
-
-
 DROP TABLE IF EXISTS breach.bank_card_payment;
 CREATE TABLE breach.bank_card_payment
 (
@@ -410,14 +407,6 @@ CREATE TABLE breach.call_data_record
     cell_azimuth        float
 );
 ALTER TABLE breach.call_data_record OWNER TO postgres;
-
-
-
-
-
-
-
-
 
 DROP TABLE IF EXISTS breach.confiscated;
 CREATE TABLE breach.confiscated

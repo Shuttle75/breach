@@ -65,29 +65,151 @@
                         </tr>
                     </table>
 
+                    <!--/*@thymesVar id="breachMethod" type="ua.gov.cyberpolice.breach.entity.BreachMethod"*/-->
+                    <form th:object="${breachMethod}"
+                          th:if="${breachMethod}"
+                          method="post"
+                          autocomplete="off"
+                          action="/dictionary/breach-method">
+                        <div class="row">
+                            <label class="control-label col-md-1" th:text="#{id}"></label>
+                            <div class="col-md-2">
+                                <input class="form-control"
+                                       type="number"
+                                       th:field="${breachMethod.id}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{breach.method}"></label>
+                            <div class="col-md-2">
+                                <select class="form-control" th:field="${breachMethod.breachType}">
+                                    <option th:each="type : ${@breachTypeRepository.findAll()}"
+                                            th:value="${type.id}"
+                                            th:text="${type.name}">
+                                    </option>
+                                </select>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{name}"></label>
+                            <div class="col-md-5">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${breachMethod.name}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-offset-10 col-md-2">
+                                <button class="btn btn-default" type="submit" th:text="#{submit}"></button>
+                            </div>
+                        </div>
+                    </form>
+
                     <table class="table table-striped" th:if="${breachMethods}">
                         <tr>
                             <th th:text="#{id}"></th>
                             <th th:text="#{type}"></th>
                             <th th:text="#{name}"></th>
+                            <th></th>
                         </tr>
                         <tr th:each="breachMethod : ${breachMethods}">
                             <td th:text="${breachMethod.id}"></td>
                             <td th:text="${breachMethod.breachType.name}"></td>
                             <td th:text="${breachMethod.name}"></td>
+                            <td style="width: 30px" >
+                                <a th:href="@{/dictionary/breach-method/{breachMethodId}(breachMethodId=${breachMethod.id})}">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
                         </tr>
                     </table>
+
+                    <!--/*@thymesVar id="participantType" type="ua.gov.cyberpolice.breach.entity.ParticipantType"*/-->
+                    <form th:object="${participantType}"
+                          th:if="${participantType}"
+                          method="post"
+                          autocomplete="off"
+                          action="/dictionary/participant-type">
+                        <div class="row">
+                            <label class="control-label col-md-1" th:text="#{id}"></label>
+                            <div class="col-md-2">
+                                <input class="form-control"
+                                       type="number"
+                                       th:field="${participantType.id}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{name}"></label>
+                            <div class="col-md-8">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${participantType.name}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-offset-10 col-md-2">
+                                <button class="btn btn-default" type="submit" th:text="#{submit}"></button>
+                            </div>
+                        </div>
+                    </form>
 
                     <table class="table table-striped" th:if="${participantTypes}">
                         <tr>
                             <th th:text="#{id}"></th>
                             <th th:text="#{name}"></th>
+                            <th></th>
                         </tr>
                         <tr th:each="participantType : ${participantTypes}">
                             <td th:text="${participantType.id}"></td>
                             <td th:text="${participantType.name}"></td>
+                            <td style="width: 30px" >
+                                <a th:href="@{/dictionary/participant-type/{participantTypeId}(participantTypeId=${participantType.id})}">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
                         </tr>
                     </table>
+
+                    <!--/*@thymesVar id="prison" type="ua.gov.cyberpolice.breach.entity.Prison"*/-->
+                    <form th:object="${prison}"
+                          th:if="${prison}"
+                          method="post"
+                          autocomplete="off"
+                          action="/dictionary/prison">
+                        <div class="row">
+                            <label class="control-label col-md-1" th:text="#{id}"></label>
+                            <div class="col-md-2">
+                                <input class="form-control"
+                                       type="number"
+                                       th:field="${prison.id}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{name}"></label>
+                            <div class="col-md-8">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${prison.name}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-1" th:text="#{prison.code}"></label>
+                            <div class="col-md-3">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${prison.code}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{prison.latitude}"></label>
+                            <div class="col-md-3">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${prison.latitude}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{prison.longitude}"></label>
+                            <div class="col-md-3">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${prison.longitude}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-offset-10 col-md-2">
+                                <button class="btn btn-default" type="submit" th:text="#{submit}"></button>
+                            </div>
+                        </div>
+                    </form>
 
                     <table class="table table-striped" th:if="${prisons}">
                         <tr>
@@ -96,6 +218,7 @@
                             <th th:text="#{prison.code}"></th>
                             <th th:text="#{prison.latitude}"></th>
                             <th th:text="#{prison.longitude}"></th>
+                            <th></th>
                         </tr>
                         <!--/*@thymesVar id="prison" type="ua.gov.cyberpolice.breach.entity.Prison"*/-->
                         <tr th:each="prison : ${prisons}">
@@ -104,8 +227,61 @@
                             <td th:text="${prison.code}"></td>
                             <td th:text="${prison.latitude}"></td>
                             <td th:text="${prison.longitude}"></td>
+                            <td style="width: 30px" >
+                                <a th:href="@{/dictionary/prison/{prisonId}(prisonId=${prison.id})}">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
                         </tr>
                     </table>
+
+                    <!--/*@thymesVar id="paymentProvider" type="ua.gov.cyberpolice.breach.entity.PaymentProvider"*/-->
+                    <form th:object="${paymentProvider}"
+                          th:if="${paymentProvider}"
+                          method="post"
+                          autocomplete="off"
+                          action="/dictionary/payment-provider">
+                        <div class="row">
+                            <label class="control-label col-md-1" th:text="#{id}"></label>
+                            <div class="col-md-1">
+                                <input class="form-control"
+                                       type="number"
+                                       th:field="${paymentProvider.id}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{name}"></label>
+                            <div class="col-md-4">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${paymentProvider.name}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{paymentProvider.legalName}"></label>
+                            <div class="col-md-4">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${paymentProvider.legalName}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="control-label col-md-1" th:text="#{paymentProvider.website}"></label>
+                            <div class="col-md-6">
+                                <input class="form-control"
+                                       type="text"
+                                       th:field="${paymentProvider.website}"/>
+                            </div>
+                            <label class="control-label col-md-1" th:text="#{paymentProvider.local}"></label>
+                            <div class="col-md-4">
+                                <select class="form-control" th:field="${paymentProvider.local}">
+                                    <option value="true" th:text="#{bool.true}"></option>
+                                    <option value="false" th:text="#{bool.false}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-offset-10 col-md-2">
+                                <button class="btn btn-default" type="submit" th:text="#{submit}"></button>
+                            </div>
+                        </div>
+                    </form>
 
                     <table class="table table-striped" th:if="${paymentProviders}">
                         <tr>
@@ -114,6 +290,7 @@
                             <th th:text="#{paymentProvider.legalName}"></th>
                             <th th:text="#{paymentProvider.website}"></th>
                             <th th:text="#{paymentProvider.local}"></th>
+                            <th></th>
                         </tr>
                         <!--/*@thymesVar id="paymentProvider" type="ua.gov.cyberpolice.breach.entity.PaymentProvider"*/-->
                         <tr th:each="paymentProvider : ${paymentProviders}">
@@ -121,7 +298,15 @@
                             <td th:text="${paymentProvider.name}"></td>
                             <td th:text="${paymentProvider.legalName}"></td>
                             <td th:text="${paymentProvider.website}"></td>
-                            <td th:text="${paymentProvider.local}"></td>
+                            <td>
+                                <label th:text="#{bool.true}" th:if="${paymentProvider.local}"></label>
+                                <label th:text="#{bool.false}" th:unless="${paymentProvider.local}"></label>
+                            </td>
+                            <td style="width: 30px" >
+                                <a th:href="@{/dictionary/payment-provider/{paymentProviderId}(paymentProviderId=${paymentProvider.id})}">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                            </td>
                         </tr>
                     </table>
 

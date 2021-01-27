@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class Breach extends BaseEntity {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @Column
-    private LocalDateTime incomeDate;
+    private Date incomeDate;
 
     @Column
     private String eoNumber;
@@ -101,11 +102,11 @@ public class Breach extends BaseEntity {
         this.incomeNumber = incomeNumber;
     }
 
-    public LocalDateTime getIncomeDate() {
+    public Date getIncomeDate() {
         return incomeDate;
     }
 
-    public void setIncomeDate(LocalDateTime incomeDate) {
+    public void setIncomeDate(Date incomeDate) {
         this.incomeDate = incomeDate;
     }
 

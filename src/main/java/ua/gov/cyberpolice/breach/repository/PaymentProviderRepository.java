@@ -4,4 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import ua.gov.cyberpolice.breach.entity.PaymentProvider;
 
 public interface PaymentProviderRepository extends CrudRepository<PaymentProvider, Integer> {
+    Iterable<PaymentProvider> findAllByOrderById();
 }

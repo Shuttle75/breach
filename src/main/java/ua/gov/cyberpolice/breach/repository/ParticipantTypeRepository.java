@@ -4,4 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import ua.gov.cyberpolice.breach.entity.ParticipantType;
 
 public interface ParticipantTypeRepository extends CrudRepository<ParticipantType, Integer> {
+    Iterable<ParticipantType> findAllByOrderById();
 }
