@@ -3,8 +3,49 @@ package ua.gov.cyberpolice.breach.entity;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Find {
+
+
+    public class Pages {
+
+        public Pages(String pageFunction, String pageName, String cssClass) {
+            this.pageFunction = pageFunction;
+            this.pageName = pageName;
+            this.cssClass = cssClass;
+        }
+
+        private String pageFunction;
+
+        private String pageName;
+
+        private String cssClass;
+
+        public String getPageNumber() {
+            return pageFunction;
+        }
+
+        public void setPageNumber(String pageFunction) {
+            this.pageFunction = pageFunction;
+        }
+
+        public String getPageName() {
+            return pageName;
+        }
+
+        public void setPageName(String pageName) {
+            this.pageName = pageName;
+        }
+
+        public String getCssClass() {
+            return cssClass;
+        }
+
+        public void setCssClass(String cssClass) {
+            this.cssClass = cssClass;
+        }
+    }
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate fromDate;
@@ -12,32 +53,29 @@ public class Find {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate toDate;
 
-    private Integer page = 1;
+    private Integer firstPage = 1;
+    private Integer prevPage = 1;
+    private Integer currentPage = 1;
+    private Integer nextPage = 10;
+    private Integer lastPage = 10;
 
-    private Integer size = 10;
+    private List<Pages> pages;
+
+    private Integer pageSize = 10;
+    private Integer totalItems = 100;
 
     private String sortField = "incomeDate";
-
     private String sortOrder = "ASC";
 
     private String passport = "";
-
     private String lastName = "";
-
     private String firstName = "";
-
     private String middleName = "";
-
     private String region = "";
-
     private Integer method;
-
     private String cardNumber = "";
-
     private String phone = "";
-
     private String mac = "";
-
     private String imei = "";
 
     public LocalDate getFromDate() {
@@ -56,20 +94,68 @@ public class Find {
         this.toDate = toDate;
     }
 
-    public Integer getPage() {
-        return page;
+    public Integer getFirstPage() {
+        return firstPage;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setFirstPage(Integer firstPage) {
+        this.firstPage = firstPage;
     }
 
-    public Integer getSize() {
-        return size;
+    public Integer getPrevPage() {
+        return prevPage;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setPrevPage(Integer prevPage) {
+        this.prevPage = prevPage;
+    }
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public Integer getNextPage() {
+        return nextPage;
+    }
+
+    public void setNextPage(Integer nextPage) {
+        this.nextPage = nextPage;
+    }
+
+    public Integer getLastPage() {
+        return lastPage;
+    }
+
+    public void setLastPage(Integer lastPage) {
+        this.lastPage = lastPage;
+    }
+
+    public List<Pages> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<Pages> pages) {
+        this.pages = pages;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public Integer getTotalItems() {
+        return totalItems;
+    }
+
+    public void setTotalItems(Integer totalItems) {
+        this.totalItems = totalItems;
     }
 
     public String getSortField() {

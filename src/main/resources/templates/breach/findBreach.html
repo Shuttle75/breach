@@ -3,8 +3,12 @@
 <body>
 <!--/*@thymesVar id="find" type="ua.gov.cyberpolice.breach.entity.Find"*/-->
   <form id="form" class="form-horizontal" th:object="${find}" method="post" autocomplete="off">
-    <input type="hidden" th:field="${find.page}">
-    <input type="hidden" th:field="${find.size}">
+    <input type="hidden" th:field="${find.firstPage}">
+    <input type="hidden" th:field="${find.prevPage}">
+    <input type="hidden" th:field="${find.currentPage}">
+    <input type="hidden" th:field="${find.nextPage}">
+    <input type="hidden" th:field="${find.lastPage}">
+    <input type="hidden" th:field="${find.pageSize}">
     <input type="hidden" th:field="${find.sortField}">
     <input type="hidden" th:field="${find.sortOrder}">
     <div class="panel panel-default">
@@ -96,7 +100,26 @@
         </div>
       </div>
     </div>
-    <!--/*@thymesVar id="breach" type="ua.gov.cyberpolice.breach.entity.Breach"*/-->
+
+    <!--/*@thymesVar id="find" type="ua.gov.cyberpolice.breach.entity.Find"*/-->
+    <div th:fragment="menuItem(fin)" class="row">
+      <div class="col-md-1">
+        <ul class="pagination">
+          <li class="disabled">
+            <span th:text="'Всього ' + ${find.totalItems}"></span>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-offset-6 col-md-5">
+        <!--/*@thymesVar id="find" type="ua.gov.cyberpolice.breach.entity.Find"*/-->
+        <ul class="pagination">
+          <li th:class="${page.cssClass}" th:each="page : ${find.pages}">
+            <a th:onclick="'changePage(' + ${page.pageNumber} + ')'" th:text="${page.pageName}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <div class="panel panel-default">
       <div class="panel-body">
         <table class="table table-striped">
@@ -169,6 +192,8 @@
         </table>
       </div>
     </div>
+
+    <div th:replace="::menuItem(${find})"></div>
   </form>
   <br/>
 </body>
@@ -183,4 +208,9 @@
     }
     document.getElementById('form').submit();
   }
+  function changePage(page) {
+    document.getElementById('currentPage').value = page;
+    document.getElementById('form').submit();
+  }
+
 </script>
