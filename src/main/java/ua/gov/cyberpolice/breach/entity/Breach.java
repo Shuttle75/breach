@@ -65,6 +65,10 @@ public class Breach extends BaseEntity {
     private List<Payment> payments;
 
     @OneToMany(mappedBy = "headId")
+    @OrderBy("date")
+    private List<BankCardPayment> bankCardPayments;
+
+    @OneToMany(mappedBy = "headId")
     private List<CallDataRecord> callDataRecords;
 
     @OneToMany(mappedBy = "headId")
@@ -196,6 +200,14 @@ public class Breach extends BaseEntity {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    public List<BankCardPayment> getBankCardPayments() {
+        return bankCardPayments;
+    }
+
+    public void setBankCardPayments(List<BankCardPayment> bankCardPayments) {
+        this.bankCardPayments = bankCardPayments;
     }
 
     public List<CallDataRecord> getCallDataRecords() {

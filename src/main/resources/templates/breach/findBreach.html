@@ -3,12 +3,7 @@
 <body>
 <!--/*@thymesVar id="find" type="ua.gov.cyberpolice.breach.entity.Find"*/-->
   <form id="form" class="form-horizontal" th:object="${find}" method="post" autocomplete="off">
-    <input type="hidden" th:field="${find.firstPage}">
-    <input type="hidden" th:field="${find.prevPage}">
-    <input type="hidden" th:field="${find.currentPage}">
-    <input type="hidden" th:field="${find.nextPage}">
-    <input type="hidden" th:field="${find.lastPage}">
-    <input type="hidden" th:field="${find.pageSize}">
+    <input type="hidden" th:field="${find.pageNumber}">
     <input type="hidden" th:field="${find.sortField}">
     <input type="hidden" th:field="${find.sortOrder}">
     <div class="panel panel-default">
@@ -101,20 +96,39 @@
       </div>
     </div>
 
-    <!--/*@thymesVar id="find" type="ua.gov.cyberpolice.breach.entity.Find"*/-->
+
     <div th:fragment="menuItem(fin)" class="row">
       <div class="col-md-1">
         <ul class="pagination">
           <li class="disabled">
-            <span th:text="'Всього ' + ${find.totalItems}"></span>
+            <span th:text="'Всього ' + ${page.totalElements}"></span>
           </li>
         </ul>
       </div>
       <div class="col-md-offset-6 col-md-5">
-        <!--/*@thymesVar id="find" type="ua.gov.cyberpolice.breach.entity.Find"*/-->
+        <!--/*@thymesVar id="page" type="ua.gov.cyberpolice.breach.entity.PageWrapper"*/-->
         <ul class="pagination">
-          <li th:class="${page.cssClass}" th:each="page : ${find.pages}">
-            <a th:onclick="'changePage(' + ${page.pageNumber} + ')'" th:text="${page.pageName}"></a>
+          <li th:class="${page.first} ? 'disabled' : ''">
+            <span th:if="${page.first}">← Перша</span>
+            <a th:if="${not page.first}" th:onclick="'changePage(0)'">← Перша</a>
+          </li>
+          <li th:class="${page.hasPrevious} ? '' : 'disabled'">
+            <span th:if="${not page.hasPrevious}">«</span>
+            <a th:if="${page.hasPrevious}" th:onclick="'changePage(' + ${page.number - 2} + ')'" title="До попередньої сторінки">«</a>
+          </li>
+          <li th:each="item : ${page.items}" th:class="${item.current}? 'active' : ''">
+            <span th:if="${item.current}" th:text="${item.number}">1</span>
+            <a th:if="${not item.current}" th:onclick="'changePage(' + ${item.number - 1} + ')'">
+              <span th:text="${item.number}">1</span>
+            </a>
+          </li>
+          <li th:class="${page.hasNext} ? '' : 'disabled'">
+            <span th:if="${not page.hasNext}">»</span>
+            <a th:if="${page.hasNext}" th:onclick="'changePage(' + ${page.number} + ')'" title="До наступної сторінки">»</a>
+          </li>
+          <li th:class="${page.last} ? 'disabled' : ''">
+            <span th:if="${page.last}">Остання →</span>
+            <a th:if="${not page.last}" th:onclick="'changePage(' + ${page.totalPages - 1} + ')'">Остання →</a>
           </li>
         </ul>
       </div>
@@ -125,7 +139,7 @@
         <table class="table table-striped">
           <tr>
             <th>
-              <a onclick="sort('incomeNumber')">
+              <a th:onclick="sort('incomeNumber')">
                 <span th:if="${find.sortField} == 'incomeNumber' and ${find.sortOrder == 'ASC'}" class="glyphicon glyphicon-arrow-up"></span>
                 <span th:if="${find.sortField} == 'incomeNumber' and ${find.sortOrder == 'DESC'}" class="glyphicon glyphicon-arrow-down"></span>
                 Вход номер
@@ -175,7 +189,7 @@
             </th>
             <th></th>
           </tr>
-          <tr th:each="breach : ${breaches}">
+          <tr th:each="breach : ${page.content}">
             <td th:text="${breach.incomeNumber}" style="white-space: nowrap"></td>
             <td th:text="${#dates.format(breach.incomeDate, 'dd.MM.yyyy HH:mm')}" style="width: 200px; white-space: nowrap"></td>
             <td th:text="${breach.eoNumber}" style="white-space: nowrap"></td>
@@ -209,7 +223,7 @@
     document.getElementById('form').submit();
   }
   function changePage(page) {
-    document.getElementById('currentPage').value = page;
+    document.getElementById('pageNumber').value = page;
     document.getElementById('form').submit();
   }
 
